@@ -214,7 +214,7 @@ export default function Dashboard() {
       
       <div className="px-6 -mt-16 space-y-4">
         {upcomingAppointments.length > 0 && (
-          <div className="space-y-4 pt-2">
+          <div className="space-y-2">
              <div className="flex justify-between items-center">
                     <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
                     <Link href="/appointments">
