@@ -226,7 +226,10 @@ export default function Dashboard() {
 
         <div className="pb-6 pt-2">
           <section className="space-y-4">
-            <h2 className="text-xl font-bold text-gray-800 px-4">Categories</h2>
+            <div className="flex justify-between items-center px-4">
+                <h2 className="text-xl font-bold text-gray-800">Categories</h2>
+                <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
+            </div>
             <Carousel opts={{
               align: "start",
               dragFree: true,
