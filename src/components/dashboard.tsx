@@ -160,7 +160,7 @@ export default function Dashboard() {
       <div className="px-6 -mt-16 space-y-6">
         {nextAppointment && nextDoctor && (
           <div className="space-y-4">
-            <Card className="bg-white text-foreground rounded-2xl shadow-lg">
+            <Card className="bg-[#E7E5D7] text-foreground rounded-2xl shadow-lg">
               <CardContent className="p-4">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
@@ -229,3 +229,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+    
