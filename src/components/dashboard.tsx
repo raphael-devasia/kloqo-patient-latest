@@ -181,7 +181,7 @@ export default function Dashboard() {
 
   return (
     <div className="relative min-h-full">
-      <div className="bg-primary p-6 pb-24 rounded-b-[3rem]">
+      <div className="bg-primary p-6 pb-28 rounded-b-[3rem]">
         <header className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <MapPin className="h-6 w-6 text-primary-foreground fill-primary-foreground/20" />
@@ -216,7 +216,7 @@ export default function Dashboard() {
         </div>
       </div>
       
-      <div className="px-6 -mt-16 space-y-4">
+      <div className="px-6 -mt-24 space-y-4">
         {upcomingAppointments.length > 0 && (
           <div className="space-y-4">
              <div className="flex justify-between items-center">
