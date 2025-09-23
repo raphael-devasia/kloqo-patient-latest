@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, HeartPulse, Clock, Brain, Calendar, ChevronRight, MapPin, ChevronDown, Eye, Activity, Stethoscope, Star } from "lucide-react";
+import { Bell, Search, HeartPulse, Clock, Brain, Calendar, ChevronRight, MapPin, ChevronDown, Eye, Activity, Stethoscope, Star, MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import { format, isPast } from "date-fns";
 import {
@@ -25,6 +25,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Appointment } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 
 const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string }) => (
@@ -53,28 +55,28 @@ const DoctorCard = ({ doctor }: { doctor: { id: string, name: string, specialty:
 )
 
 const ToothIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M11 2c-2.5 1.5-2.5 4.5 0 6" />
-    <path d="M13 2c2.5 1.5 2.5 4.5 0 6" />
-    <path d="M4 12c-1.5 1.5-1.5 3.5 0 5s3.5 1.5 5 0" />
-    <path d="M20 12c1.5 1.5 1.5 3.5 0 5s-3.5 1.5-5 0" />
-    <path d="M7 19c-1-2-1-4 0-6" />
-    <path d="M17 19c1-2 1-4 0-6" />
-    <path d="M12 22v-4" />
-    <path d="M12 14c-1.5-1.5-1.5-3.5 0-5" />
-    <path d="M12 14c1.5-1.5 1.5-3.5 0-5" />
-  </svg>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        {...props}
+    >
+        <path d="M11 2c-2.5 1.5-2.5 4.5 0 6" />
+        <path d="M13 2c2.5 1.5 2.5 4.5 0 6" />
+        <path d="M4 12c-1.5 1.5-1.5 3.5 0 5s3.5 1.5 5 0" />
+        <path d="M20 12c1.5 1.5 1.5 3.5 0 5s-3.5 1.5-5 0" />
+        <path d="M7 19c-1-2-1-4 0-6" />
+        <path d="M17 19c1-2 1-4 0-6" />
+        <path d="M12 22v-4" />
+        <path d="M12 14c-1.5-1.5-1.5-3.5 0-5" />
+        <path d="M12 14c1.5-1.5 1.5-3.5 0-5" />
+    </svg>
 );
 
 const FaceIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -134,8 +136,6 @@ export default function Dashboard() {
     .filter((appt) => appt.status === "Upcoming" && !isPast(new Date(appt.date)))
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   
-  const nextAppointment = upcomingAppointments[0];
-  const nextDoctor = nextAppointment ? doctors.find(d => d.id === nextAppointment.doctorId) : null;
   const popularHealers = doctors.slice(0, 2);
 
   const categories = [
@@ -146,6 +146,38 @@ export default function Dashboard() {
     { label: "Ophthalmology", icon: <Eye className="w-8 h-8 text-primary" /> },
     { label: "General", icon: <Stethoscope className="w-8 h-8 text-primary" /> },
   ];
+
+  const AppointmentCard = ({ appointment, isFirst }: { appointment: Appointment, isFirst: boolean }) => {
+    const doctor = doctors.find(d => d.id === appointment.doctorId);
+    return (
+        <Card className={cn(
+            "flex-shrink-0 w-64 rounded-2xl shadow-md",
+            isFirst ? "bg-primary text-primary-foreground" : "bg-card text-card-foreground"
+        )}>
+            <CardContent className="p-4">
+                <div className="flex justify-between items-start">
+                    <div className="flex gap-4">
+                        <div className={cn(
+                            "flex flex-col items-center justify-center rounded-lg p-2 w-16",
+                            isFirst ? "bg-white/20" : "bg-primary text-primary-foreground"
+                        )}>
+                            <span className="text-2xl font-bold">{format(new Date(appointment.date), 'dd')}</span>
+                            <span className="font-semibold">{format(new Date(appointment.date), 'E')}</span>
+                        </div>
+                        <div>
+                            <p className={cn("text-sm", isFirst ? "text-primary-foreground/80" : "text-muted-foreground")}>{appointment.time}</p>
+                            <h3 className="font-bold text-base mt-1">{doctor?.name}</h3>
+                            <p className={cn("text-sm", isFirst ? "text-primary-foreground/80" : "text-muted-foreground")}>{doctor?.specialty}</p>
+                        </div>
+                    </div>
+                    <Button variant="ghost" size="icon" className={cn("h-6 w-6", isFirst ? "text-primary-foreground/80" : "text-muted-foreground")}>
+                        <MoreHorizontal />
+                    </Button>
+                </div>
+            </CardContent>
+        </Card>
+    );
+};
 
   return (
     <div className="relative min-h-full">
@@ -184,48 +216,26 @@ export default function Dashboard() {
         </div>
       </div>
       
-      <div className="px-6 -mt-16 space-y-2">
-        {nextAppointment && nextDoctor && (
+      <div className="px-6 -mt-16 space-y-4">
+        {upcomingAppointments.length > 0 && (
           <div className="space-y-4">
-            <Card className="bg-[#F7F4ED] text-foreground rounded-2xl shadow-lg">
-              <CardContent className="p-4">
-                <div className="flex justify-between items-center mb-4">
+             <div className="flex justify-between items-center">
                     <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
                     <Link href="/appointments">
                         <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
                     </Link>
                 </div>
-                <div className="flex items-center gap-4">
-                  <Avatar className="w-12 h-12 border-2 border-white">
-                    <AvatarImage src={nextDoctor.avatar} alt={nextDoctor.name} />
-                    <AvatarFallback>{nextDoctor.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1">
-                    <div className="flex items-center">
-                      <h3 className="font-bold text-base">{nextDoctor.name}</h3>
-                      <ChevronRight className="w-5 h-5" />
-                    </div>
-                    <p className="text-sm text-muted-foreground">{nextDoctor.specialty}</p>
-                  </div>
-                </div>
-                <div className="mt-4 grid grid-cols-2 gap-3 text-sm bg-accent/50 p-3 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-primary"/>
-                    <span>{format(new Date(nextAppointment.date), "dd MMM, EEEE")}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-primary"/>
-                    <span>{nextAppointment.time}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="flex space-x-4 overflow-x-auto pb-4 -mx-6 px-6">
+              {upcomingAppointments.map((appointment, index) => (
+                <AppointmentCard key={appointment.id} appointment={appointment} isFirst={index === 0} />
+              ))}
+            </div>
           </div>
         )}
 
-        <div className="pb-6 pt-2">
+        <div className="pb-6">
           <section className="space-y-4">
-            <div className="flex justify-between items-center px-4">
+            <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold text-gray-800">Categories</h2>
                 <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
             </div>
@@ -233,7 +243,7 @@ export default function Dashboard() {
               align: "start",
               dragFree: true,
             }} className="w-full">
-              <CarouselContent className="px-4 -ml-2">
+              <CarouselContent className="-ml-2">
                 {categories.map((category, index) => (
                   <CarouselItem key={index} className="pl-2 basis-1/4">
                     <CategoryCard icon={category.icon} label={category.label} />
@@ -243,7 +253,7 @@ export default function Dashboard() {
             </Carousel>
           </section>
 
-          <section className="space-y-4 pt-6 px-4">
+          <section className="space-y-4 pt-6">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-bold text-gray-800">Doctors</h2>
               <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>

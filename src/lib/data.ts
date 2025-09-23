@@ -44,6 +44,16 @@ export const appointments: Appointment[] = [
     type: 'Follow-up',
     status: 'Upcoming',
   },
+   {
+    id: 'appt5',
+    doctorId: 'doc3',
+    doctorName: 'Dr. Elena Vance',
+    doctorAvatar: findImage('doctor-3'),
+    date: format(addDays(new Date(), 5), 'yyyy-MM-dd'),
+    time: '09:30 AM',
+    type: 'Consultation',
+    status: 'Upcoming',
+  },
   {
     id: 'appt3',
     doctorId: 'doc3',
