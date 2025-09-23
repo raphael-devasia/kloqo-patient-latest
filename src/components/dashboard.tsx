@@ -145,8 +145,8 @@ export default function Dashboard() {
 
   const AppointmentCard = ({ appointment, index }: { appointment: Appointment, index: number }) => {
     const doctor = doctors.find(d => d.id === appointment.doctorId);
-    const cardColors = ['bg-[#F2FFE3]', 'bg-[#FFE0B2]'];
-    const dateColors = ['bg-[#D9F5B3]', 'bg-[#F9C88A]'];
+    const cardColors = ['bg-[#F2FFE3]', 'bg-[#E7D7C9]'];
+    const dateColors = ['bg-[#D9F5B3]', 'bg-[#DBCFB9]'];
     const cardColor = cardColors[index % cardColors.length];
     const dateColor = dateColors[index % dateColors.length];
 
