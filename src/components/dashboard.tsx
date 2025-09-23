@@ -156,8 +156,8 @@ export default function Dashboard() {
                 <div className="flex justify-between items-start">
                     <div className="flex gap-4">
                         <div className={cn("flex flex-col items-center justify-center rounded-lg p-2 w-16", dateColor)}>
+                            <span className="text-sm font-semibold">{format(new Date(appointment.date), 'MMM')}</span>
                             <span className="text-2xl font-bold">{format(new Date(appointment.date), 'dd')}</span>
-                            <span className="font-semibold">{format(new Date(appointment.date), 'E')}</span>
                         </div>
                         <div>
                             <p className="text-sm text-gray-600">{appointment.time}</p>
