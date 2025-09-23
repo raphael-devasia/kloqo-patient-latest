@@ -6,18 +6,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, HeartPulse, Clock, Brain, Calendar, ChevronRight, MapPin, ChevronDown, Eye, Activity, Stethoscope, Star, MoreHorizontal } from "lucide-react";
-import Image from "next/image";
+import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MoreHorizontal, MapPin, ChevronDown } from "lucide-react";
+import Link from "next/link";
 import { format, isPast } from "date-fns";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel"
-import Link from "next/link";
-import { Badge } from "./ui/badge";
 import { useEffect, useState } from "react";
 import {
   DropdownMenu,
@@ -181,7 +177,7 @@ export default function Dashboard() {
 
   return (
     <div className="relative min-h-full">
-      <div className="bg-primary p-6 pb-28 rounded-b-[3rem]">
+      <div className="bg-primary p-6 pb-20 rounded-b-[3rem]">
         <header className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <MapPin className="h-6 w-6 text-primary-foreground fill-primary-foreground/20" />
@@ -278,5 +274,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-    
