@@ -258,14 +258,14 @@ export default function Dashboard() {
               <h2 className="text-xl font-bold text-gray-800">Doctors</h2>
               <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-                <Card className="flex items-center justify-center gap-2 p-3 bg-primary/10 border-primary/20">
-                  <MapPin className="w-5 h-5 text-primary"/>
-                  <span className="font-semibold text-primary text-sm">Near you</span>
+            <div className="grid grid-cols-2 gap-4 w-1/2 pr-2">
+                <Card className="flex items-center justify-center gap-1 p-2 bg-primary/10 border-primary/20">
+                  <MapPin className="w-4 h-4 text-primary"/>
+                  <span className="font-semibold text-primary text-xs">Near you</span>
                 </Card>
-                <Card className="flex items-center justify-center gap-2 p-3">
-                  <Star className="w-5 h-5 text-muted-foreground"/>
-                  <span className="font-semibold text-muted-foreground text-sm">Favourites</span>
+                <Card className="flex items-center justify-center gap-1 p-2">
+                  <Star className="w-4 h-4 text-muted-foreground"/>
+                  <span className="font-semibold text-muted-foreground text-xs">Favourites</span>
                 </Card>
             </div>
             <div className="space-y-3">
