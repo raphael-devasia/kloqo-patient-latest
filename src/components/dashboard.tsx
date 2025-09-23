@@ -1,9 +1,12 @@
+
+"use client";
+
 import { user, doctors, appointments } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, Star, Clock, Video, MessageCircle, BrainCircuit, HeartPulse, Calendar, VideoIcon } from "lucide-react";
+import { Bell, Search, Star, Clock, Video, MessageCircle, BrainCircuit, HeartPulse, Calendar, VideoIcon, MapPin } from "lucide-react";
 import Image from "next/image";
 import { format, isPast } from "date-fns";
 import {
@@ -13,6 +16,7 @@ import {
 } from "@/components/ui/carousel"
 import Link from "next/link";
 import { Badge } from "./ui/badge";
+import { useEffect, useState } from "react";
 
 
 const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string }) => (
@@ -43,6 +47,37 @@ const DoctorCard = ({ doctor }: { doctor: { id: string, name: string, specialty:
 )
 
 export default function Dashboard() {
+  const [location, setLocation] = useState<{ city: string; country: string } | null>(null);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            const { latitude, longitude } = position.coords;
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+            const data = await response.json();
+            const { city, country } = data.address;
+            setLocation({ city, country });
+          } catch (error) {
+            console.error("Error fetching location:", error);
+            // Fallback or error handling
+            setLocation({ city: 'New York', country: 'USA' });
+          }
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+           // Fallback or error handling
+          setLocation({ city: 'New York', country: 'USA' });
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+       // Fallback or error handling
+      setLocation({ city: 'New York', country: 'USA' });
+    }
+  }, []);
+  
   const upcomingAppointments = appointments
     .filter((appt) => appt.status === "Upcoming" && !isPast(new Date(appt.date)))
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
@@ -54,9 +89,14 @@ export default function Dashboard() {
   return (
     <div className="space-y-8 bg-slate-50/80 -m-6 p-6">
       <header className="flex items-center justify-between">
-        <div>
-          <p className="text-muted-foreground font-medium">Good Morning!</p>
-          <h1 className="text-2xl font-bold text-gray-800">Hello {user.name.split(' ')[0]}</h1>
+        <div className="flex items-center gap-2">
+          <MapPin className="h-6 w-6 text-gray-500" />
+          <div>
+            <p className="text-muted-foreground font-medium">Location</p>
+            <h1 className="text-lg font-bold text-gray-800 -mt-1">
+              {location ? `${location.city}, ${location.country}` : 'Loading...'}
+            </h1>
+          </div>
         </div>
         <Button variant="ghost" size="icon" className="rounded-full relative">
           <Bell className="h-6 w-6 text-gray-500" />
@@ -131,3 +171,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+    
