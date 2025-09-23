@@ -196,14 +196,14 @@ export default function Dashboard() {
           </div>
         )}
 
-        <div className="pb-6 bg-slate-50/80 rounded-t-[-1.5rem] pt-6">
+        <div className="pb-6 bg-slate-50/80 rounded-t-[-1.5rem] pt-2">
           <section className="space-y-4">
-            <h2 className="text-xl font-bold text-gray-800">Categories</h2>
+            <h2 className="text-xl font-bold text-gray-800 px-4">Categories</h2>
             <Carousel opts={{
               align: "start",
               dragFree: true,
             }} className="w-full">
-              <CarouselContent className="-ml-2">
+              <CarouselContent className="px-4 -ml-2">
                 {categories.map((category, index) => (
                   <CarouselItem key={index} className="pl-2 basis-1/4">
                     <CategoryCard icon={category.icon} label={category.label} />
@@ -213,7 +213,7 @@ export default function Dashboard() {
             </Carousel>
           </section>
 
-          <section className="space-y-4 pt-6">
+          <section className="space-y-4 pt-6 px-4">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-bold text-gray-800">Popular healers</h2>
               <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
