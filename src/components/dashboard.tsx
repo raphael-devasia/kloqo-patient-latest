@@ -176,7 +176,7 @@ export default function Dashboard() {
 
   return (
     <div className="relative min-h-full">
-      <div className="bg-primary p-6 pt-6 pb-20 rounded-b-[3rem]">
+      <div className="bg-primary p-6 pt-6 pb-24 rounded-b-[3rem]">
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <MapPin className="h-6 w-6 text-primary-foreground fill-primary-foreground/20" />
@@ -207,14 +207,14 @@ export default function Dashboard() {
             placeholder="Search Doctors..."
             className="h-10 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
           />
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-primary-foreground/80"/>
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-primary-foreground/80"/>
         </div>
       </div>
       
       <div className="px-6 -mt-16 space-y-4">
         {upcomingAppointments.length > 0 && (
           <div className="space-y-4">
-             <div className="flex justify-between items-center mb-4">
+             <div className="flex justify-between items-center mt-4">
                     <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
                     <Link href="/appointments">
                         <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
