@@ -145,7 +145,7 @@ export default function Dashboard() {
 
   const AppointmentCard = ({ appointment, index }: { appointment: Appointment, index: number }) => {
     const doctor = doctors.find(d => d.id === appointment.doctorId);
-    const cardColors = ['bg-[#F2FFE3]', 'bg-[#FFDBAA]'];
+    const cardColors = ['bg-[#F2FFE3]', 'bg-[#FFE0B2]'];
     const dateColors = ['bg-[#D9F5B3]', 'bg-[#F9C88A]'];
     const cardColor = cardColors[index % cardColors.length];
     const dateColor = dateColors[index % dateColors.length];
@@ -176,7 +176,7 @@ export default function Dashboard() {
 
   return (
     <div className="relative min-h-full">
-      <div className="bg-primary p-6 pb-20 rounded-b-[3rem]">
+      <div className="bg-primary p-6 rounded-b-[3rem]">
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <MapPin className="h-6 w-6 text-primary-foreground fill-primary-foreground/20" />
