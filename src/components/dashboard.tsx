@@ -211,10 +211,10 @@ export default function Dashboard() {
         </div>
       </div>
       
-      <div className="px-6 -mt-16 space-y-4">
+      <div className="px-6 -mt-20 space-y-4">
         {upcomingAppointments.length > 0 && (
           <div className="space-y-4">
-             <div className="flex justify-between items-center mt-4">
+             <div className="flex justify-between items-center">
                     <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
                     <Link href="/appointments">
                         <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
@@ -257,7 +257,7 @@ export default function Dashboard() {
             </div>
             <div className="grid grid-cols-2 gap-4 w-1/2 pr-2">
                 <Card className="flex items-center justify-center gap-1 p-0 h-8 bg-primary/10 border-primary/20">
-                  <span className="font-semibold text-primary text-xs">Near you</span>
+                  <span className="font-semibold text-primary text-xs whitespace-nowrap">Near you</span>
                 </Card>
                 <Card className="flex items-center justify-center gap-1 p-0 h-8">
                   <Star className="w-4 h-4 text-muted-foreground"/>
@@ -275,3 +275,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+    
