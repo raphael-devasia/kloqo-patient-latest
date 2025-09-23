@@ -106,3 +106,7 @@ body {
     --muted-foreground: 225.2 38.4% 43.9%;
     --border: 76 21% 68%;
 }
+
+.doctors-page {
+  background-color: #F6F6F6;
+}

@@ -77,8 +77,8 @@ export default function DoctorsList() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="h-12 rounded-xl pl-4 pr-12 text-base bg-input text-foreground placeholder:text-muted-foreground border-border"
           />
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-primary text-primary-foreground rounded-lg h-8 w-8 flex items-center justify-center pointer-events-none">
-              <Search className="h-5 w-5" />
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-primary-foreground rounded-lg h-8 w-8 flex items-center justify-center pointer-events-none">
+              <Search className="h-5 w-5 text-muted-foreground" />
           </div>
         </div>
         <DropdownMenu>
