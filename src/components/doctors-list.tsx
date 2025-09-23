@@ -99,11 +99,11 @@ export default function DoctorsList() {
         </DropdownMenu>
       </div>
 
-      <div className="grid gap-4 bg-destructive p-4 rounded-lg">
+      <div className="grid gap-4">
         {filteredAndSortedDoctors.length > 0 ? (
           filteredAndSortedDoctors.map((doc) => <DoctorCard key={doc.id} doctor={doc} />)
         ) : (
-          <p className="col-span-full mt-4 text-center text-destructive-foreground">
+          <p className="col-span-full mt-4 text-center text-muted-foreground">
             No doctors found.
           </p>
         )}
