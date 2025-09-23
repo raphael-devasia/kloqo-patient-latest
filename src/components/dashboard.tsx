@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, Star, Clock, Video, MessageCircle, BrainCircuit, HeartPulse, Calendar, VideoIcon, MapPin, ChevronDown } from "lucide-react";
+import { Bell, Search, Star, Clock, Video, MessageCircle, BrainCircuit, HeartPulse, Calendar, VideoIcon, MapPin, ChevronDown, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { format, isPast } from "date-fns";
 import {
@@ -146,7 +146,10 @@ export default function Dashboard() {
                   <AvatarFallback>{nextDoctor.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div className="flex-1">
-                  <h3 className="font-bold text-base">{nextDoctor.name}</h3>
+                  <div className="flex items-center">
+                    <h3 className="font-bold text-base">{nextDoctor.name}</h3>
+                    <ChevronRight className="w-5 h-5" />
+                  </div>
                   <p className="text-sm text-primary-foreground/80">{nextDoctor.specialty}</p>
                 </div>
               </div>
