@@ -6,13 +6,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, Star, Clock, Video, MessageCircle, BrainCircuit, HeartPulse, Calendar, VideoIcon, MapPin, ChevronDown, ChevronRight } from "lucide-react";
+import { Bell, Search, Star, Clock, Video, MessageCircle, Brain, HeartPulse, Calendar, VideoIcon, MapPin, ChevronDown, ChevronRight, Tooth } from "lucide-react";
 import Image from "next/image";
 import { format, isPast } from "date-fns";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel"
 import Link from "next/link";
 import { Badge } from "./ui/badge";
@@ -92,6 +94,14 @@ export default function Dashboard() {
   const nextDoctor = nextAppointment ? doctors.find(d => d.id === nextAppointment.doctorId) : null;
   const popularHealers = doctors.slice(0, 2);
 
+  const categories = [
+    { label: "Dentist", icon: <Tooth className="w-6 h-6 text-primary" /> },
+    { label: "Heart", icon: <HeartPulse className="w-6 h-6 text-primary" /> },
+    { label: "Brain", icon: <Brain className="w-6 h-6 text-primary" /> },
+    { label: "Video", icon: <VideoIcon className="w-6 h-6 text-primary" /> },
+    { label: "Search", icon: <Search className="w-6 h-6 text-primary" /> },
+  ];
+
   return (
     <div className="space-y-8 bg-slate-50/80 -m-6 p-6">
       <header className="flex items-center justify-between">
@@ -122,12 +132,9 @@ export default function Dashboard() {
       <div className="relative">
         <Input
           placeholder="Search Doctors..."
-          className="h-14 rounded-xl border-2 border-slate-200/80 bg-white pl-12 text-base focus-visible:ring-primary/40"
+          className="h-14 rounded-full border-2 border-slate-200/80 bg-white pl-12 text-base focus-visible:ring-primary/40"
         />
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-400"/>
-        <Button size="icon" variant="ghost" className="absolute right-3 top-1/2 -translate-y-1/2 h-9 w-9 text-gray-500">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="4" y1="21" y2="14" /><line x1="4" x2="4" y1="10" y2="3" /><line x1="12" x2="12" y1="21" y2="12" /><line x1="12" x2="12" y1="8" y2="3" /><line x1="20" x2="20" y1="21" y2="16" /><line x1="20" x2="20" y1="12" y2="3" /><line x1="2" x2="6" y1="14" y2="14" /><line x1="10" x2="14" y1="8" y2="8" /><line x1="18" x2="22" y1="16" y2="16" /></svg>
-        </Button>
       </div>
 
       {nextAppointment && nextDoctor && (
@@ -167,6 +174,22 @@ export default function Dashboard() {
           </Card>
         </section>
       )}
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-bold text-gray-800">Categories</h2>
+        <Carousel opts={{
+          align: "start",
+          dragFree: true,
+        }} className="w-full">
+          <CarouselContent className="-ml-2">
+            {categories.map((category, index) => (
+              <CarouselItem key={index} className="pl-2 basis-1/4">
+                <CategoryCard icon={category.icon} label={category.label} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </section>
 
       <section className="space-y-4">
         <div className="flex justify-between items-center">
