@@ -23,7 +23,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased bg-gray-100 flex items-center justify-center min-h-screen py-10">
+      <body className="font-body antialiased bg-background flex items-center justify-center min-h-screen py-10">
         <div className="mobile-frame">
           <div className="mobile-frame-notch"></div>
           <div className="mobile-frame-content">
