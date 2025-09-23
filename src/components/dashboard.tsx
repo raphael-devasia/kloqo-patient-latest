@@ -157,9 +157,9 @@ export default function Dashboard() {
         </div>
       </div>
       
-      <div className="space-y-6 px-6 pb-6 bg-slate-50/80 rounded-t-[-1.5rem] pt-6 -mt-16">
+      <div className="px-6 -mt-16 space-y-6">
         {nextAppointment && nextDoctor && (
-          <section className="space-y-4">
+          <div className="space-y-4">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
               <Link href="/appointments">
@@ -193,36 +193,38 @@ export default function Dashboard() {
                 </div>
               </CardContent>
             </Card>
-          </section>
+          </div>
         )}
 
-        <section className="space-y-4">
-          <h2 className="text-xl font-bold text-gray-800">Categories</h2>
-          <Carousel opts={{
-            align: "start",
-            dragFree: true,
-          }} className="w-full">
-            <CarouselContent className="-ml-2">
-              {categories.map((category, index) => (
-                <CarouselItem key={index} className="pl-2 basis-1/4">
-                  <CategoryCard icon={category.icon} label={category.label} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </section>
+        <div className="pb-6 bg-slate-50/80 rounded-t-[-1.5rem] pt-6">
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold text-gray-800">Categories</h2>
+            <Carousel opts={{
+              align: "start",
+              dragFree: true,
+            }} className="w-full">
+              <CarouselContent className="-ml-2">
+                {categories.map((category, index) => (
+                  <CarouselItem key={index} className="pl-2 basis-1/4">
+                    <CategoryCard icon={category.icon} label={category.label} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </section>
 
-        <section className="space-y-4">
-          <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold text-gray-800">Popular healers</h2>
-            <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
-          </div>
-          <div className="space-y-3">
-            {popularHealers.map((doctor) => (
-              <DoctorCard key={doctor.id} doctor={doctor} />
-            ))}
-          </div>
-        </section>
+          <section className="space-y-4 pt-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-bold text-gray-800">Popular healers</h2>
+              <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
+            </div>
+            <div className="space-y-3">
+              {popularHealers.map((doctor) => (
+                <DoctorCard key={doctor.id} doctor={doctor} />
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );
