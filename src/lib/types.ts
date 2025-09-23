@@ -11,6 +11,7 @@ export type Appointment = {
   doctorId: string;
   doctorName: string;
   doctorAvatar: string;
+  doctorClinic: string;
   date: string;
   time: string;
   type: 'Consultation' | 'Follow-up' | 'Check-up';

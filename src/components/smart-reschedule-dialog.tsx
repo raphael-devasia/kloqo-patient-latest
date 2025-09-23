@@ -112,7 +112,7 @@ export default function SmartRescheduleDialog({ appointment }: { appointment: Ap
               {result.suggestedTimes.map((time, index) => (
                 <div key={index} className="flex items-center justify-between rounded-md border p-3">
                   <div className="flex items-center gap-3">
-                    <CalendarCheck className="h-5 w-5 text-accent" />
+                    <CalendarCheck className="h-5 w-5 text-accent-foreground" />
                     <span className="font-medium">{time}</span>
                   </div>
                   <Button size="sm" variant="outline">Select</Button>
