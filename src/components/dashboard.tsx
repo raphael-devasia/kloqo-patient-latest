@@ -121,18 +121,20 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="space-y-6 bg-slate-50/80 -m-6 p-6">
-      <div className="space-y-4">
-        <header className="flex items-center justify-between">
+    <div className="relative min-h-full">
+      <div className="absolute top-0 left-0 right-0 h-64 bg-primary rounded-b-[3rem] -z-10" />
+      
+      <div className="p-6">
+        <header className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <MapPin className="h-6 w-6 text-primary fill-primary/20" />
+            <MapPin className="h-6 w-6 text-primary-foreground fill-primary-foreground/20" />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="p-0 h-auto">
-                  <h1 className="text-base font-bold text-gray-800">
+                <Button variant="ghost" className="p-0 h-auto text-primary-foreground">
+                  <h1 className="text-base font-bold">
                     {location ? `${location.city}, ${location.country}` : 'Loading...'}
                   </h1>
-                  <ChevronDown className="h-5 w-5 text-gray-500" />
+                  <ChevronDown className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -142,86 +144,88 @@ export default function Dashboard() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <Button variant="ghost" size="icon" className="rounded-full relative">
-            <Bell className="h-6 w-6 text-gray-500" />
+          <Button variant="ghost" size="icon" className="rounded-full relative text-primary-foreground">
+            <Bell className="h-6 w-6" />
             <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500" />
           </Button>
         </header>
 
-        <div className="relative">
+        <div className="relative mb-6">
           <Input
             placeholder="Search Doctors..."
-            className="h-14 rounded-full border-2 border-slate-200/80 bg-white pl-12 text-base focus-visible:ring-primary/40"
+            className="h-14 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
           />
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-400"/>
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-primary-foreground/80"/>
         </div>
       </div>
+      
+      <div className="space-y-6 px-6 pb-6 bg-slate-50/80 rounded-t-[3rem] pt-6 -mt-12">
+        {nextAppointment && nextDoctor && (
+          <section className="space-y-4 -mt-16">
+            <div className="flex justify-between items-center pt-16">
+              <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
+              <Link href="/appointments">
+                <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
+              </Link>
+            </div>
+            <Card className="bg-white text-foreground rounded-2xl shadow-lg">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-4">
+                  <Avatar className="w-12 h-12 border-2 border-white">
+                    <AvatarImage src={nextDoctor.avatar} alt={nextDoctor.name} />
+                    <AvatarFallback>{nextDoctor.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <div className="flex items-center">
+                      <h3 className="font-bold text-base">{nextDoctor.name}</h3>
+                      <ChevronRight className="w-5 h-5" />
+                    </div>
+                    <p className="text-sm text-muted-foreground">{nextDoctor.specialty}</p>
+                  </div>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-3 text-sm bg-accent/50 p-3 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-primary"/>
+                    <span>{format(new Date(nextAppointment.date), "dd MMM, EEEE")}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-primary"/>
+                    <span>{nextAppointment.time}</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+        )}
 
-      {nextAppointment && nextDoctor && (
+        <section className="space-y-4">
+          <h2 className="text-xl font-bold text-gray-800">Categories</h2>
+          <Carousel opts={{
+            align: "start",
+            dragFree: true,
+          }} className="w-full">
+            <CarouselContent className="-ml-2">
+              {categories.map((category, index) => (
+                <CarouselItem key={index} className="pl-2 basis-1/4">
+                  <CategoryCard icon={category.icon} label={category.label} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </section>
+
         <section className="space-y-4">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
-            <Link href="/appointments">
-              <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
-            </Link>
+            <h2 className="text-xl font-bold text-gray-800">Popular healers</h2>
+            <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
           </div>
-          <Card className="bg-primary text-primary-foreground rounded-2xl shadow-xl shadow-primary/20 overflow-hidden">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-4">
-                <Avatar className="w-12 h-12 border-2 border-white">
-                  <AvatarImage src={nextDoctor.avatar} alt={nextDoctor.name} />
-                  <AvatarFallback>{nextDoctor.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <div className="flex-1">
-                  <div className="flex items-center">
-                    <h3 className="font-bold text-base">{nextDoctor.name}</h3>
-                    <ChevronRight className="w-5 h-5" />
-                  </div>
-                  <p className="text-sm text-primary-foreground/80">{nextDoctor.specialty}</p>
-                </div>
-              </div>
-              <div className="mt-4 grid grid-cols-2 gap-3 text-sm bg-primary-foreground/10 p-3 rounded-lg">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4"/>
-                  <span>{format(new Date(nextAppointment.date), "dd MMM, EEEE")}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4"/>
-                  <span>{nextAppointment.time}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-      )}
-
-      <section className="space-y-4">
-        <h2 className="text-xl font-bold text-gray-800">Categories</h2>
-        <Carousel opts={{
-          align: "start",
-          dragFree: true,
-        }} className="w-full">
-          <CarouselContent className="-ml-2">
-            {categories.map((category, index) => (
-              <CarouselItem key={index} className="pl-2 basis-1/4">
-                <CategoryCard icon={category.icon} label={category.label} />
-              </CarouselItem>
+          <div className="space-y-3">
+            {popularHealers.map((doctor) => (
+              <DoctorCard key={doctor.id} doctor={doctor} />
             ))}
-          </CarouselContent>
-        </Carousel>
-      </section>
-
-      <section className="space-y-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-bold text-gray-800">Popular healers</h2>
-          <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
-        </div>
-        <div className="space-y-3">
-          {popularHealers.map((doctor) => (
-            <DoctorCard key={doctor.id} doctor={doctor} />
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
