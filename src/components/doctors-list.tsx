@@ -4,11 +4,9 @@ import { doctors } from "@/lib/data";
 import { Doctor } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Star, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
   <Card className="shadow-md rounded-2xl">
@@ -34,23 +32,22 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
 
 export default function DoctorsList() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSpecialty, setSelectedSpecialty] = useState("All");
-
-  const specialties = ["All", ...new Set(doctors.map((doc) => doc.specialty))];
 
   const filteredDoctors = doctors
-    .filter((doctor) =>
-      selectedSpecialty === "All" ? true : doctor.specialty === selectedSpecialty
-    )
-    .filter((doctor) =>
-      doctor.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    .filter((doctor) => {
+      const term = searchTerm.toLowerCase();
+      return (
+        doctor.name.toLowerCase().includes(term) ||
+        doctor.specialty.toLowerCase().includes(term) ||
+        doctor.clinic.toLowerCase().includes(term)
+      );
+    });
 
   return (
     <div className="space-y-6">
       <div className="relative">
         <Input
-          placeholder="Search doctor by name"
+          placeholder="Search doctor, specialty, or clinic"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="h-12 rounded-xl pl-4 pr-12 text-base"
@@ -58,24 +55,6 @@ export default function DoctorsList() {
         <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-primary/20 text-primary rounded-lg h-8 w-8 flex items-center justify-center">
             <Search className="h-5 w-5" />
         </div>
-      </div>
-
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 -mx-4 px-4">
-        {specialties.map((specialty) => (
-          <Button
-            key={specialty}
-            onClick={() => setSelectedSpecialty(specialty)}
-            variant={selectedSpecialty === specialty ? "default" : "outline"}
-            className={cn(
-              "rounded-xl px-4 h-10 flex-shrink-0",
-              selectedSpecialty === specialty
-                ? "bg-primary text-primary-foreground"
-                : "bg-card border-border text-foreground"
-            )}
-          >
-            {specialty}
-          </Button>
-        ))}
       </div>
 
       <div className="grid gap-4">
