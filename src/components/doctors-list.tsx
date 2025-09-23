@@ -31,8 +31,8 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
           <h3 className="font-bold text-base">{doctor.name}</h3>
           <div className="flex items-center gap-1 text-sm text-amber-500">
             <Star className="w-4 h-4 fill-current" />
-            <span className="font-semibold">4.9</span>
-            <span className="text-muted-foreground">(37 Reviews)</span>
+            <span className="font-semibold">{doctor.rating.toFixed(1)}</span>
+            <span className="text-muted-foreground">({doctor.reviews} Reviews)</span>
           </div>
           <p className="text-sm text-muted-foreground">{doctor.specialty} - {doctor.clinic}</p>
         </div>
@@ -43,7 +43,7 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
 
 export default function DoctorsList() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortOrder, setSortOrder] = useState("alphabetical");
+  const [sortOrder, setSortOrder] = useState("a-z");
 
   const filteredAndSortedDoctors = useMemo(() => {
     let filtered = doctors
@@ -57,11 +57,11 @@ export default function DoctorsList() {
       });
 
     switch (sortOrder) {
-      case "specialty":
-        return filtered.sort((a, b) => a.specialty.localeCompare(b.specialty));
-      case "hospital":
-        return filtered.sort((a, b) => a.clinic.localeCompare(b.clinic));
-      case "alphabetical":
+      case "z-a":
+        return filtered.sort((a, b) => b.name.localeCompare(a.name));
+      case "top-rated":
+        return filtered.sort((a, b) => b.rating - a.rating);
+      case "a-z":
       default:
         return filtered.sort((a, b) => a.name.localeCompare(b.name));
     }
@@ -91,9 +91,9 @@ export default function DoctorsList() {
                 <DropdownMenuLabel>Sort by</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup value={sortOrder} onValueChange={setSortOrder}>
-                    <DropdownMenuRadioItem value="alphabetical">Alphabetical</DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="specialty">Specialty</DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="hospital">Hospital</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="a-z">Alphabetical (A-Z)</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="z-a">Alphabetical (Z-A)</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="top-rated">Top Rated</DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
             </DropdownMenuContent>
         </DropdownMenu>

@@ -4,6 +4,8 @@ export type Doctor = {
   specialty: string;
   avatar: string;
   clinic: string;
+  rating: number;
+  reviews: number;
 };
 
 export type Appointment = {
