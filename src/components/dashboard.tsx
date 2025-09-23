@@ -21,7 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Appointment } from "@/lib/types";
+import { Appointment, Doctor } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 
@@ -32,7 +32,7 @@ const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string })
   </div>
 );
 
-const DoctorCard = ({ doctor }: { doctor: { id: string, name: string, specialty: string, avatar: string } }) => (
+const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
   <Card className="p-4">
     <div className="flex items-center gap-4">
       <Avatar className="w-16 h-16 border">
@@ -42,6 +42,7 @@ const DoctorCard = ({ doctor }: { doctor: { id: string, name: string, specialty:
       <div className="flex-1">
         <h3 className="font-bold text-base">{doctor.name}</h3>
         <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
+        <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
       </div>
       <Button variant="ghost" size="icon">
         <HeartPulse className="w-5 h-5 text-muted-foreground" />
