@@ -66,15 +66,15 @@ const ToothIcon = (props: React.SVGProps<SVGSVGElement>) => (
     strokeLinejoin="round"
     {...props}
   >
-    <path d="M11 2a4.5 4.5 0 0 0-4.5 4.5v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1A6.5 6.5 0 0 1 7.5.5c.66 0 1.31.09 1.94.27" />
-    <path d="M13 2a4.5 4.5 0 0 1 4.5 4.5v1a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-1A6.5 6.5 0 0 0 16.5.5c-.66 0-1.31.09-1.94.27" />
-    <path d="m7.5 9.5 3 3 3-3" />
-    <path d="M4.5 9.5h15" />
-    <path d="M4.5 12.5h15" />
-    <path d="M11 15.5v2a2 2 0 1 1-4 0v-2" />
-    <path d="M13 15.5v2a2 2 0 1 0 4 0v-2" />
-    <path d="m14 20-2 2-2-2" />
-    <path d="M12 17.5v4.5" />
+    <path d="M11 2c-2.5 1.5-2.5 4.5 0 6" />
+    <path d="M13 2c2.5 1.5 2.5 4.5 0 6" />
+    <path d="M4 12c-1.5 1.5-1.5 3.5 0 5s3.5 1.5 5 0" />
+    <path d="M20 12c1.5 1.5 1.5 3.5 0 5s-3.5 1.5-5 0" />
+    <path d="M7 19c-1-2-1-4 0-6" />
+    <path d="M17 19c1-2 1-4 0-6" />
+    <path d="M12 22v-4" />
+    <path d="M12 14c-1.5-1.5-1.5-3.5 0-5" />
+    <path d="M12 14c1.5-1.5 1.5-3.5 0-5" />
   </svg>
 );
 
@@ -157,9 +157,9 @@ export default function Dashboard() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="p-0 h-auto text-primary-foreground">
-                  <h1 className="text-base font-bold">
+                  <span className="text-sm font-normal">
                     {location ? `${location.city}, ${location.country}` : 'Loading...'}
-                  </h1>
+                  </span>
                   <ChevronDown className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
