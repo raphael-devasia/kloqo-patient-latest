@@ -160,14 +160,14 @@ export default function Dashboard() {
       <div className="px-6 -mt-16 space-y-6">
         {nextAppointment && nextDoctor && (
           <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
-              <Link href="/appointments">
-                <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
-              </Link>
-            </div>
             <Card className="bg-white text-foreground rounded-2xl shadow-lg">
               <CardContent className="p-4">
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
+                    <Link href="/appointments">
+                        <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
+                    </Link>
+                </div>
                 <div className="flex items-center gap-4">
                   <Avatar className="w-12 h-12 border-2 border-white">
                     <AvatarImage src={nextDoctor.avatar} alt={nextDoctor.name} />
@@ -229,5 +229,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-    
