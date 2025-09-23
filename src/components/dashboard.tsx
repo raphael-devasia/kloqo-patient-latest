@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, Star, Clock, Video, MessageCircle, BrainCircuit, HeartPulse, Calendar, VideoIcon, MapPin } from "lucide-react";
+import { Bell, Search, Star, Clock, Video, MessageCircle, BrainCircuit, HeartPulse, Calendar, VideoIcon, MapPin, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { format, isPast } from "date-fns";
 import {
@@ -17,6 +17,12 @@ import {
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { useEffect, useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 
 const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string }) => (
@@ -90,13 +96,22 @@ export default function Dashboard() {
     <div className="space-y-8 bg-slate-50/80 -m-6 p-6">
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <MapPin className="h-6 w-6 text-gray-500" />
-          <div>
-            <p className="text-muted-foreground font-medium">Location</p>
-            <h1 className="text-lg font-bold text-gray-800 -mt-1">
-              {location ? `${location.city}, ${location.country}` : 'Loading...'}
-            </h1>
-          </div>
+          <MapPin className="h-6 w-6 text-primary fill-primary/20" />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="p-0 h-auto">
+                <h1 className="text-lg font-bold text-gray-800">
+                  {location ? `${location.city}, ${location.country}` : 'Loading...'}
+                </h1>
+                <ChevronDown className="h-5 w-5 text-gray-500" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onSelect={() => setLocation({ city: 'London', country: 'UK' })}>London, UK</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setLocation({ city: 'Tokyo', country: 'Japan' })}>Tokyo, Japan</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setLocation({ city: 'Sydney', country: 'Australia' })}>Sydney, Australia</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <Button variant="ghost" size="icon" className="rounded-full relative">
           <Bell className="h-6 w-6 text-gray-500" />
