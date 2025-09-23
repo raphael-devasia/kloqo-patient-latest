@@ -121,38 +121,40 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="space-y-8 bg-slate-50/80 -m-6 p-6">
-      <header className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <MapPin className="h-6 w-6 text-primary fill-primary/20" />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="p-0 h-auto">
-                <h1 className="text-base font-bold text-gray-800">
-                  {location ? `${location.city}, ${location.country}` : 'Loading...'}
-                </h1>
-                <ChevronDown className="h-5 w-5 text-gray-500" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onSelect={() => setLocation({ city: 'London', country: 'UK' })}>London, UK</DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => setLocation({ city: 'Tokyo', country: 'Japan' })}>Tokyo, Japan</DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => setLocation({ city: 'Sydney', country: 'Australia' })}>Sydney, Australia</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-        <Button variant="ghost" size="icon" className="rounded-full relative">
-          <Bell className="h-6 w-6 text-gray-500" />
-          <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500" />
-        </Button>
-      </header>
+    <div className="space-y-6 bg-slate-50/80 -m-6 p-6">
+      <div className="space-y-4">
+        <header className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <MapPin className="h-6 w-6 text-primary fill-primary/20" />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="p-0 h-auto">
+                  <h1 className="text-base font-bold text-gray-800">
+                    {location ? `${location.city}, ${location.country}` : 'Loading...'}
+                  </h1>
+                  <ChevronDown className="h-5 w-5 text-gray-500" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onSelect={() => setLocation({ city: 'London', country: 'UK' })}>London, UK</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => setLocation({ city: 'Tokyo', country: 'Japan' })}>Tokyo, Japan</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => setLocation({ city: 'Sydney', country: 'Australia' })}>Sydney, Australia</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <Button variant="ghost" size="icon" className="rounded-full relative">
+            <Bell className="h-6 w-6 text-gray-500" />
+            <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500" />
+          </Button>
+        </header>
 
-      <div className="relative">
-        <Input
-          placeholder="Search Doctors..."
-          className="h-14 rounded-full border-2 border-slate-200/80 bg-white pl-12 text-base focus-visible:ring-primary/40"
-        />
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-400"/>
+        <div className="relative">
+          <Input
+            placeholder="Search Doctors..."
+            className="h-14 rounded-full border-2 border-slate-200/80 bg-white pl-12 text-base focus-visible:ring-primary/40"
+          />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-400"/>
+        </div>
       </div>
 
       {nextAppointment && nextDoctor && (
@@ -222,5 +224,4 @@ export default function Dashboard() {
       </section>
     </div>
   );
-
-    
+}
