@@ -122,9 +122,7 @@ export default function Dashboard() {
 
   return (
     <div className="relative min-h-full">
-      <div className="absolute top-0 left-0 right-0 h-64 bg-primary rounded-b-[3rem] -z-10" />
-      
-      <div className="p-6">
+      <div className="bg-primary p-6 pb-24 rounded-b-[3rem]">
         <header className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <MapPin className="h-6 w-6 text-primary-foreground fill-primary-foreground/20" />
@@ -150,7 +148,7 @@ export default function Dashboard() {
           </Button>
         </header>
 
-        <div className="relative mb-6">
+        <div className="relative">
           <Input
             placeholder="Search Doctors..."
             className="h-14 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
@@ -159,10 +157,10 @@ export default function Dashboard() {
         </div>
       </div>
       
-      <div className="space-y-6 px-6 pb-6 bg-slate-50/80 rounded-t-[3rem] pt-6 -mt-12">
+      <div className="space-y-6 px-6 pb-6 bg-slate-50/80 rounded-t-[-1.5rem] pt-6 -mt-16">
         {nextAppointment && nextDoctor && (
-          <section className="space-y-4 -mt-16">
-            <div className="flex justify-between items-center pt-16">
+          <section className="space-y-4">
+            <div className="flex justify-between items-center">
               <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
               <Link href="/appointments">
                 <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
@@ -229,3 +227,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+    
