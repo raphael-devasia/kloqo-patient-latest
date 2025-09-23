@@ -20,7 +20,7 @@ import {
 import { Button } from "./ui/button";
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-  <Card className="shadow-md rounded-2xl bg-card">
+  <Card className="shadow-md rounded-2xl" style={{ backgroundColor: '#d4E0EE', border: 'none' }}>
     <CardContent className="p-3">
       <div className="flex items-center gap-4">
         <Avatar className="h-24 w-24 rounded-2xl">
