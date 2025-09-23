@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, HeartPulse, Clock, Brain, Calendar, ChevronRight, MapPin, ChevronDown, Eye, Activity, Stethoscope } from "lucide-react";
+import { Bell, Search, HeartPulse, Clock, Brain, Calendar, ChevronRight, MapPin, ChevronDown, Eye, Activity, Stethoscope, Star } from "lucide-react";
 import Image from "next/image";
 import { format, isPast } from "date-fns";
 import {
@@ -185,7 +185,7 @@ export default function Dashboard() {
         </div>
       </div>
       
-      <div className="px-6 -mt-16 space-y-4">
+      <div className="px-6 -mt-16 space-y-2">
         {nextAppointment && nextDoctor && (
           <div className="space-y-4">
             <Card className="bg-[#F7F4ED] text-foreground rounded-2xl shadow-lg">
@@ -246,8 +246,18 @@ export default function Dashboard() {
 
           <section className="space-y-4 pt-6 px-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-bold text-gray-800">Doctors near you</h2>
+              <h2 className="text-xl font-bold text-gray-800">Doctor</h2>
               <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+                <Card className="flex items-center gap-3 p-4 bg-primary/10 border-primary/20">
+                  <MapPin className="w-6 h-6 text-primary"/>
+                  <span className="font-semibold text-primary">Near you</span>
+                </Card>
+                <Card className="flex items-center gap-3 p-4">
+                  <Star className="w-6 h-6 text-muted-foreground"/>
+                  <span className="font-semibold text-muted-foreground">Favourites</span>
+                </Card>
             </div>
             <div className="space-y-3">
               {popularHealers.map((doctor) => (
