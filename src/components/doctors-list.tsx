@@ -20,7 +20,7 @@ import {
 import { Button } from "./ui/button";
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-  <Card className="shadow-md rounded-2xl">
+  <Card className="shadow-md rounded-2xl bg-card">
     <CardContent className="p-3">
       <div className="flex items-center gap-4">
         <Avatar className="h-24 w-24 rounded-2xl">
@@ -28,7 +28,7 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
           <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="flex-1 space-y-1">
-          <h3 className="font-bold text-base">{doctor.name}</h3>
+          <h3 className="font-bold text-base text-card-foreground">{doctor.name}</h3>
           <div className="flex items-center gap-1 text-sm text-amber-500">
             <Star className="w-4 h-4 fill-current" />
             <span className="font-semibold">{doctor.rating.toFixed(1)}</span>
@@ -75,9 +75,9 @@ export default function DoctorsList() {
             placeholder="Search doctor, specialty, or clinic"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="h-12 rounded-xl pl-4 pr-12 text-base"
+            className="h-12 rounded-xl pl-4 pr-12 text-base bg-input text-foreground placeholder:text-muted-foreground border-border"
           />
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-primary/20 text-primary rounded-lg h-8 w-8 flex items-center justify-center pointer-events-none">
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-primary text-primary-foreground rounded-lg h-8 w-8 flex items-center justify-center pointer-events-none">
               <Search className="h-5 w-5" />
           </div>
         </div>

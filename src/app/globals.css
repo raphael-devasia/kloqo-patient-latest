@@ -94,3 +94,15 @@ body {
     @apply w-full h-full overflow-auto bg-background;
   }
 }
+
+.doctors-page {
+    --background: 132 17% 53%;
+    --foreground: 0 0% 100%;
+    --card: 132 17% 48%;
+    --card-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 132 17% 30%;
+    --input: 132 17% 60%;
+    --muted-foreground: 0 0% 90%;
+    --border: 132 17% 40%;
+}

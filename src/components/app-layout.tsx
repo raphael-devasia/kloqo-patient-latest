@@ -23,9 +23,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   const isDashboard = pathname === '/';
+  const isDoctorsPage = pathname === '/doctors';
 
   return (
-    <div className="flex flex-col h-full bg-background">
+    <div className={cn("flex flex-col h-full bg-background", isDoctorsPage && "doctors-page")}>
       <main className={cn("flex-1 overflow-auto", isDashboard ? "" : "p-4 sm:p-6", "pb-24")}>{children}</main>
       <footer className="fixed bottom-0 left-0 right-0 h-20 bg-card/95 backdrop-blur-sm border-t border-border/60 z-20 w-[414px] mx-auto rounded-b-[44px]">
         <nav className="flex justify-around items-center h-full px-4">
