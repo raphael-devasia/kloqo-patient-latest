@@ -149,9 +149,6 @@ export default function Dashboard() {
                   <h3 className="font-bold text-base">{nextDoctor.name}</h3>
                   <p className="text-sm text-primary-foreground/80">{nextDoctor.specialty}</p>
                 </div>
-                <Button variant="ghost" size="icon" className="bg-white/20 rounded-full h-9 w-9">
-                  <VideoIcon className="w-5 h-5 text-white" />
-                </Button>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-3 text-sm bg-primary-foreground/10 p-3 rounded-lg">
                 <div className="flex items-center gap-2">
@@ -162,10 +159,6 @@ export default function Dashboard() {
                   <Clock className="w-4 h-4"/>
                   <span>{nextAppointment.time}</span>
                 </div>
-              </div>
-              <div className="mt-4 flex gap-3">
-                <Button variant="secondary" className="w-full bg-white/20 text-white hover:bg-white/30 rounded-lg h-10 text-sm">Re-Schedule</Button>
-                <Button variant="secondary" className="w-full bg-white text-primary hover:bg-gray-100 rounded-lg h-10 text-sm">View Profile</Button>
               </div>
             </CardContent>
           </Card>
