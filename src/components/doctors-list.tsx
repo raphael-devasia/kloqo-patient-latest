@@ -1,12 +1,23 @@
+
 "use client";
 
 import { doctors } from "@/lib/data";
 import { Doctor } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Star, Search } from "lucide-react";
+import { Star, Search, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "./ui/button";
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
   <Card className="shadow-md rounded-2xl">
@@ -32,34 +43,65 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
 
 export default function DoctorsList() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("alphabetical");
 
-  const filteredDoctors = doctors
-    .filter((doctor) => {
-      const term = searchTerm.toLowerCase();
-      return (
-        doctor.name.toLowerCase().includes(term) ||
-        doctor.specialty.toLowerCase().includes(term) ||
-        doctor.clinic.toLowerCase().includes(term)
-      );
-    });
+  const filteredAndSortedDoctors = useMemo(() => {
+    let filtered = doctors
+      .filter((doctor) => {
+        const term = searchTerm.toLowerCase();
+        return (
+          doctor.name.toLowerCase().includes(term) ||
+          doctor.specialty.toLowerCase().includes(term) ||
+          doctor.clinic.toLowerCase().includes(term)
+        );
+      });
+
+    switch (sortOrder) {
+      case "specialty":
+        return filtered.sort((a, b) => a.specialty.localeCompare(b.specialty));
+      case "hospital":
+        return filtered.sort((a, b) => a.clinic.localeCompare(b.clinic));
+      case "alphabetical":
+      default:
+        return filtered.sort((a, b) => a.name.localeCompare(b.name));
+    }
+  }, [searchTerm, sortOrder]);
 
   return (
     <div className="space-y-6">
-      <div className="relative">
-        <Input
-          placeholder="Search doctor, specialty, or clinic"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="h-12 rounded-xl pl-4 pr-12 text-base"
-        />
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-primary/20 text-primary rounded-lg h-8 w-8 flex items-center justify-center">
-            <Search className="h-5 w-5" />
+      <div className="flex gap-2">
+        <div className="relative flex-grow">
+          <Input
+            placeholder="Search doctor, specialty, or clinic"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="h-12 rounded-xl pl-4 pr-12 text-base"
+          />
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-primary/20 text-primary rounded-lg h-8 w-8 flex items-center justify-center pointer-events-none">
+              <Search className="h-5 w-5" />
+          </div>
         </div>
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon" className="h-12 w-12 flex-shrink-0 rounded-xl">
+                    <SlidersHorizontal className="h-5 w-5" />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup value={sortOrder} onValueChange={setSortOrder}>
+                    <DropdownMenuRadioItem value="alphabetical">Alphabetical</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="specialty">Specialty</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="hospital">Hospital</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       <div className="grid gap-4">
-        {filteredDoctors.length > 0 ? (
-          filteredDoctors.map((doc) => <DoctorCard key={doc.id} doctor={doc} />)
+        {filteredAndSortedDoctors.length > 0 ? (
+          filteredAndSortedDoctors.map((doc) => <DoctorCard key={doc.id} doctor={doc} />)
         ) : (
           <p className="col-span-full mt-4 text-center text-muted-foreground">
             No doctors found.
