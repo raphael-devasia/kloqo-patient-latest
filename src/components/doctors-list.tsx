@@ -5,7 +5,7 @@ import { doctors } from "@/lib/data";
 import { Doctor } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Star, Search, SlidersHorizontal } from "lucide-react";
+import { Star, Search, ArrowUpDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState, useMemo } from "react";
 import {
@@ -84,7 +84,7 @@ export default function DoctorsList() {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon" className="h-12 w-12 flex-shrink-0 rounded-xl">
-                    <SlidersHorizontal className="h-5 w-5" />
+                    <ArrowUpDown className="h-5 w-5" />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
