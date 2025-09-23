@@ -203,7 +203,7 @@ export default function Dashboard() {
           </Button>
         </header>
 
-        <div className="relative mb-1">
+        <div className="relative">
           <Input
             placeholder="Search Doctors..."
             className="h-14 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
@@ -233,7 +233,9 @@ export default function Dashboard() {
           <section className="space-y-4">
             <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold text-gray-800">Categories</h2>
-                <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
+                <Link href="#">
+                    <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
+                </Link>
             </div>
             <Carousel opts={{
               align: "start",
@@ -274,3 +276,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+    
