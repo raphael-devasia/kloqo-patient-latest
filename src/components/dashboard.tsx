@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, Star, Clock, Video, MessageCircle, Brain, HeartPulse, Calendar, VideoIcon, MapPin, ChevronDown, ChevronRight, Tooth } from "lucide-react";
+import { Bell, Search, Star, Clock, Video, MessageCircle, Brain, HeartPulse, Calendar, VideoIcon, MapPin, ChevronDown, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { format, isPast } from "date-fns";
 import {
@@ -54,6 +54,24 @@ const DoctorCard = ({ doctor }: { doctor: { id: string, name: string, specialty:
   </Card>
 )
 
+const ToothIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M9.34 1.13a1.5 1.5 0 0 0-2.68 0L3.5 6.26a1.5 1.5 0 0 0 0 1.48l1.37 2.62a1.5 1.5 0 0 0 1.34.74h5.58a1.5 1.5 0 0 0 1.34-.74l1.37-2.62a1.5 1.5 0 0 0 0-1.48Z" />
+      <path d="M9.5 11v8.5a1.5 1.5 0 0 0 1.5 1.5h2a1.5 1.5 0 0 0 1.5-1.5V11" />
+    </svg>
+  );
+
 export default function Dashboard() {
   const [location, setLocation] = useState<{ city: string; country: string } | null>(null);
 
@@ -95,7 +113,7 @@ export default function Dashboard() {
   const popularHealers = doctors.slice(0, 2);
 
   const categories = [
-    { label: "Dentist", icon: <Tooth className="w-6 h-6 text-primary" /> },
+    { label: "Dentist", icon: <ToothIcon className="w-6 h-6 text-primary" /> },
     { label: "Heart", icon: <HeartPulse className="w-6 h-6 text-primary" /> },
     { label: "Brain", icon: <Brain className="w-6 h-6 text-primary" /> },
     { label: "Video", icon: <VideoIcon className="w-6 h-6 text-primary" /> },
@@ -204,4 +222,5 @@ export default function Dashboard() {
       </section>
     </div>
   );
-}
+
+    
