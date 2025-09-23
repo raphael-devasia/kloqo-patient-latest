@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, Star, Clock, Video, MessageCircle, Brain, HeartPulse, Calendar, VideoIcon, MapPin, ChevronDown, ChevronRight } from "lucide-react";
+import { Bell, Search, HeartPulse, Clock, Brain, Calendar, ChevronRight, MapPin, ChevronDown, Eye, Activity, Stethoscope } from "lucide-react";
 import Image from "next/image";
 import { format, isPast } from "date-fns";
 import {
@@ -114,10 +114,11 @@ export default function Dashboard() {
 
   const categories = [
     { label: "Dentist", icon: <ToothIcon className="w-6 h-6 text-primary" /> },
-    { label: "Heart", icon: <HeartPulse className="w-6 h-6 text-primary" /> },
-    { label: "Brain", icon: <Brain className="w-6 h-6 text-primary" /> },
-    { label: "Video", icon: <VideoIcon className="w-6 h-6 text-primary" /> },
-    { label: "Search", icon: <Search className="w-6 h-6 text-primary" /> },
+    { label: "Cardiology", icon: <HeartPulse className="w-6 h-6 text-primary" /> },
+    { label: "Dermatology", icon: <Activity className="w-6 h-6 text-primary" /> },
+    { label: "Neurology", icon: <Brain className="w-6 h-6 text-primary" /> },
+    { label: "Ophthalmology", icon: <Eye className="w-6 h-6 text-primary" /> },
+    { label: "General", icon: <Stethoscope className="w-6 h-6 text-primary" /> },
   ];
 
   return (
@@ -196,7 +197,7 @@ export default function Dashboard() {
           </div>
         )}
 
-        <div className="pb-6 bg-slate-50/80 rounded-t-[-1.5rem] pt-2">
+        <div className="pb-6 pt-2">
           <section className="space-y-4">
             <h2 className="text-xl font-bold text-gray-800 px-4">Categories</h2>
             <Carousel opts={{
@@ -229,6 +230,8 @@ export default function Dashboard() {
     </div>
   );
 }
+
+    
 
     
 
