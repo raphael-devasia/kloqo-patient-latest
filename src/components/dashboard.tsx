@@ -205,13 +205,13 @@ export default function Dashboard() {
         <div className="relative mt-4">
           <Input
             placeholder="Search Doctors..."
-            className="h-12 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
+            className="h-10 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
           />
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-primary-foreground/80"/>
         </div>
       </div>
       
-      <div className="px-6 -mt-12 space-y-4">
+      <div className="px-6 -mt-16 space-y-4">
         {upcomingAppointments.length > 0 && (
           <div className="space-y-4">
              <div className="flex justify-between items-center mb-4">
@@ -256,10 +256,10 @@ export default function Dashboard() {
               <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
             </div>
             <div className="grid grid-cols-2 gap-4 w-1/2 pr-2">
-                <Card className="flex items-center justify-center gap-1 p-1 bg-primary/10 border-primary/20">
+                <Card className="flex items-center justify-center gap-1 p-0 h-8 bg-primary/10 border-primary/20">
                   <span className="font-semibold text-primary text-xs">Near you</span>
                 </Card>
-                <Card className="flex items-center justify-center gap-1 p-1">
+                <Card className="flex items-center justify-center gap-1 p-0 h-8">
                   <Star className="w-4 h-4 text-muted-foreground"/>
                   <span className="font-semibold text-muted-foreground text-xs whitespace-nowrap">Favourites</span>
                 </Card>
