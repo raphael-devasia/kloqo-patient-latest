@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { user, doctors, appointments } from "@/lib/data";
@@ -28,12 +29,10 @@ import {
 
 
 const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string }) => (
-  <Card className="p-3 flex flex-col items-center justify-center gap-2 aspect-square rounded-2xl shadow-sm hover:bg-accent/50 transition-colors">
-    <div className="flex items-center justify-center w-12 h-12 bg-accent rounded-full">
-      {icon}
-    </div>
-    <span className="text-xs font-medium text-center">{label}</span>
-  </Card>
+  <div className="flex flex-col items-center justify-center gap-2 text-center">
+    {icon}
+    <span className="text-xs font-medium">{label}</span>
+  </div>
 );
 
 const DoctorCard = ({ doctor }: { doctor: { id: string, name: string, specialty: string, avatar: string } }) => (
@@ -236,3 +235,4 @@ export default function Dashboard() {
     
 
     
+
