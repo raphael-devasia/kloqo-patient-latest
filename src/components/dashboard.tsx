@@ -32,7 +32,7 @@ const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string })
     <div className="flex items-center justify-center w-12 h-12 bg-accent rounded-full">
       {icon}
     </div>
-    <span className="text-xs font-medium text-center whitespace-nowrap">{label}</span>
+    <span className="text-xs font-medium text-center">{label}</span>
   </Card>
 );
 
