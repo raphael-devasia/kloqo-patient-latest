@@ -28,11 +28,11 @@ import {
 
 
 const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string }) => (
-  <Card className="p-4 flex flex-col items-center justify-center gap-2 aspect-square rounded-2xl shadow-sm hover:bg-accent/50 transition-colors">
+  <Card className="p-3 flex flex-col items-center justify-center gap-2 aspect-square rounded-2xl shadow-sm hover:bg-accent/50 transition-colors">
     <div className="flex items-center justify-center w-12 h-12 bg-accent rounded-full">
       {icon}
     </div>
-    <span className="text-sm font-medium text-center">{label}</span>
+    <span className="text-xs font-medium text-center whitespace-nowrap">{label}</span>
   </Card>
 );
 
@@ -113,7 +113,7 @@ export default function Dashboard() {
   const popularHealers = doctors.slice(0, 2);
 
   const categories = [
-    { label: "Dentist", icon: <ToothIcon className="w-6 h-6 text-primary" /> },
+    { label: "Dentistry", icon: <ToothIcon className="w-6 h-6 text-primary" /> },
     { label: "Cardiology", icon: <HeartPulse className="w-6 h-6 text-primary" /> },
     { label: "Dermatology", icon: <Activity className="w-6 h-6 text-primary" /> },
     { label: "Neurology", icon: <Brain className="w-6 h-6 text-primary" /> },
