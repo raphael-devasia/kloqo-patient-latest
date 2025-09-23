@@ -18,6 +18,7 @@ import { Appointment } from "@/lib/types";
 import { Loader2, Wand2, CalendarCheck, Lightbulb } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
+import { doctors } from "@/lib/data";
 
 type SuggestionResult = {
   suggestedTimes: string[];
@@ -30,6 +31,8 @@ export default function SmartRescheduleDialog({ appointment }: { appointment: Ap
   const [result, setResult] = useState<SuggestionResult | null>(null);
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
+  const doctor = doctors.find((d) => d.id === appointment.doctorId);
+
 
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) {
@@ -79,7 +82,7 @@ export default function SmartRescheduleDialog({ appointment }: { appointment: Ap
             Smart Reschedule
           </DialogTitle>
           <DialogDescription>
-            Tell us your preferences, and our AI will suggest the best new times for your appointment with {appointment.doctorName}.
+            Tell us your preferences, and our AI will suggest the best new times for your appointment with {doctor?.name}.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">

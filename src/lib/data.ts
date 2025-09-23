@@ -18,18 +18,18 @@ export const user: UserProfile = {
 };
 
 export const doctors: Doctor[] = [
-  { id: 'doc1', name: 'Dr. Evelyn Reed', specialty: 'Cardiology', avatar: findImage('doctor-1'), clinic: 'Wellness Clinic', rating: 4.9, reviews: 128 },
-  { id: 'doc2', name: 'Dr. Marcus Thorne', specialty: 'Dermatology', avatar: findImage('doctor-2'), clinic: 'City Clinic', rating: 4.8, reviews: 92 },
-  { id: 'doc3', name: 'Dr. Elena Vance', specialty: 'Pediatrics', avatar: findImage('doctor-3'), clinic: 'Wellness Clinic', rating: 5.0, reviews: 215 },
-  { id: 'doc4', name: 'Dr. Sofia Ramirez', specialty: 'Neurology', avatar: findImage('doctor-4'), clinic: 'Healthway Medical', rating: 4.7, reviews: 89 },
-  { id: 'doc5', name: 'Dr. Ben Carter', specialty: 'Dentistry', avatar: findImage('doctor-5'), clinic: 'Bright Smiles Dental', rating: 4.9, reviews: 152 },
+  { id: 'doc1', name: 'Dr. Priya Varma', specialty: 'Cardiology', avatar: findImage('doctor-1'), clinic: 'Wellness Clinic', rating: 4.9, reviews: 128 },
+  { id: 'doc2', name: 'Dr. Rohan Pillai', specialty: 'Dermatology', avatar: findImage('doctor-2'), clinic: 'City Clinic', rating: 4.8, reviews: 92 },
+  { id: 'doc3', name: 'Dr. Anjali Menon', specialty: 'Pediatrics', avatar: findImage('doctor-3'), clinic: 'Wellness Clinic', rating: 5.0, reviews: 215 },
+  { id: 'doc4', name: 'Dr. Arjun Nair', specialty: 'Neurology', avatar: findImage('doctor-4'), clinic: 'Healthway Medical', rating: 4.7, reviews: 89 },
+  { id: 'doc5', name: 'Dr. Meera Krishnan', specialty: 'Dentistry', avatar: findImage('doctor-5'), clinic: 'Bright Smiles Dental', rating: 4.9, reviews: 152 },
 ];
 
 export const appointments: Appointment[] = [
   {
     id: 'appt1',
     doctorId: 'doc1',
-    doctorName: 'Dr. Evelyn Reed',
+    doctorName: 'Dr. Priya Varma',
     doctorAvatar: findImage('doctor-1'),
     doctorClinic: 'Wellness Clinic',
     date: format(addDays(new Date(), 3), 'yyyy-MM-dd'),
@@ -40,7 +40,7 @@ export const appointments: Appointment[] = [
   {
     id: 'appt2',
     doctorId: 'doc2',
-    doctorName: 'Dr. Marcus Thorne',
+    doctorName: 'Dr. Rohan Pillai',
     doctorAvatar: findImage('doctor-2'),
     doctorClinic: 'City Clinic',
     date: format(addDays(new Date(), 10), 'yyyy-MM-dd'),
@@ -51,7 +51,7 @@ export const appointments: Appointment[] = [
    {
     id: 'appt5',
     doctorId: 'doc3',
-    doctorName: 'Dr. Elena Vance',
+    doctorName: 'Dr. Anjali Menon',
     doctorAvatar: findImage('doctor-3'),
     doctorClinic: 'Wellness Clinic',
     date: format(addDays(new Date(), 5), 'yyyy-MM-dd'),
@@ -62,7 +62,7 @@ export const appointments: Appointment[] = [
   {
     id: 'appt3',
     doctorId: 'doc3',
-    doctorName: 'Dr. Elena Vance',
+    doctorName: 'Dr. Anjali Menon',
     doctorAvatar: findImage('doctor-3'),
     doctorClinic: 'Wellness Clinic',
     date: format(subDays(new Date(), 14), 'yyyy-MM-dd'),
@@ -73,7 +73,7 @@ export const appointments: Appointment[] = [
   {
     id: 'appt4',
     doctorId: 'doc1',
-    doctorName: 'Dr. Evelyn Reed',
+    doctorName: 'Dr. Priya Varma',
     doctorAvatar: findImage('doctor-1'),
     doctorClinic: 'Wellness Clinic',
     date: format(subDays(new Date(), 30), 'yyyy-MM-dd'),
@@ -84,7 +84,7 @@ export const appointments: Appointment[] = [
 ];
 
 export const doctorAvailability = {
-  "doc1": { // Dr. Evelyn Reed
+  "doc1": { // Dr. Priya Varma
     "next_7_days": [
       { "date": format(addDays(new Date(), 1), 'yyyy-MM-dd'), "slots": ["09:00 AM", "11:00 AM", "02:00 PM"] },
       { "date": format(addDays(new Date(), 2), 'yyyy-MM-dd'), "slots": ["10:00 AM", "12:00 PM"] },
