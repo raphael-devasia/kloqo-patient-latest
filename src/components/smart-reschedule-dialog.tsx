@@ -72,7 +72,7 @@ export default function SmartRescheduleDialog({ appointment }: { appointment: Ap
       <DialogTrigger asChild>
         <Button>Reschedule</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md md:max-w-lg">
+      <DialogContent className="max-w-sm">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Wand2 className="h-5 w-5 text-primary" />
