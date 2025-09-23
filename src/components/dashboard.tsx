@@ -164,6 +164,7 @@ export default function Dashboard() {
                             <p className="text-sm text-gray-600">{appointment.time}</p>
                             <h3 className="font-bold text-base mt-1">{doctor?.name}</h3>
                             <p className="text-sm text-gray-600">{doctor?.specialty}</p>
+                            <p className="text-sm text-gray-500 mt-1">{doctor?.clinic}</p>
                         </div>
                     </div>
                     <Button variant="ghost" size="icon" className="h-6 w-6 text-gray-600">

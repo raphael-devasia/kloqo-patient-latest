@@ -18,9 +18,9 @@ export const user: UserProfile = {
 };
 
 export const doctors: Doctor[] = [
-  { id: 'doc1', name: 'Dr. Evelyn Reed', specialty: 'Cardiology', avatar: findImage('doctor-1') },
-  { id: 'doc2', name: 'Dr. Marcus Thorne', specialty: 'Dermatology', avatar: findImage('doctor-2') },
-  { id: 'doc3', name: 'Dr. Elena Vance', specialty: 'Pediatrics', avatar: findImage('doctor-3') },
+  { id: 'doc1', name: 'Dr. Evelyn Reed', specialty: 'Cardiology', avatar: findImage('doctor-1'), clinic: 'Wellness Clinic' },
+  { id: 'doc2', name: 'Dr. Marcus Thorne', specialty: 'Dermatology', avatar: findImage('doctor-2'), clinic: 'City Clinic' },
+  { id: 'doc3', name: 'Dr. Elena Vance', specialty: 'Pediatrics', avatar: findImage('doctor-3'), clinic: 'Wellness Clinic' },
 ];
 
 export const appointments: Appointment[] = [
