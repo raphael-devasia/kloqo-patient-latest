@@ -246,7 +246,7 @@ export default function Dashboard() {
 
           <section className="space-y-4 pt-6 px-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-bold text-gray-800">Popular healers</h2>
+              <h2 className="text-xl font-bold text-gray-800">Doctors near you</h2>
               <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
             </div>
             <div className="space-y-3">
