@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { user, doctors, appointments } from "@/lib/data";
@@ -246,17 +245,17 @@ export default function Dashboard() {
 
           <section className="space-y-4 pt-6 px-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-bold text-gray-800">Doctor</h2>
+              <h2 className="text-xl font-bold text-gray-800">Doctors</h2>
               <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
             </div>
             <div className="grid grid-cols-2 gap-4">
-                <Card className="flex items-center gap-3 p-4 bg-primary/10 border-primary/20">
-                  <MapPin className="w-6 h-6 text-primary"/>
-                  <span className="font-semibold text-primary">Near you</span>
+                <Card className="flex items-center justify-center gap-2 p-3 bg-primary/10 border-primary/20">
+                  <MapPin className="w-5 h-5 text-primary"/>
+                  <span className="font-semibold text-primary text-sm">Near you</span>
                 </Card>
-                <Card className="flex items-center gap-3 p-4">
-                  <Star className="w-6 h-6 text-muted-foreground"/>
-                  <span className="font-semibold text-muted-foreground">Favourites</span>
+                <Card className="flex items-center justify-center gap-2 p-3">
+                  <Star className="w-5 h-5 text-muted-foreground"/>
+                  <span className="font-semibold text-muted-foreground text-sm">Favourites</span>
                 </Card>
             </div>
             <div className="space-y-3">
@@ -270,3 +269,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+    
