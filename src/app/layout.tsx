@@ -23,9 +23,14 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased">
-        <AppLayout>{children}</AppLayout>
-        <Toaster />
+      <body className="font-body antialiased bg-gray-100 flex items-center justify-center min-h-screen py-10">
+        <div className="mobile-frame">
+          <div className="mobile-frame-notch"></div>
+          <div className="mobile-frame-content">
+            <AppLayout>{children}</AppLayout>
+            <Toaster />
+          </div>
+        </div>
       </body>
     </html>
   );

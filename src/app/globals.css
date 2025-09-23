@@ -82,3 +82,15 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .mobile-frame {
+    @apply w-[414px] h-[896px] border-[16px] border-black rounded-[60px] shadow-2xl overflow-hidden relative bg-slate-200;
+  }
+  .mobile-frame-notch {
+    @apply w-[210px] h-[30px] bg-black rounded-b-[20px] absolute top-0 left-1/2 -translate-x-1/2 z-10;
+  }
+  .mobile-frame-content {
+    @apply w-full h-full overflow-auto bg-white;
+  }
+}

@@ -39,53 +39,36 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarProvider>
-      <Sidebar>
-        <SidebarHeader>
-          <div className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <HeartPulse className="h-6 w-6" />
-            </div>
-            <span className="text-lg font-semibold">MediQueue</span>
-          </div>
-        </SidebarHeader>
-        <SidebarContent>
-          <SidebarMenu>
+      <Sidebar collapsible='none' side='bottom' variant='inset'>
+        <SidebarContent className="p-0 m-0">
+          <SidebarMenu className="flex-row justify-around h-16 items-center bg-card border-t">
             {menuItems.map((item) => (
-              <SidebarMenuItem key={item.href}>
+              <SidebarMenuItem key={item.href} className="flex-1">
                 <Link href={item.href} legacyBehavior passHref>
                   <SidebarMenuButton
                     isActive={pathname === item.href}
-                    tooltip={{ children: item.label }}
+                    variant='ghost'
+                    className="flex-col h-auto w-full p-1"
                   >
-                    <item.icon />
-                    <span>{item.label}</span>
+                    <item.icon className="w-5 h-5"/>
+                    <span className="text-xs">{item.label}</span>
                   </SidebarMenuButton>
                 </Link>
               </SidebarMenuItem>
             ))}
           </SidebarMenu>
         </SidebarContent>
-        <SidebarFooter>
-          <div className="flex items-center gap-3 rounded-md p-2 hover:bg-sidebar-accent">
-            <Avatar className="h-10 w-10">
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col overflow-hidden">
-              <span className="truncate font-medium">{user.name}</span>
-              <span className="truncate text-sm text-muted-foreground">{user.email}</span>
-            </div>
-          </div>
-        </SidebarFooter>
       </Sidebar>
-      <SidebarInset>
-        <header className="flex h-14 items-center gap-4 border-b bg-card px-4 sm:px-6 md:h-16">
-          <SidebarTrigger className="md:hidden" />
-          <h1 className="text-lg font-semibold md:text-xl">
-            {menuItems.find(item => item.href === pathname)?.label || 'Dashboard'}
-          </h1>
+      <SidebarInset className="bg-background">
+        <header className="flex h-16 items-center gap-4 border-b bg-card px-4 sm:px-6 sticky top-0 z-10">
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <HeartPulse className="h-5 w-5" />
+            </div>
+            <span className="text-md font-semibold">MediQueue</span>
+          </div>
         </header>
-        <main className="flex-1 overflow-auto p-4 sm:p-6">{children}</main>
+        <main className="flex-1 overflow-auto p-4 sm:p-6 pb-20">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
