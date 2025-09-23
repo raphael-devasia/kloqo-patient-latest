@@ -8,21 +8,21 @@
     },
     {
       "id": "doctor-1",
-      "description": "Avatar for Dr. Evelyn Reed",
+      "description": "Avatar for Dr. Priya Varma",
       "imageUrl": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkb2N0b3IlMjB3b21hbnxlbnwwfHx8fDE3NTg1OTQ0NTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "doctor woman"
+      "imageHint": "indian woman doctor"
     },
     {
       "id": "doctor-2",
-      "description": "Avatar for Dr. Marcus Thorne",
+      "description": "Avatar for Dr. Rohan Pillai",
       "imageUrl": "https://images.unsplash.com/photo-1657551882668-53fdd523c9ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxkb2N0b3IlMjBtYW58ZW58MHx8fHwxNzU4NjI2MDUzfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "doctor man"
+      "imageHint": "indian man doctor"
     },
     {
       "id": "doctor-3",
-      "description": "Avatar for Dr. Elena Vance",
+      "description": "Avatar for Dr. Anjali Menon",
       "imageUrl": "https://images.unsplash.com/photo-1585842378054-ee2e52f94ba2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkb2N0b3IlMjB3b21hbiUyMHNtaWxpbmd8ZW58MHx8fHwxNzU4NjI2MDUzfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "doctor woman smiling"
+      "imageHint": "indian woman doctor smiling"
     },
     {
       "id": "doctor-4",
