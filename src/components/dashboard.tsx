@@ -143,30 +143,29 @@ export default function Dashboard() {
     { label: "General", icon: <Stethoscope className="w-8 h-8 text-primary" /> },
   ];
 
-  const AppointmentCard = ({ appointment, isFirst }: { appointment: Appointment, isFirst: boolean }) => {
+  const AppointmentCard = ({ appointment, index }: { appointment: Appointment, index: number }) => {
     const doctor = doctors.find(d => d.id === appointment.doctorId);
+    const cardColors = ['bg-[#F2FFE3]', 'bg-[#FFDBAA]'];
+    const dateColors = ['bg-[#D9F5B3]', 'bg-[#F9C88A]'];
+    const cardColor = cardColors[index % cardColors.length];
+    const dateColor = dateColors[index % dateColors.length];
+
     return (
-        <Card className={cn(
-            "flex-shrink-0 w-64 rounded-2xl shadow-md",
-            isFirst ? "bg-primary text-primary-foreground" : "bg-card text-card-foreground"
-        )}>
-            <CardContent className="p-4">
+        <Card className={cn("flex-shrink-0 w-64 rounded-2xl shadow-md", cardColor)}>
+            <CardContent className="p-4 text-gray-800">
                 <div className="flex justify-between items-start">
                     <div className="flex gap-4">
-                        <div className={cn(
-                            "flex flex-col items-center justify-center rounded-lg p-2 w-16",
-                            isFirst ? "bg-white/20" : "bg-primary text-primary-foreground"
-                        )}>
+                        <div className={cn("flex flex-col items-center justify-center rounded-lg p-2 w-16", dateColor)}>
                             <span className="text-2xl font-bold">{format(new Date(appointment.date), 'dd')}</span>
                             <span className="font-semibold">{format(new Date(appointment.date), 'E')}</span>
                         </div>
                         <div>
-                            <p className={cn("text-sm", isFirst ? "text-primary-foreground/80" : "text-muted-foreground")}>{appointment.time}</p>
+                            <p className="text-sm text-gray-600">{appointment.time}</p>
                             <h3 className="font-bold text-base mt-1">{doctor?.name}</h3>
-                            <p className={cn("text-sm", isFirst ? "text-primary-foreground/80" : "text-muted-foreground")}>{doctor?.specialty}</p>
+                            <p className="text-sm text-gray-600">{doctor?.specialty}</p>
                         </div>
                     </div>
-                    <Button variant="ghost" size="icon" className={cn("h-6 w-6", isFirst ? "text-primary-foreground/80" : "text-muted-foreground")}>
+                    <Button variant="ghost" size="icon" className="h-6 w-6 text-gray-600">
                         <MoreHorizontal />
                     </Button>
                 </div>
@@ -178,7 +177,7 @@ export default function Dashboard() {
   return (
     <div className="relative min-h-full">
       <div className="bg-primary p-6 pb-20 rounded-b-[3rem]">
-        <header className="flex items-center justify-between mb-4">
+        <header className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <MapPin className="h-6 w-6 text-primary-foreground fill-primary-foreground/20" />
             <DropdownMenu>
@@ -203,7 +202,7 @@ export default function Dashboard() {
           </Button>
         </header>
 
-        <div className="relative">
+        <div className="relative mt-4">
           <Input
             placeholder="Search Doctors..."
             className="h-14 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
@@ -214,7 +213,7 @@ export default function Dashboard() {
       
       <div className="px-6 -mt-16 space-y-4">
         {upcomingAppointments.length > 0 && (
-          <div className="space-y-2">
+          <div className="space-y-1">
              <div className="flex justify-between items-center">
                     <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
                     <Link href="/appointments">
@@ -223,7 +222,7 @@ export default function Dashboard() {
                 </div>
             <div className="flex space-x-4 overflow-x-auto pb-4 -mx-6 px-6">
               {upcomingAppointments.map((appointment, index) => (
-                <AppointmentCard key={appointment.id} appointment={appointment} isFirst={index === 0} />
+                <AppointmentCard key={appointment.id} appointment={appointment} index={index} />
               ))}
             </div>
           </div>
@@ -276,5 +275,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-    
