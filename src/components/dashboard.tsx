@@ -54,22 +54,43 @@ const DoctorCard = ({ doctor }: { doctor: { id: string, name: string, specialty:
 )
 
 const ToothIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M9.34 1.13a1.5 1.5 0 0 0-2.68 0L3.5 6.26a1.5 1.5 0 0 0 0 1.48l1.37 2.62a1.5 1.5 0 0 0 1.34.74h5.58a1.5 1.5 0 0 0 1.34-.74l1.37-2.62a1.5 1.5 0 0 0 0-1.48Z" />
-      <path d="M9.5 11v8.5a1.5 1.5 0 0 0 1.5 1.5h2a1.5 1.5 0 0 0 1.5-1.5V11" />
-    </svg>
-  );
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M9.34 1.13a1.5 1.5 0 0 0-2.68 0L3.5 6.26a1.5 1.5 0 0 0 0 1.48l1.37 2.62a1.5 1.5 0 0 0 1.34.74h5.58a1.5 1.5 0 0 0 1.34-.74l1.37-2.62a1.5 1.5 0 0 0 0-1.48Z" />
+    <path d="M9.5 11v8.5a1.5 1.5 0 0 0 1.5 1.5h2a1.5 1.5 0 0 0 1.5-1.5V11" />
+  </svg>
+);
+
+const FaceIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <circle cx="12" cy="12" r="10" />
+    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+    <line x1="9" y1="9" x2="9.01" y2="9" />
+    <line x1="15" y1="9" x2="15.01" y2="9" />
+  </svg>
+);
+
 
 export default function Dashboard() {
   const [location, setLocation] = useState<{ city: string; country: string } | null>(null);
@@ -112,12 +133,12 @@ export default function Dashboard() {
   const popularHealers = doctors.slice(0, 2);
 
   const categories = [
-    { label: "Dentistry", icon: <ToothIcon className="w-6 h-6 text-primary" /> },
-    { label: "Cardiology", icon: <HeartPulse className="w-6 h-6 text-primary" /> },
-    { label: "Dermatology", icon: <Activity className="w-6 h-6 text-primary" /> },
-    { label: "Neurology", icon: <Brain className="w-6 h-6 text-primary" /> },
-    { label: "Ophthalmology", icon: <Eye className="w-6 h-6 text-primary" /> },
-    { label: "General", icon: <Stethoscope className="w-6 h-6 text-primary" /> },
+    { label: "Dentistry", icon: <ToothIcon className="w-8 h-8 text-primary" /> },
+    { label: "Cardiology", icon: <HeartPulse className="w-8 h-8 text-primary" /> },
+    { label: "Dermatology", icon: <FaceIcon className="w-8 h-8 text-primary" /> },
+    { label: "Neurology", icon: <Brain className="w-8 h-8 text-primary" /> },
+    { label: "Ophthalmology", icon: <Eye className="w-8 h-8 text-primary" /> },
+    { label: "General", icon: <Stethoscope className="w-8 h-8 text-primary" /> },
   ];
 
   return (
@@ -229,10 +250,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-    
-
-    
-
-    
-
