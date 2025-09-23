@@ -100,7 +100,7 @@ export default function Dashboard() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="p-0 h-auto">
-                <h1 className="text-lg font-bold text-gray-800">
+                <h1 className="text-base font-bold text-gray-800">
                   {location ? `${location.city}, ${location.country}` : 'Loading...'}
                 </h1>
                 <ChevronDown className="h-5 w-5 text-gray-500" />
@@ -186,5 +186,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-    
