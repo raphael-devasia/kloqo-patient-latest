@@ -19,8 +19,8 @@ export const user: UserProfile = {
 
 export const doctors: Doctor[] = [
   { id: 'doc1', name: 'Dr. Priya Varma', specialty: 'Cardiology', avatar: findImage('doctor-1'), clinic: 'Wellness Clinic', rating: 4.9, reviews: 128 },
-  { id: 'doc2', name: 'Dr. Rohan Pillai', specialty: 'Dermatology', avatar: findImage('doctor-2'), clinic: 'City Clinic', rating: 4.8, reviews: 92 },
-  { id: 'doc3', name: 'Dr. Anjali Menon', specialty: 'Pediatrics', avatar: findImage('doctor-3'), clinic: 'Wellness Clinic', rating: 5.0, reviews: 215 },
+  { id: 'doc2', name: 'Dr. Anjali Menon', specialty: 'Dermatology', avatar: findImage('doctor-2'), clinic: 'City Clinic', rating: 4.8, reviews: 92 },
+  { id: 'doc3', name: 'Dr. Rohan Pillai', specialty: 'Pediatrics', avatar: findImage('doctor-3'), clinic: 'Wellness Clinic', rating: 5.0, reviews: 215 },
   { id: 'doc4', name: 'Dr. Arjun Nair', specialty: 'Neurology', avatar: findImage('doctor-4'), clinic: 'Healthway Medical', rating: 4.7, reviews: 89 },
   { id: 'doc5', name: 'Dr. Meera Krishnan', specialty: 'Dentistry', avatar: findImage('doctor-5'), clinic: 'Bright Smiles Dental', rating: 4.9, reviews: 152 },
 ];
