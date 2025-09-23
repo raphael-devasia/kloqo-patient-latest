@@ -157,7 +157,7 @@ export default function Dashboard() {
         </div>
       </div>
       
-      <div className="px-6 -mt-16 space-y-6">
+      <div className="px-6 -mt-16 space-y-4">
         {nextAppointment && nextDoctor && (
           <div className="space-y-4">
             <Card className="bg-[#F7F4ED] text-foreground rounded-2xl shadow-lg">
@@ -229,5 +229,7 @@ export default function Dashboard() {
     </div>
   );
 }
+
+    
 
     
