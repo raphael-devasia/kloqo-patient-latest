@@ -203,7 +203,7 @@ export default function Dashboard() {
           </Button>
         </header>
 
-        <div className="relative">
+        <div className="relative mb-1">
           <Input
             placeholder="Search Doctors..."
             className="h-14 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
