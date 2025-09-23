@@ -139,17 +139,17 @@ export default function Dashboard() {
             </Link>
           </div>
           <Card className="bg-primary text-primary-foreground rounded-2xl shadow-xl shadow-primary/20 overflow-hidden">
-            <CardContent className="p-5">
+            <CardContent className="p-4">
               <div className="flex items-center gap-4">
-                <Avatar className="w-14 h-14 border-2 border-white">
+                <Avatar className="w-12 h-12 border-2 border-white">
                   <AvatarImage src={nextDoctor.avatar} alt={nextDoctor.name} />
                   <AvatarFallback>{nextDoctor.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div className="flex-1">
-                  <h3 className="font-bold text-lg">{nextDoctor.name}</h3>
+                  <h3 className="font-bold text-base">{nextDoctor.name}</h3>
                   <p className="text-sm text-primary-foreground/80">{nextDoctor.specialty}</p>
                 </div>
-                <Button variant="ghost" size="icon" className="bg-white/20 rounded-full h-10 w-10">
+                <Button variant="ghost" size="icon" className="bg-white/20 rounded-full h-9 w-9">
                   <VideoIcon className="w-5 h-5 text-white" />
                 </Button>
               </div>
@@ -164,8 +164,8 @@ export default function Dashboard() {
                 </div>
               </div>
               <div className="mt-4 flex gap-3">
-                <Button variant="secondary" className="w-full bg-white/20 text-white hover:bg-white/30 rounded-lg h-12 text-base">Re-Schedule</Button>
-                <Button variant="secondary" className="w-full bg-white text-primary hover:bg-gray-100 rounded-lg h-12 text-base">View Profile</Button>
+                <Button variant="secondary" className="w-full bg-white/20 text-white hover:bg-white/30 rounded-lg h-10 text-sm">Re-Schedule</Button>
+                <Button variant="secondary" className="w-full bg-white text-primary hover:bg-gray-100 rounded-lg h-10 text-sm">View Profile</Button>
               </div>
             </CardContent>
           </Card>
