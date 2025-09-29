@@ -16,15 +16,15 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
   return (
     <Card className="shadow-md">
       <CardContent className="p-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-start gap-3">
-            <Avatar className="h-10 w-10 border">
+        <div className="flex flex-col items-center justify-center text-center">
+          <div className="flex flex-col items-center gap-2">
+            <Avatar className="h-12 w-12 border">
               <AvatarImage src={doctor?.avatar} alt={doctor?.name} />
               <AvatarFallback>{doctor?.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className="flex-1">
               <p className="font-semibold text-base">{doctor?.name}</p>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                  <Stethoscope className="h-4 w-4" />
                 <span>{doctor?.specialty}</span>
               </div>
@@ -35,7 +35,6 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
           <div className="flex gap-2">
             <SmartRescheduleDialog appointment={appointment} />
             <Button variant="link" className="text-red-500 px-0">Cancel</Button>
-
           </div>
         </div>
       </CardContent>
