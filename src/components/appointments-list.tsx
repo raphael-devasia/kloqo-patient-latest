@@ -78,8 +78,8 @@ export default function AppointmentsList() {
          <div key={dateStr}>
             <div className="flex items-start gap-4 relative">
                 <div className="w-16 flex-shrink-0 flex flex-col items-center z-10 pt-1">
-                    <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center ring-4 ring-background">
-                        <span className="font-bold text-xl text-primary-foreground">{format(parseISO(dateStr), 'dd')}</span>
+                    <div className="h-10 w-10 rounded-full bg-[#fec868] flex items-center justify-center ring-4 ring-background">
+                        <span className="font-bold text-xl text-gray-800">{format(parseISO(dateStr), 'dd')}</span>
                     </div>
                 </div>
                 <div className="flex-1 space-y-4 pt-1">
