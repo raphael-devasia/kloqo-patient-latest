@@ -15,7 +15,7 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
 
   return (
     <Card className="shadow-md">
-      <CardContent className="p-3">
+      <CardContent className="p-2">
         <div className="flex flex-col items-center justify-center text-center">
           <div className="flex flex-col items-center gap-2">
             <Avatar className="h-12 w-12 border">
