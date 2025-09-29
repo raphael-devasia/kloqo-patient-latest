@@ -91,7 +91,7 @@ export default function AppointmentsList() {
                 </div>
             </div>
             {appointmentsByDate[dateStr].map(appt => (
-                <div key={appt.id} className="flex items-start gap-4 relative mt-4">
+                <div key={appt.id} className="flex items-start gap-4 relative mt-2">
                     <div className="w-16 flex-shrink-0 flex flex-col items-center z-10">
                         <div className="text-xs text-muted-foreground font-semibold">
                             {appt.time}
