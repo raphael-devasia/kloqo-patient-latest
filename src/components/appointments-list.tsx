@@ -18,7 +18,7 @@ const AppointmentCard = ({ appointment, index }: { appointment: Appointment, ind
 
   return (
     <Card className={cn("shadow-md", cardColor)}>
-      <CardContent className="p-2">
+      <CardContent className="p-4">
         <div className="flex flex-col items-center justify-center text-center">
           <div className="flex flex-col items-center gap-2">
             <Avatar className="h-12 w-12 border">
@@ -34,11 +34,10 @@ const AppointmentCard = ({ appointment, index }: { appointment: Appointment, ind
             </div>
           </div>
         </div>
-        <div className="flex justify-center items-center mt-2">
-          <div className="flex gap-2">
+        <div className="flex justify-center items-center mt-4">
+          <div className="flex gap-4">
             <SmartRescheduleDialog appointment={appointment} />
-            <Button variant="link" className="text-red-500 px-0">Cancel</Button>
-
+            <Button variant="destructive" size="sm" className="bg-red-500 hover:bg-red-600 text-white">Cancel</Button>
           </div>
         </div>
       </CardContent>
