@@ -73,7 +73,7 @@ export default function AppointmentsList() {
 
   return (
     <div className="space-y-6 relative">
-       <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+       <div className="absolute left-8 top-5 bottom-5 w-0.5 bg-gray-200"></div>
        {dates.map((dateStr, dateIndex) => (
          <div key={dateStr}>
             <div className="flex items-start gap-4 relative">
