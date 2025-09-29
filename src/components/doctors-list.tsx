@@ -21,14 +21,14 @@ import { Button } from "./ui/button";
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
     <Card className="shadow-md rounded-2xl aspect-square overflow-hidden" style={{ backgroundColor: '#d4E0EE', border: 'none' }}>
-        <CardContent className="p-3 flex flex-col items-center justify-center h-full text-center">
-            <Avatar className="h-16 w-16 md:h-20 md:w-20 rounded-full mb-2 md:mb-3">
+        <CardContent className="p-2 flex flex-col items-center justify-center h-full text-center">
+            <Avatar className="h-12 w-12 md:h-16 md:w-16 rounded-full mb-1 md:mb-2">
                 <AvatarImage src={doctor.avatar} alt={doctor.name} className="object-cover" />
                 <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
             </Avatar>
-            <div className="space-y-1">
-                <h3 className="font-bold text-sm md:text-base text-card-foreground leading-tight">{doctor.name}</h3>
-                <p className="text-xs md:text-sm text-muted-foreground">{doctor.specialty}</p>
+            <div className="space-y-0.5">
+                <h3 className="font-bold text-sm text-card-foreground leading-tight">{doctor.name}</h3>
+                <p className="text-xs text-muted-foreground">{doctor.specialty}</p>
             </div>
         </CardContent>
     </Card>
