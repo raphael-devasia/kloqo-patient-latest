@@ -68,7 +68,6 @@ export default function ProfileForm() {
                       width={80}
                       height={80}
                       className="object-cover"
-                      data-ai-hint="person portrait"
                     />
                 </Avatar>
               </div>

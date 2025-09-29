@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Appointment, Doctor } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 
 const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string }) => (
@@ -176,30 +177,21 @@ export default function Dashboard() {
 
   return (
     <div className="relative min-h-full">
-      <div className="bg-primary p-6 pt-6 pb-24 rounded-b-[3rem]">
+      <div className="bg-[#869A73] p-6 pt-6 pb-24 rounded-b-[3rem]">
         <header className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <MapPin className="h-6 w-6 text-primary-foreground fill-primary-foreground/20" />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="p-0 h-auto text-primary-foreground">
-                  <span className="text-sm font-normal">
-                    {location ? `${location.city}, ${location.country}` : 'Loading...'}
-                  </span>
-                  <ChevronDown className="h-5 w-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onSelect={() => setLocation({ city: 'London', country: 'UK' })}>London, UK</DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setLocation({ city: 'Tokyo', country: 'Japan' })}>Tokyo, Japan</DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setLocation({ city: 'Sydney', country: 'Australia' })}>Sydney, Australia</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-          <Button variant="ghost" size="icon" className="rounded-full relative text-primary-foreground">
-            <Bell className="h-6 w-6" />
-            <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500" />
-          </Button>
+          <h2 className="text-xl font-bold text-white">Hello {user.name.split(' ')[0]}!</h2>
+          <Link href="/profile">
+              <Avatar className="h-10 w-10 border-2 border-white">
+                <Image
+                  src={user.avatar}
+                  alt={user.name}
+                  width={40}
+                  height={40}
+                  className="object-cover"
+                  data-ai-hint="person portrait"
+                />
+              </Avatar>
+          </Link>
         </header>
 
         <div className="relative mt-4">
