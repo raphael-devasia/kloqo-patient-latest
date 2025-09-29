@@ -1,3 +1,4 @@
+
 "use client";
 
 import { appointments, doctors } from "@/lib/data";
@@ -6,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Stethoscope, Star, ChevronRight } from "lucide-react";
-import { format, parse } from "date-fns";
+import { format, parse, parseISO, eachDayOfInterval, isSameDay } from "date-fns";
 import SmartRescheduleDialog from "./smart-reschedule-dialog";
 
 const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
@@ -36,9 +37,14 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
           </div>
           <ChevronRight className="h-6 w-6 text-muted-foreground" />
         </div>
-        <div className="flex justify-start gap-2 mt-3 ml-16">
+        <div className="flex justify-between items-center mt-3">
+          <div className="bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full ml-16">
+            {appointment.time}
+          </div>
+          <div className="flex gap-2">
             <SmartRescheduleDialog appointment={appointment} />
             <Button variant="link" className="text-red-500 px-0">Cancel</Button>
+          </div>
         </div>
       </CardContent>
     </Card>
@@ -49,45 +55,45 @@ export default function AppointmentsList() {
     const upcomingAppointments = appointments
     .filter(appt => appt.status === "Upcoming")
     .sort((a, b) => {
+        const dateA = parseISO(a.date);
+        const dateB = parseISO(b.date);
+        if (dateA.getTime() !== dateB.getTime()) {
+            return dateA.getTime() - dateB.getTime();
+        }
         const timeA = parse(a.time, 'hh:mm a', new Date());
         const timeB = parse(b.time, 'hh:mm a', new Date());
         return timeA.getTime() - timeB.getTime();
     });
     
-  const appointmentsByHour: { [hour: string]: Appointment[] } = {};
+  const appointmentsByDate: { [date: string]: Appointment[] } = {};
   upcomingAppointments.forEach(appt => {
-    const hour = format(parse(appt.time, 'hh:mm a', new Date()), 'ha');
-    if (!appointmentsByHour[hour]) {
-        appointmentsByHour[hour] = [];
+    const dateKey = format(parseISO(appt.date), 'yyyy-MM-dd');
+    if (!appointmentsByDate[dateKey]) {
+        appointmentsByDate[dateKey] = [];
     }
-    appointmentsByHour[hour].push(appt);
+    appointmentsByDate[dateKey].push(appt);
   });
 
-  const hours = Array.from({ length: 12 }, (_, i) => i + 7).map(h => {
-    const hour12 = h > 12 ? h - 12 : h;
-    const ampm = h < 12 ? 'AM' : 'PM';
-    const hourStr = `${hour12} ${ampm}`;
-    const hourKey = format(parse(hourStr, 'h a', new Date()), 'ha');
-    return { display: hourStr, key: hourKey };
-  });
+  const dates = Object.keys(appointmentsByDate).sort();
 
   return (
-    <div className="space-y-4 relative">
-       <div className="absolute left-9 top-0 bottom-0 w-0.5 bg-gray-200"></div>
-       {hours.map(({ display, key }) => (
-         <div key={display} className="flex items-start gap-4">
-           <div className="w-16 flex-shrink-0 flex justify-center z-10">
-                <span className="bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full">{display}</span>
+    <div className="space-y-6 relative">
+       {dates.map((dateStr) => (
+         <div key={dateStr} className="flex items-start gap-4">
+           <div className="w-16 flex-shrink-0 flex flex-col items-center z-10 pt-1">
+                <span className="font-bold text-lg text-primary">{format(parseISO(dateStr), 'dd')}</span>
+                <span className="text-sm text-muted-foreground">{format(parseISO(dateStr), 'MMM')}</span>
            </div>
-           <div className="flex-1 space-y-4 pt-1">
-             {appointmentsByHour[key] ? (
-               appointmentsByHour[key].map(appt => <AppointmentCard key={appt.id} appointment={appt} />)
-             ) : (
-                <div className="h-8"></div>
-             )}
+           <div className="flex-1 space-y-4">
+             {appointmentsByDate[dateStr].map(appt => <AppointmentCard key={appt.id} appointment={appt} />)}
            </div>
          </div>
        ))}
+       {dates.length === 0 && (
+          <div className="text-center py-10 text-muted-foreground">
+              You have no upcoming appointments.
+          </div>
+       )}
     </div>
   );
 }
