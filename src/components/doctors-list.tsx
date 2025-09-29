@@ -29,11 +29,6 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
         </Avatar>
         <div className="flex-1 space-y-1">
           <h3 className="font-bold text-base text-card-foreground">{doctor.name}</h3>
-          <div className="flex items-center gap-1 text-sm text-amber-500">
-            <Star className="w-4 h-4 fill-current" />
-            <span className="font-semibold">{doctor.rating.toFixed(1)}</span>
-            <span className="text-muted-foreground">({doctor.reviews} Reviews)</span>
-          </div>
           <p className="text-sm text-muted-foreground">{doctor.specialty} - {doctor.clinic}</p>
         </div>
       </div>

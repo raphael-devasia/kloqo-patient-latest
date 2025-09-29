@@ -27,10 +27,6 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                  <Stethoscope className="h-4 w-4" />
                 <span>{doctor?.specialty}</span>
-                <span className="text-amber-500 flex items-center gap-1">
-                  <Star className="w-4 h-4 fill-current" />
-                  {doctor?.rating.toFixed(1)}
-                </span>
               </div>
                <p className="text-sm mt-1">{appointment.type}</p>
             </div>
