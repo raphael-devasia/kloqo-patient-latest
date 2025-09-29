@@ -33,9 +33,6 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
                 </span>
               </div>
                <p className="text-sm mt-1">{appointment.type}</p>
-                 <div className="bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">
-                    {appointment.time}
-                </div>
             </div>
           </div>
           <ChevronRight className="h-6 w-6 text-muted-foreground" />
@@ -80,17 +77,31 @@ export default function AppointmentsList() {
   return (
     <div className="space-y-6 relative">
        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
-       {dates.map((dateStr) => (
-         <div key={dateStr} className="flex items-start gap-4 relative">
-           <div className="w-16 flex-shrink-0 flex flex-col items-center z-10 pt-1">
-                <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center ring-4 ring-background">
-                    <span className="font-bold text-2xl text-primary-foreground">{format(parseISO(dateStr), 'dd')}</span>
+       {dates.map((dateStr, dateIndex) => (
+         <div key={dateStr}>
+            <div className="flex items-start gap-4 relative">
+                <div className="w-16 flex-shrink-0 flex flex-col items-center z-10 pt-1">
+                    <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center ring-4 ring-background">
+                        <span className="font-bold text-2xl text-primary-foreground">{format(parseISO(dateStr), 'dd')}</span>
+                    </div>
+                    <span className="text-sm font-bold text-muted-foreground mt-1">{format(parseISO(dateStr), 'MMM')}</span>
                 </div>
-                <span className="text-sm font-bold text-muted-foreground mt-1">{format(parseISO(dateStr), 'MMM')}</span>
-           </div>
-           <div className="flex-1 space-y-4 pt-1">
-             {appointmentsByDate[dateStr].map(appt => <AppointmentCard key={appt.id} appointment={appt} />)}
-           </div>
+                <div className="flex-1 space-y-4 pt-1">
+                    {/* Placeholder to align cards correctly when there's no single-appointment row */}
+                </div>
+            </div>
+            {appointmentsByDate[dateStr].map(appt => (
+                <div key={appt.id} className="flex items-start gap-4 relative mt-4">
+                    <div className="w-16 flex-shrink-0 flex flex-col items-center z-10">
+                        <div className="text-xs text-muted-foreground font-semibold">
+                            {appt.time}
+                        </div>
+                    </div>
+                    <div className="flex-1">
+                        <AppointmentCard appointment={appt} />
+                    </div>
+                </div>
+            ))}
          </div>
        ))}
        {dates.length === 0 && (
