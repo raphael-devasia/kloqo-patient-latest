@@ -82,8 +82,8 @@ export default function AppointmentsList() {
        {dates.map((dateStr) => (
          <div key={dateStr} className="flex items-start gap-4 relative">
            <div className="w-16 flex-shrink-0 flex flex-col items-center z-10 pt-1">
-                <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center ring-4 ring-background">
-                    <span className="font-bold text-xs text-primary-foreground">{format(parseISO(dateStr), 'dd')}</span>
+                <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center ring-4 ring-background">
+                    <span className="font-bold text-sm text-primary-foreground">{format(parseISO(dateStr), 'dd')}</span>
                 </div>
                 <span className="text-sm text-muted-foreground mt-1">{format(parseISO(dateStr), 'MMM')}</span>
            </div>
