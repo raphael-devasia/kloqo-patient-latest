@@ -9,12 +9,15 @@ import { Button } from "@/components/ui/button";
 import { Stethoscope, Star, ChevronRight } from "lucide-react";
 import { format, parse, parseISO } from "date-fns";
 import SmartRescheduleDialog from "./smart-reschedule-dialog";
+import { cn } from "@/lib/utils";
 
-const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
+const AppointmentCard = ({ appointment, index }: { appointment: Appointment, index: number }) => {
   const doctor = doctors.find((d) => d.id === appointment.doctorId);
+  const cardColors = ['bg-[#F2FFE3]', 'bg-[#E7D7C9]'];
+  const cardColor = cardColors[index % cardColors.length];
 
   return (
-    <Card className="shadow-md">
+    <Card className={cn("shadow-md", cardColor)}>
       <CardContent className="p-2">
         <div className="flex flex-col items-center justify-center text-center">
           <div className="flex flex-col items-center gap-2">
@@ -35,6 +38,7 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
           <div className="flex gap-2">
             <SmartRescheduleDialog appointment={appointment} />
             <Button variant="link" className="text-red-500 px-0">Cancel</Button>
+
           </div>
         </div>
       </CardContent>
@@ -66,6 +70,7 @@ export default function AppointmentsList() {
   });
 
   const dates = Object.keys(appointmentsByDate).sort();
+  let appointmentCounter = 0;
 
   return (
     <div className="space-y-6 relative">
@@ -91,7 +96,7 @@ export default function AppointmentsList() {
                         </div>
                     </div>
                     <div className="flex-1">
-                        <AppointmentCard appointment={appt} />
+                        <AppointmentCard appointment={appt} index={appointmentCounter++} />
                     </div>
                 </div>
             ))}
