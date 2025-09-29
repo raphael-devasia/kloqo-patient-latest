@@ -15,10 +15,10 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
 
   return (
     <Card className="shadow-md">
-      <CardContent className="p-4">
+      <CardContent className="p-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-start gap-4">
-            <Avatar className="h-12 w-12 border">
+          <div className="flex items-start gap-3">
+            <Avatar className="h-10 w-10 border">
               <AvatarImage src={doctor?.avatar} alt={doctor?.name} />
               <AvatarFallback>{doctor?.name.charAt(0)}</AvatarFallback>
             </Avatar>
@@ -32,7 +32,7 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
           </div>
           <ChevronRight className="h-6 w-6 text-muted-foreground" />
         </div>
-        <div className="flex justify-end items-center mt-3">
+        <div className="flex justify-end items-center mt-2">
           <div className="flex gap-2">
             <SmartRescheduleDialog appointment={appointment} />
             <Button variant="link" className="text-red-500 px-0">Cancel</Button>
@@ -79,7 +79,6 @@ export default function AppointmentsList() {
                     <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center ring-4 ring-background">
                         <span className="font-bold text-2xl text-primary-foreground">{format(parseISO(dateStr), 'dd')}</span>
                     </div>
-                    <span className="text-sm font-bold text-muted-foreground mt-1">{format(parseISO(dateStr), 'MMM')}</span>
                 </div>
                 <div className="flex-1 space-y-4 pt-1">
                     {/* Placeholder to align cards correctly when there's no single-appointment row */}
@@ -88,6 +87,7 @@ export default function AppointmentsList() {
             {appointmentsByDate[dateStr].map(appt => (
                 <div key={appt.id} className="flex items-start gap-4 relative mt-2">
                     <div className="w-16 flex-shrink-0 flex flex-col items-center z-10">
+                         <span className="text-sm font-bold text-muted-foreground mt-0">{format(parseISO(dateStr), 'MMM')}</span>
                         <div className="text-xs text-muted-foreground font-semibold">
                             {appt.time}
                         </div>
