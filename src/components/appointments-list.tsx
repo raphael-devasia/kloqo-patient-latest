@@ -30,7 +30,6 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
               </div>
             </div>
           </div>
-          <ChevronRight className="h-6 w-6 text-muted-foreground" />
         </div>
         <div className="flex justify-end items-center mt-2">
           <div className="flex gap-2">
