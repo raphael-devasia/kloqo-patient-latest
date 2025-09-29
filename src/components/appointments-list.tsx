@@ -33,14 +33,14 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
                 </span>
               </div>
                <p className="text-sm mt-1">{appointment.type}</p>
+                 <div className="bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">
+                    {appointment.time}
+                </div>
             </div>
           </div>
           <ChevronRight className="h-6 w-6 text-muted-foreground" />
         </div>
-        <div className="flex justify-between items-center mt-3">
-          <div className="bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full ml-16">
-            {appointment.time}
-          </div>
+        <div className="flex justify-end items-center mt-3">
           <div className="flex gap-2">
             <SmartRescheduleDialog appointment={appointment} />
             <Button variant="link" className="text-red-500 px-0">Cancel</Button>
