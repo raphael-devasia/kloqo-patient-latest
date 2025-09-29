@@ -73,7 +73,7 @@ export default function SmartRescheduleDialog({ appointment }: { appointment: Ap
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button>Reschedule</Button>
+        <Button variant="link" className="text-primary px-0">Reschedule</Button>
       </DialogTrigger>
       <DialogContent className="max-w-sm">
         <DialogHeader>
