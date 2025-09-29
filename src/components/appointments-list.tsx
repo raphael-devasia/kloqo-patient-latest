@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Stethoscope, Star, ChevronRight } from "lucide-react";
-import { format, parse, parseISO, eachDayOfInterval, isSameDay } from "date-fns";
+import { format, parse, parseISO } from "date-fns";
 import SmartRescheduleDialog from "./smart-reschedule-dialog";
 
 const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
@@ -78,13 +78,16 @@ export default function AppointmentsList() {
 
   return (
     <div className="space-y-6 relative">
+       <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
        {dates.map((dateStr) => (
-         <div key={dateStr} className="flex items-start gap-4">
+         <div key={dateStr} className="flex items-start gap-4 relative">
            <div className="w-16 flex-shrink-0 flex flex-col items-center z-10 pt-1">
-                <span className="font-bold text-lg text-primary">{format(parseISO(dateStr), 'dd')}</span>
-                <span className="text-sm text-muted-foreground">{format(parseISO(dateStr), 'MMM')}</span>
+                <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center ring-4 ring-background">
+                    <span className="font-bold text-xs text-primary-foreground">{format(parseISO(dateStr), 'dd')}</span>
+                </div>
+                <span className="text-sm text-muted-foreground mt-1">{format(parseISO(dateStr), 'MMM')}</span>
            </div>
-           <div className="flex-1 space-y-4">
+           <div className="flex-1 space-y-4 pt-1">
              {appointmentsByDate[dateStr].map(appt => <AppointmentCard key={appt.id} appointment={appt} />)}
            </div>
          </div>
