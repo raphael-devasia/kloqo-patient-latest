@@ -84,9 +84,9 @@ export default function AppointmentsList() {
          <div key={dateStr} className="flex items-start gap-4 relative">
            <div className="w-16 flex-shrink-0 flex flex-col items-center z-10 pt-1">
                 <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center ring-4 ring-background">
-                    <span className="font-bold text-xl text-primary-foreground">{format(parseISO(dateStr), 'dd')}</span>
+                    <span className="font-bold text-2xl text-primary-foreground">{format(parseISO(dateStr), 'dd')}</span>
                 </div>
-                <span className="text-sm text-muted-foreground mt-1">{format(parseISO(dateStr), 'MMM')}</span>
+                <span className="text-sm font-bold text-muted-foreground mt-1">{format(parseISO(dateStr), 'MMM')}</span>
            </div>
            <div className="flex-1 space-y-4 pt-1">
              {appointmentsByDate[dateStr].map(appt => <AppointmentCard key={appt.id} appointment={appt} />)}
