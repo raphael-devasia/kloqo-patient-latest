@@ -28,7 +28,6 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
                  <Stethoscope className="h-4 w-4" />
                 <span>{doctor?.specialty}</span>
               </div>
-               <p className="text-sm mt-1">{appointment.type}</p>
             </div>
           </div>
           <ChevronRight className="h-6 w-6 text-muted-foreground" />
