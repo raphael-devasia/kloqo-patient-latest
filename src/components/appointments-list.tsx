@@ -6,7 +6,7 @@ import { Appointment } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Stethoscope, Star, ChevronRight } from "lucide-react";
+import { Stethoscope } from "lucide-react";
 import { format, parse, parseISO } from "date-fns";
 import SmartRescheduleDialog from "./smart-reschedule-dialog";
 import { cn } from "@/lib/utils";
