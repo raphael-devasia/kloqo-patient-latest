@@ -31,7 +31,7 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-end items-center mt-2">
+        <div className="flex justify-center items-center mt-2">
           <div className="flex gap-2">
             <SmartRescheduleDialog appointment={appointment} />
             <Button variant="link" className="text-red-500 px-0">Cancel</Button>
