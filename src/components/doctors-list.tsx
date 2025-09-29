@@ -20,20 +20,18 @@ import {
 import { Button } from "./ui/button";
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-  <Card className="shadow-md rounded-2xl" style={{ backgroundColor: '#d4E0EE', border: 'none' }}>
-    <CardContent className="p-3">
-      <div className="flex items-center gap-4">
-        <Avatar className="h-24 w-24 rounded-2xl">
-          <AvatarImage src={doctor.avatar} alt={doctor.name} className="object-cover" />
-          <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
-        </Avatar>
-        <div className="flex-1 space-y-1">
-          <h3 className="font-bold text-base text-card-foreground">{doctor.name}</h3>
-          <p className="text-sm text-muted-foreground">{doctor.specialty} - {doctor.clinic}</p>
-        </div>
-      </div>
-    </CardContent>
-  </Card>
+    <Card className="shadow-md rounded-2xl aspect-square" style={{ backgroundColor: '#d4E0EE', border: 'none' }}>
+        <CardContent className="p-3 flex flex-col items-center justify-center h-full text-center">
+            <Avatar className="h-20 w-20 rounded-full mb-3">
+                <AvatarImage src={doctor.avatar} alt={doctor.name} className="object-cover" />
+                <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+            <div className="flex-1 space-y-1">
+                <h3 className="font-bold text-base text-card-foreground">{doctor.name}</h3>
+                <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
+            </div>
+        </CardContent>
+    </Card>
 );
 
 export default function DoctorsList() {
@@ -94,7 +92,7 @@ export default function DoctorsList() {
         </DropdownMenu>
       </div>
 
-      <div className="grid gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {filteredAndSortedDoctors.length > 0 ? (
           filteredAndSortedDoctors.map((doc) => <DoctorCard key={doc.id} doctor={doc} />)
         ) : (
