@@ -20,15 +20,15 @@ import {
 import { Button } from "./ui/button";
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-    <Card className="shadow-md rounded-2xl aspect-square" style={{ backgroundColor: '#d4E0EE', border: 'none' }}>
+    <Card className="shadow-md rounded-2xl aspect-square overflow-hidden" style={{ backgroundColor: '#d4E0EE', border: 'none' }}>
         <CardContent className="p-3 flex flex-col items-center justify-center h-full text-center">
-            <Avatar className="h-20 w-20 rounded-full mb-3">
+            <Avatar className="h-16 w-16 md:h-20 md:w-20 rounded-full mb-2 md:mb-3">
                 <AvatarImage src={doctor.avatar} alt={doctor.name} className="object-cover" />
                 <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
             </Avatar>
-            <div className="flex-1 space-y-1">
-                <h3 className="font-bold text-base text-card-foreground">{doctor.name}</h3>
-                <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
+            <div className="space-y-1">
+                <h3 className="font-bold text-sm md:text-base text-card-foreground leading-tight">{doctor.name}</h3>
+                <p className="text-xs md:text-sm text-muted-foreground">{doctor.specialty}</p>
             </div>
         </CardContent>
     </Card>
