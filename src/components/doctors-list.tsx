@@ -5,7 +5,7 @@ import { doctors } from "@/lib/data";
 import { Doctor } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Star, Search, ArrowUpDown } from "lucide-react";
+import { Star, Search, ArrowUpDown, Ticket } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState, useMemo } from "react";
 import {
@@ -29,6 +29,10 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
             <div className="space-y-0.5">
                 <h3 className="font-bold text-sm text-card-foreground leading-tight">{doctor.name}</h3>
                 <p className="text-xs text-muted-foreground">{doctor.specialty}</p>
+            </div>
+            <div className="flex items-center gap-1.5 mt-2 bg-black/10 rounded-full px-2 py-0.5">
+              <Ticket className="w-3 h-3 text-foreground/80" />
+              <span className="text-xs font-bold text-foreground/80">{doctor.currentToken}</span>
             </div>
         </CardContent>
     </Card>
@@ -56,7 +60,7 @@ export default function DoctorsList() {
         return filtered.sort((a, b) => b.rating - a.rating);
       case "a-z":
       default:
-        return filtered.sort((a, b) => a.name.localeCompare(b.name));
+        return filtered.sort((a, b) => a.name.localeCompare(a.name));
     }
   }, [searchTerm, sortOrder]);
 

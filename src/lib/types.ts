@@ -6,6 +6,7 @@ export type Doctor = {
   clinic: string;
   rating: number;
   reviews: number;
+  currentToken: number;
 };
 
 export type Appointment = {
