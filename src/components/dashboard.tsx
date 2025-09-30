@@ -184,7 +184,7 @@ export default function Dashboard() {
             <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
             <div className="flex items-center gap-1.5 opacity-80">
                 <MapPin className="w-4 h-4" />
-                <p className="text-sm">
+                <p className="text-xs">
                   {location ? `${location.city}, ${location.country}` : 'Finding your location...'}
                 </p>
               </div>
