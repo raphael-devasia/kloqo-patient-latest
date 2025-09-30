@@ -7,6 +7,10 @@ export type Doctor = {
   rating: number;
   reviews: number;
   currentToken: number;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
 };
 
 export type Appointment = {

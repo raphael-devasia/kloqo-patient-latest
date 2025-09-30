@@ -5,9 +5,9 @@ import { doctors } from "@/lib/data";
 import { Doctor } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Star, Search, ArrowUpDown, Ticket, Hospital, ChevronRight } from "lucide-react";
+import { Star, Search, ArrowUpDown, Ticket, Hospital, ChevronRight, MapPin, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,27 +21,86 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
+// Haversine formula to calculate distance between two lat/lon points
+const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+  const R = 6371; // Radius of the earth in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c; // Distance in km
+  return d;
+};
 
-const ClinicCard = ({ clinicName }: { clinicName: string }) => (
-  <Link href={`/clinics/${encodeURIComponent(clinicName)}`}>
-    <Card className="w-full">
-      <CardContent className="p-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="p-3 bg-primary/10 rounded-lg">
-            <Hospital className="w-5 h-5 text-primary" />
+
+const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; location: { latitude: number; longitude: number; } }, userLocation: { latitude: number; longitude: number; } | null }) => {
+  const [distance, setDistance] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (userLocation && clinic.location) {
+      const dist = getDistance(userLocation.latitude, userLocation.longitude, clinic.location.latitude, clinic.location.longitude);
+      setDistance(dist.toFixed(1) + " km");
+    }
+  }, [userLocation, clinic.location]);
+  
+  return (
+    <Link href={`/clinics/${encodeURIComponent(clinic.name)}`}>
+      <Card className="w-full">
+        <CardContent className="p-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-primary/10 rounded-lg">
+              <Hospital className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold">{clinic.name}</h2>
+            </div>
           </div>
-          <h2 className="text-lg font-bold">{clinicName}</h2>
-        </div>
-        <ChevronRight className="w-5 h-5 text-muted-foreground" />
-      </CardContent>
-    </Card>
-  </Link>
-);
+          <div className="flex items-center gap-2">
+            {distance ? (
+                <>
+                    <MapPin className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-sm font-medium text-muted-foreground">{distance}</span>
+                </>
+            ) : (
+                <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+            )}
+            <ChevronRight className="w-5 h-5 text-muted-foreground" />
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
+  )
+};
 
 
 export default function DoctorsList({ specialty }: { specialty?: string | null }) {
   const [searchTerm, setSearchTerm] = useState(specialty || "");
   const [sortOrder, setSortOrder] = useState("a-z");
+  const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error getting user location:", error);
+          // Fallback location (e.g., city center)
+          setUserLocation({ latitude: 40.7128, longitude: -74.0060 });
+        }
+      );
+    } else {
+        // Fallback for browsers that don't support geolocation
+        setUserLocation({ latitude: 40.7128, longitude: -74.0060 });
+    }
+  }, []);
 
   const filteredAndSortedDoctors = useMemo(() => {
     let filtered = doctors
@@ -68,21 +127,20 @@ export default function DoctorsList({ specialty }: { specialty?: string | null }
         return filtered.sort((a, b) => b.rating - a.rating);
       case "a-z":
       default:
-        return filtered.sort((a, b) => a.name.localeCompare(b.name));
+        return filtered.sort((a, b) => a.name.localeCompare(a.name));
     }
   }, [searchTerm, sortOrder, specialty]);
-
-  const doctorsByClinic = useMemo(() => {
-    return filteredAndSortedDoctors.reduce((acc, doctor) => {
-      if (!acc[doctor.clinic]) {
-        acc[doctor.clinic] = [];
-      }
-      acc[doctor.clinic].push(doctor);
-      return acc;
-    }, {} as Record<string, Doctor[]>);
+  
+  const clinics = useMemo(() => {
+      const clinicMap = new Map<string, { name: string; location: { latitude: number; longitude: number; } }>();
+      filteredAndSortedDoctors.forEach(doctor => {
+          if (!clinicMap.has(doctor.clinic)) {
+              clinicMap.set(doctor.clinic, { name: doctor.clinic, location: doctor.location });
+          }
+      });
+      return Array.from(clinicMap.values());
   }, [filteredAndSortedDoctors]);
 
-  const clinicNames = Object.keys(doctorsByClinic);
 
   return (
     <div className="space-y-6">
@@ -117,9 +175,9 @@ export default function DoctorsList({ specialty }: { specialty?: string | null }
       </div>
 
       <div className="space-y-4">
-        {clinicNames.length > 0 ? (
-          clinicNames.map((clinicName) => (
-            <ClinicCard key={clinicName} clinicName={clinicName} />
+        {clinics.length > 0 ? (
+          clinics.map((clinic) => (
+            <ClinicCard key={clinic.name} clinic={clinic} userLocation={userLocation} />
           ))
         ) : (
           <p className="col-span-full mt-4 text-center text-muted-foreground">
