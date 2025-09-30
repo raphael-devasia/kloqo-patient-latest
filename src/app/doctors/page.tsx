@@ -10,7 +10,7 @@ export default function DoctorsPage() {
   const searchParams = useSearchParams();
   const specialty = searchParams.get('specialty');
 
-  const pageTitle = specialty ? specialty : "Clinics";
+  const pageTitle = specialty ? specialty : "Clinic / Doctors";
 
   return (
     <div className="space-y-4">
