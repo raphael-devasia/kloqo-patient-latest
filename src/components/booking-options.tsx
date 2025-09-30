@@ -116,7 +116,7 @@ export default function BookingOptions() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center relative justify-center">
+      <div className="flex items-center relative justify-center mt-4">
         <button onClick={() => router.back()} className="absolute left-0">
           <ChevronLeft className="w-6 h-6" />
         </button>
@@ -283,3 +283,4 @@ export default function BookingOptions() {
     
 
     
+
