@@ -95,7 +95,7 @@ body {
   }
 }
 
-.doctors-page {
+.doctors-page, .schedule-page {
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
@@ -107,6 +107,6 @@ body {
     --border: 76 21% 68%;
 }
 
-.doctors-page {
+.doctors-page, .schedule-page {
   background-color: #F6F6F6;
 }

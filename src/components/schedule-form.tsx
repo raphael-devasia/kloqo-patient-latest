@@ -6,26 +6,19 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { doctors } from "@/lib/data";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { Stethoscope, User, Calendar as CalendarIcon, Clock } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { Star, ChevronLeft, Share2, MessageSquare, ChevronRight } from "lucide-react";
+import { useSearchParams, useRouter } from "next/navigation";
+import Image from "next/image";
+import DatePicker from "./date-picker";
 
 const scheduleSchema = z.object({
-  specialty: z.string().min(1, "Please select a specialty."),
   doctorId: z.string().min(1, "Please select a doctor."),
   date: z.date({ required_error: "Please select a date." }),
   time: z.string({ required_error: "Please select a time slot." }),
@@ -33,162 +26,114 @@ const scheduleSchema = z.object({
 
 type ScheduleFormValues = z.infer<typeof scheduleSchema>;
 
-const timeSlots = ["09:00 AM", "10:00 AM", "11:00 AM", "02:00 PM", "03:00 PM", "04:00 PM"];
+const timeSlots = [
+    "08:00 AM", "09:30 AM", "10:00 AM", 
+    "10:30 AM", "11:00 AM", "11:30 AM",
+    "12:00 PM", "12:30 PM", "02:00 PM"
+];
 
 export default function ScheduleForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const preselectedDoctorId = searchParams.get("doctorId");
-  const preselectedSpecialty = searchParams.get("specialty");
 
-  const [selectedSpecialty, setSelectedSpecialty] = useState<string>(preselectedSpecialty || "");
   const { toast } = useToast();
+
+  const doctor = doctors.find(d => d.id === preselectedDoctorId);
 
   const form = useForm<ScheduleFormValues>({
     resolver: zodResolver(scheduleSchema),
     defaultValues: {
-        specialty: preselectedSpecialty || "",
-        doctorId: preselectedDoctorId || "",
+      doctorId: preselectedDoctorId || "",
+      date: new Date(),
     }
   });
 
-  const { handleSubmit, control, watch, reset, formState: { errors } } = form;
-  const watchedDoctorId = watch("doctorId");
+  const { handleSubmit, control, formState: { errors } } = form;
 
   useEffect(() => {
-    if (preselectedSpecialty) {
-      setSelectedSpecialty(preselectedSpecialty);
-      form.setValue("specialty", preselectedSpecialty);
-    }
     if (preselectedDoctorId) {
       form.setValue("doctorId", preselectedDoctorId);
     }
-  }, [preselectedDoctorId, preselectedSpecialty, form]);
+  }, [preselectedDoctorId, form]);
 
 
   const onSubmit = (data: ScheduleFormValues) => {
     console.log(data);
     toast({
       title: "Appointment Booked!",
-      description: `Your appointment with ${doctors.find(d => d.id === data.doctorId)?.name} on ${format(data.date, 'PPP')} at ${data.time} is confirmed.`,
+      description: `Your appointment with ${doctor?.name} on ${format(data.date, 'PPP')} at ${data.time} is confirmed.`,
       variant: 'default',
       className: 'bg-accent text-accent-foreground'
     });
-    reset({
-        specialty: "",
-        doctorId: "",
-        date: undefined,
-        time: "",
-    });
-    setSelectedSpecialty("");
+    router.push('/appointments');
   };
 
-  const specialties = [...new Set(doctors.map((doc) => doc.specialty))];
-  const filteredDoctors = selectedSpecialty
-    ? doctors.filter((doc) => doc.specialty === selectedSpecialty)
-    : [];
+  if (!doctor) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p>Doctor not found. Please select a doctor first.</p>
+        <Button onClick={() => router.push('/')} className="mt-4">Go to Home</Button>
+      </div>
+    );
+  }
 
   return (
-    <Card className="max-w-3xl mx-auto">
-      <CardHeader>
-        <CardTitle>Booking Details</CardTitle>
-        <CardDescription>Fill out the form below to book your appointment.</CardDescription>
-      </CardHeader>
+    <div className="bg-[#f8f8f8] min-h-full">
+      <div className="relative h-80">
+        <Image
+          src={doctor.avatar}
+          alt={doctor.name}
+          layout="fill"
+          objectFit="cover"
+          className="rounded-b-3xl"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-b-3xl"></div>
+        <div className="absolute top-6 left-4 right-4 flex justify-between items-center">
+            <Button variant="ghost" size="icon" className="bg-white/80 rounded-full h-10 w-10" onClick={() => router.back()}>
+                <ChevronLeft className="h-6 w-6" />
+            </Button>
+            <Button variant="ghost" size="icon" className="bg-white/80 rounded-full h-10 w-10">
+                <Share2 className="h-5 w-5" />
+            </Button>
+        </div>
+        <div className="absolute bottom-6 left-6 text-white">
+            <div className="flex items-center gap-2 mb-2">
+                <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                <span className="font-bold text-lg">{doctor.rating}</span>
+            </div>
+          <h1 className="text-3xl font-bold">{doctor.name}</h1>
+          <p className="text-lg">{doctor.specialty}</p>
+        </div>
+      </div>
+      
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="space-y-8">
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Specialty Selection */}
-            <div className="space-y-2">
-              <Label className={cn(errors.specialty && 'text-destructive')}>
-                <Stethoscope className="inline-block mr-2 h-4 w-4" />
-                Specialty
-              </Label>
-              <Controller
-                name="specialty"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                      setSelectedSpecialty(value);
-                      form.setValue("doctorId", "");
-                    }}
-                    value={field.value}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a specialty" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {specialties.map((specialty) => (
-                        <SelectItem key={specialty} value={specialty}>
-                          {specialty}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-              {errors.specialty && <p className="text-sm text-destructive">{errors.specialty.message}</p>}
-            </div>
-
-            {/* Doctor Selection */}
-            <div className="space-y-2">
-              <Label className={cn(errors.doctorId && 'text-destructive')}>
-                <User className="inline-block mr-2 h-4 w-4" />
-                Doctor
-              </Label>
-              <Controller
-                name="doctorId"
-                control={control}
-                render={({ field }) => (
-                  <Select onValueChange={field.onChange} value={field.value} disabled={!selectedSpecialty}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a doctor" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {filteredDoctors.map((doctor) => (
-                        <SelectItem key={doctor.id} value={doctor.id}>
-                          {doctor.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-              {errors.doctorId && <p className="text-sm text-destructive">{errors.doctorId.message}</p>}
-            </div>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Date Selection */}
-            <div className="space-y-2">
-               <Label className={cn(errors.date && 'text-destructive')}>
-                <CalendarIcon className="inline-block mr-2 h-4 w-4" />
-                Date
-              </Label>
+        <Card className="rounded-t-3xl -mt-6 shadow-none border-0">
+          <CardContent className="p-6 space-y-6">
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-bold">Select Date</h3>
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <ChevronLeft className="w-4 h-4 cursor-pointer" />
+                  <span>November 2025</span>
+                  <ChevronRight className="w-4 h-4 cursor-pointer" />
+                </div>
+              </div>
               <Controller
                 name="date"
                 control={control}
                 render={({ field }) => (
-                  <div className="rounded-md border flex justify-center">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) => date < new Date() || date < new Date("1900-01-01")}
-                      initialFocus
-                    />
-                  </div>
+                    <DatePicker date={field.value} onDateChange={field.onChange} />
                 )}
               />
-               {errors.date && <p className="text-sm text-destructive">{errors.date.message}</p>}
+              {errors.date && <p className="text-sm text-destructive mt-2">{errors.date.message}</p>}
             </div>
-
-            {/* Time Selection */}
-            <div className="space-y-2">
-               <Label className={cn(errors.time && 'text-destructive')}>
-                <Clock className="inline-block mr-2 h-4 w-4" />
-                Available Slots
-              </Label>
+            
+            <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-bold">Select Time</h3>
+                    <p className="text-sm text-muted-foreground">{timeSlots.length} Slots</p>
+                </div>
                <Controller
                 name="time"
                 control={control}
@@ -196,15 +141,14 @@ export default function ScheduleForm() {
                   <RadioGroup
                     onValueChange={field.onChange}
                     defaultValue={field.value}
-                    className="grid grid-cols-2 gap-2 pt-2"
-                    disabled={!watchedDoctorId}
+                    className="grid grid-cols-3 gap-3"
                   >
                     {timeSlots.map((slot) => (
                       <div key={slot}>
                         <RadioGroupItem value={slot} id={slot} className="peer sr-only" />
                         <Label
                           htmlFor={slot}
-                          className="flex items-center justify-center rounded-md border-2 border-muted bg-popover p-3 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                          className="flex items-center justify-center rounded-lg border-2 border-muted bg-popover p-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 peer-data-[state=checked]:text-primary"
                         >
                           {slot}
                         </Label>
@@ -213,14 +157,19 @@ export default function ScheduleForm() {
                   </RadioGroup>
                 )}
               />
-              {errors.time && <p className="text-sm text-destructive">{errors.time.message}</p>}
+              {errors.time && <p className="text-sm text-destructive mt-2">{errors.time.message}</p>}
             </div>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button type="submit" className="w-full md:w-auto ml-auto">Confirm Appointment</Button>
-        </CardFooter>
+            <div className="flex items-center gap-4 pt-4">
+                <Button variant="outline" size="icon" className="h-14 w-14 rounded-2xl flex-shrink-0">
+                    <MessageSquare className="h-6 w-6 text-primary" />
+                </Button>
+                <Button type="submit" className="w-full h-14 rounded-2xl text-lg">
+                    Book an Appointment
+                </Button>
+            </div>
+          </CardContent>
+        </Card>
       </form>
-    </Card>
+    </div>
   );
 }
