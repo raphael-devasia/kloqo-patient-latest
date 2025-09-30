@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from "react";
@@ -73,7 +74,7 @@ export default function SmartRescheduleDialog({ appointment }: { appointment: Ap
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="default" size="sm">Reschedule</Button>
+        <Button variant="default" size="sm" className="bg-[#FFDAB9] hover:bg-[#FFDAB9]/90 text-gray-800">Reschedule</Button>
       </DialogTrigger>
       <DialogContent className="max-w-sm">
         <DialogHeader>
