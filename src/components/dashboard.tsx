@@ -214,7 +214,7 @@ const getRelativeDate = (date: Date) => {
         </div>
       </div>
       
-      <div className="px-6 -mt-20 space-y-4">
+      <div className="px-6 -mt-36 space-y-4">
         {upcomingAppointments.length > 0 && (
           <div className="space-y-4">
              <div className="flex justify-between items-center">
