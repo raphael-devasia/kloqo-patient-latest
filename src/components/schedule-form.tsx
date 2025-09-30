@@ -120,7 +120,7 @@ export default function ScheduleForm() {
                 <h3 className="text-lg font-bold">Select Date</h3>
                 <div className="flex items-center gap-2 text-sm font-medium">
                   <ChevronLeft className="w-4 h-4 cursor-pointer" />
-                  <span>November 2025</span>
+                  <span>{format(form.getValues('date'), 'MMMM yyyy')}</span>
                   <ChevronRight className="w-4 h-4 cursor-pointer" />
                 </div>
               </div>
