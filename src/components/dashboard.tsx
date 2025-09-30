@@ -179,7 +179,7 @@ const getRelativeDate = (date: Date) => {
 
   return (
     <div className="relative min-h-full">
-      <div className="bg-[#869A73] p-6 h-[40vh] rounded-b-[3rem] flex flex-col">
+      <div className="bg-[#869A73] p-6 h-[50vh] rounded-b-[3rem] flex flex-col">
         <header className="flex items-center justify-between text-white pt-4">
           <div>
             <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
@@ -206,7 +206,7 @@ const getRelativeDate = (date: Date) => {
         </div>
       </div>
       
-      <div className="px-6 -mt-32 space-y-4">
+      <div className="px-6 -mt-48 space-y-4">
         {upcomingAppointments.length > 0 && (
           <div className="space-y-4">
              <div className="flex justify-center items-center">
