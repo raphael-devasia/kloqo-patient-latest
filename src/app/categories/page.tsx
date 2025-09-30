@@ -13,7 +13,7 @@ export default function CategoriesPage() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center relative justify-center mt-2">
+      <div className="flex items-center relative justify-center mt-4">
         <button onClick={() => router.back()} className="absolute left-0">
           <ChevronLeft className="w-6 h-6" />
         </button>
