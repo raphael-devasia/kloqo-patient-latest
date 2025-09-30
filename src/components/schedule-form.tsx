@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, CalendarDays, Clock } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import DatePicker from "./date-picker";
@@ -101,20 +101,41 @@ export default function ScheduleForm() {
                 <span className="font-bold text-lg">{doctor.rating}</span>
             </div>
           <h1 className="text-3xl font-bold">{doctor.name}</h1>
-          <p className="text-sm">{doctor.clinic}</p>
           <p className="text-lg">{doctor.specialty}</p>
+          <p className="text-sm">{doctor.clinic}</p>
         </div>
       </div>
       
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card className="rounded-t-3xl -mt-6 shadow-none border-0 bg-white">
           <CardContent className="p-6 space-y-6">
-            {doctor.bio && (
-                <div className="space-y-2">
-                  <h3 className="text-lg font-bold">About Doctor</h3>
-                  <p className="text-sm text-foreground/80">{doctor.bio}</p>
-                </div>
-              )}
+            <div className="space-y-2">
+              <h3 className="text-lg font-bold">About Doctor</h3>
+              <p className="text-sm text-foreground/80">{doctor.bio}</p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-bold">Weekly Availability</h3>
+              <Card className="border-border/50">
+                  <CardContent className="p-4 space-y-3">
+                      <div className="flex justify-between items-center text-sm">
+                          <div className="flex items-center gap-2 text-foreground">
+                              <CalendarDays className="w-4 h-4 text-muted-foreground"/>
+                              <span className="font-medium">Working Days</span>
+                          </div>
+                          <span className="text-muted-foreground font-medium">Mon - Fri</span>
+                      </div>
+                      <div className="flex justify-between items-center text-sm">
+                          <div className="flex items-center gap-2 text-foreground">
+                              <Clock className="w-4 h-4 text-muted-foreground"/>
+                              <span className="font-medium">Working Hours</span>
+                          </div>
+                          <span className="text-muted-foreground font-medium">08:00 AM - 05:00 PM</span>
+                      </div>
+                  </CardContent>
+              </Card>
+            </div>
+
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-bold">Select Date</h3>
