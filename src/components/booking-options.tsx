@@ -115,7 +115,7 @@ export default function BookingOptions() {
   }
 
   return (
-    <div className="space-y-6 p-4">
+    <div className="space-y-6">
       <div className="flex items-center relative justify-center">
         <button onClick={() => router.back()} className="absolute left-0">
           <ChevronLeft className="w-6 h-6" />
@@ -124,29 +124,27 @@ export default function BookingOptions() {
       </div>
 
        <Card>
-            <CardHeader>
+            <CardContent className="p-4">
                 <div className="flex items-center gap-4">
-                    <Avatar className="h-16 w-16 border">
+                    <Avatar className="h-12 w-12 border">
                         <AvatarImage src={doctor.avatar} alt={doctor.name} />
                         <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
                     </Avatar>
-                    <div>
-                        <CardTitle className="text-xl">{doctor.name}</CardTitle>
-                        <CardDescription>{doctor.clinic}</CardDescription>
+                    <div className="flex-1">
+                        <p className="font-bold text-base">{doctor.name}</p>
+                        <p className="text-sm text-muted-foreground">{doctor.clinic}</p>
                     </div>
                 </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                 <div className="border-t pt-4 space-y-3">
-                    <div className="flex items-center gap-3">
-                        <Calendar className="w-5 h-5 text-primary"/>
-                        <span className="font-semibold">{format(new Date(date), 'EEEE, MMMM d, yyyy')}</span>
+                <div className="border-t pt-3 mt-3 space-y-2 text-sm">
+                    <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-primary"/>
+                        <span className="font-medium">{format(new Date(date), 'E, MMM d, yyyy')}</span>
                     </div>
-                     <div className="flex items-center gap-3">
-                        <Clock className="w-5 h-5 text-primary"/>
-                        <span className="font-semibold">{time}</span>
+                     <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-primary"/>
+                        <span className="font-medium">{time}</span>
                     </div>
-                 </div>
+                </div>
             </CardContent>
         </Card>
 
@@ -278,5 +276,7 @@ export default function BookingOptions() {
     </div>
   );
 }
+
+    
 
     
