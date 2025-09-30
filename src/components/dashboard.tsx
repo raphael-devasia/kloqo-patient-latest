@@ -348,9 +348,9 @@ const handleLocationUpdate = async (newCity: string) => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
-                className="h-12 rounded-xl border bg-card pl-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary/80 shadow-md"
+                className="h-12 rounded-xl border-0 bg-white/20 pl-12 text-base text-white placeholder:text-gray-200 focus-visible:ring-2 focus-visible:ring-primary/80 shadow-md"
               />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground"/>
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-200"/>
             </form>
             {isSearchFocused && suggestions.length > 0 && (
               <Card className="absolute top-full mt-2 w-full z-20 max-h-80 overflow-y-auto">
@@ -503,3 +503,5 @@ const handleLocationUpdate = async (newCity: string) => {
     </div>
   );
 }
+
+    
