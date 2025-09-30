@@ -101,6 +101,7 @@ export default function ScheduleForm() {
             </div>
           <h1 className="text-3xl font-bold">{doctor.name}</h1>
           <p className="text-lg">{doctor.specialty}</p>
+          <p className="text-sm">{doctor.clinic}</p>
         </div>
       </div>
       
@@ -156,10 +157,7 @@ export default function ScheduleForm() {
               />
               {errors.time && <p className="text-sm text-destructive mt-2">{errors.time.message}</p>}
             </div>
-            <div className="flex items-center gap-4 pt-4">
-                <Button variant="outline" size="icon" className="h-14 w-14 rounded-2xl flex-shrink-0">
-                    <MessageSquare className="h-6 w-6 text-primary" />
-                </Button>
+            <div className="pt-4">
                 <Button type="submit" className="w-full h-14 rounded-2xl text-lg">
                     Book an Appointment
                 </Button>
