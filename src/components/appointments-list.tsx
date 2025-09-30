@@ -34,7 +34,7 @@ const AppointmentCard = ({ appointment, onCancelSuccess }: { appointment: Appoin
         <div className="border-l pl-4 flex-1 space-y-2">
           <div className="flex justify-between">
             <div>
-              <p className="text-xs text-muted-foreground">Timing</p>
+              <p className="text-xs text-muted-foreground">Time</p>
               <p className="font-semibold">{appointment.time}</p>
             </div>
             <div>
