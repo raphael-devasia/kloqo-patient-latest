@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { appointments, doctors, user } from "@/lib/data";
@@ -39,7 +40,7 @@ const AppointmentCard = ({ appointment, index }: { appointment: Appointment, ind
                 </div>
                 <div className="flex items-center gap-2">
                     <span className="text-muted-foreground">Token #:</span>
-                    <span className="font-medium">{appointment.id.toUpperCase()}</span>
+                    <span className="font-medium">{String(index + 1).padStart(3, '0')}</span>
                 </div>
             </div>
           </div>
