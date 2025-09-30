@@ -125,24 +125,26 @@ export default function BookingOptions() {
 
        <Card>
             <CardContent className="p-4">
-                <div className="flex items-center gap-4">
-                    <Avatar className="h-12 w-12 border">
-                        <AvatarImage src={doctor.avatar} alt={doctor.name} />
-                        <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                        <p className="font-bold text-base">{doctor.name}</p>
-                        <p className="text-sm text-muted-foreground">{doctor.clinic}</p>
+                <div className="flex justify-between items-start">
+                    <div className="flex items-center gap-4">
+                        <Avatar className="h-12 w-12 border">
+                            <AvatarImage src={doctor.avatar} alt={doctor.name} />
+                            <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1">
+                            <p className="font-bold text-base">{doctor.name}</p>
+                            <p className="text-sm text-muted-foreground">{doctor.clinic}</p>
+                        </div>
                     </div>
-                </div>
-                <div className="border-t pt-3 mt-3 space-y-2 text-sm">
-                    <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-primary"/>
-                        <span className="font-medium">{format(new Date(date), 'E, MMM d, yyyy')}</span>
-                    </div>
-                     <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-primary"/>
-                        <span className="font-medium">{time}</span>
+                    <div className="text-right text-sm">
+                        <div className="flex items-center gap-2 justify-end">
+                            <Calendar className="w-4 h-4 text-primary"/>
+                            <span className="font-medium whitespace-nowrap">{format(new Date(date), 'MMM d, yyyy')}</span>
+                        </div>
+                        <div className="flex items-center gap-2 justify-end">
+                            <Clock className="w-4 h-4 text-primary"/>
+                            <span className="font-medium">{time}</span>
+                        </div>
                     </div>
                 </div>
             </CardContent>
