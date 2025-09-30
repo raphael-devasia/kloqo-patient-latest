@@ -134,6 +134,7 @@ export default function BookingOptions() {
                         <div className="flex-1">
                             <p className="font-bold text-base">{doctor.name}</p>
                             <p className="text-sm text-muted-foreground">{doctor.clinic}</p>
+                            <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
                         </div>
                     </div>
                     <div className="text-right text-sm">
