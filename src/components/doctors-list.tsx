@@ -30,10 +30,6 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
                 <h3 className="font-bold text-sm text-card-foreground leading-tight">{doctor.name}</h3>
                 <p className="text-xs text-muted-foreground">{doctor.specialty}</p>
             </div>
-            <div className="flex items-center gap-1.5 mt-2 bg-black/10 rounded-full px-2 py-0.5">
-              <Ticket className="w-3 h-3 text-foreground/80" />
-              <span className="text-xs font-bold text-foreground/80">{doctor.currentToken}</span>
-            </div>
         </CardContent>
     </Card>
 );
@@ -118,7 +114,7 @@ export default function DoctorsList({ specialty, clinic }: { specialty?: string 
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon" className="h-12 w-12 flex-shrink-0 rounded-xl">
-                    <ArrowUpDown className="h-5 w-5" />
+                    <ArrowUpDown className="h-5 h-5" />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
