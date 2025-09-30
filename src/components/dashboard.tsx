@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MoreHorizontal, MapPin, ChevronDown, HelpCircle, Clock } from "lucide-react";
+import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MoreHorizontal, MapPin, ChevronDown, Clock } from "lucide-react";
 import Link from "next/link";
 import { format, isPast } from "date-fns";
 import {
@@ -178,7 +178,7 @@ export default function Dashboard() {
 
   return (
     <div className="relative min-h-full">
-      <div className="bg-[#869A73] p-6 pb-24 rounded-b-[3rem]">
+      <div className="bg-[#869A73] p-6 h-[40vh] rounded-b-[3rem] flex flex-col">
         <header className="flex items-center justify-between text-white pt-4">
           <div>
             <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
@@ -196,7 +196,7 @@ export default function Dashboard() {
           </div>
         </header>
 
-        <div className="relative mt-6">
+        <div className="relative mt-auto mb-4">
           <Input
             placeholder="Search Doctors..."
             className="h-10 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
