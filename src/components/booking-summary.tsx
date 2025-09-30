@@ -31,9 +31,10 @@ export default function BookingSummary() {
 
   const handleConfirm = () => {
     if (appointment) {
+        const tokenNumber = appointmentsData.length + 1;
         const finalAppointment = {
             ...appointment,
-            id: `appt${appointmentsData.length + 1}`,
+            id: `appt${tokenNumber}`,
             status: 'Upcoming'
         } as Appointment;
         
@@ -49,7 +50,7 @@ export default function BookingSummary() {
         });
         
         sessionStorage.removeItem('newAppointment');
-        router.push('/appointments');
+        router.push(`/booking-success?token=${tokenNumber}`);
     }
   };
 
@@ -61,7 +62,7 @@ export default function BookingSummary() {
     )
   }
 
-  const { doctorName, doctorAvatar, doctorClinic, date, time, patientDetails } = appointment;
+  const { doctorName, doctorAvatar, doctorClinic, specialty, fee, date, time, patientDetails } = appointment;
 
   return (
     <div className="space-y-6 p-4">
@@ -95,6 +96,12 @@ export default function BookingSummary() {
                         <Clock className="w-5 h-5 text-primary"/>
                         <span className="font-semibold">{time}</span>
                     </div>
+                    {fee && (
+                        <div className="flex items-center gap-3">
+                            <span className="font-semibold text-primary">₹{fee}</span>
+                            <span className="text-sm text-muted-foreground">Consultation Fee</span>
+                        </div>
+                    )}
                  </div>
             </CardContent>
         </Card>
