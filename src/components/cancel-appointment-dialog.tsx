@@ -34,7 +34,7 @@ export default function CancelAppointmentDialog({ appointmentId, onCancelSuccess
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" size="sm">Cancel</Button>
+        <Button variant="outline" size="sm" className="bg-[#FFD1D1] hover:bg-[#FFD1D1]/90 text-red-800 border-red-200">Cancel</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
