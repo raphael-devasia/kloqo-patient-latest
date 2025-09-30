@@ -101,8 +101,8 @@ export default function ScheduleForm() {
                 <span className="font-bold text-lg">{doctor.rating}</span>
             </div>
           <h1 className="text-3xl font-bold">{doctor.name}</h1>
-          <p className="text-lg">{doctor.specialty}</p>
           <p className="text-sm">{doctor.clinic}</p>
+          <p className="text-lg">{doctor.specialty}</p>
         </div>
       </div>
       
@@ -137,7 +137,7 @@ export default function ScheduleForm() {
             <div className="space-y-4">
                 <div className="flex justify-between items-center">
                     <h3 className="text-lg font-bold">Select Time</h3>
-                    <p className="text-sm text-muted-foreground">{timeSlots.length} Slots</p>
+                    <p className="text-sm text-muted-foreground">nine slots available</p>
                 </div>
                <Controller
                 name="time"
