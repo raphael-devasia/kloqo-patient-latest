@@ -205,12 +205,12 @@ export default function BookingOptions() {
               </FormItem>
             )}
           />
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
              <FormField
               control={form.control}
               name="age"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="col-span-1">
                   <FormLabel>Age</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="Age" {...field} />
@@ -223,7 +223,7 @@ export default function BookingOptions() {
               control={form.control}
               name="sex"
               render={({ field }) => (
-                <FormItem className="space-y-3">
+                <FormItem className="space-y-3 col-span-2">
                   <FormLabel>Sex</FormLabel>
                   <FormControl>
                     <RadioGroup
@@ -298,5 +298,7 @@ export default function BookingOptions() {
 
 
 
+
+    
 
     
