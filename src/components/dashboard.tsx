@@ -253,7 +253,7 @@ const getRelativeDate = (date: Date) => {
 
           <section className="space-y-4 pt-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-bold text-gray-800">Doctors/Clinics</h2>
+              <h2 className="text-xl font-bold text-gray-800">Clinics</h2>
               <Link href="/doctors">
                 <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
               </Link>
