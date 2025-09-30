@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { user, doctors as initialDoctors } from "@/lib/data";
@@ -323,7 +322,7 @@ const handleLocationUpdate = async (newCity: string) => {
 
   return (
     <div className="relative min-h-full">
-      <div className="bg-[#869A73] p-6 h-48 rounded-b-[3rem] flex flex-col">
+      <div className="bg-[#869A73] p-6 h-96 rounded-b-[3rem] flex flex-col">
         <header className="flex items-center justify-between text-white pt-4">
           <div>
             <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
@@ -502,3 +501,5 @@ const handleLocationUpdate = async (newCity: string) => {
     </div>
   );
 }
+
+    
