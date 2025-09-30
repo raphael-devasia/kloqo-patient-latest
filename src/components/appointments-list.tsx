@@ -2,7 +2,7 @@
 
 "use client";
 
-import { appointments, doctors, user } from "@/lib/data";
+import { appointments as initialAppointments, doctors, user } from "@/lib/data";
 import { Appointment } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,6 +11,7 @@ import { Stethoscope, User } from "lucide-react";
 import { format, parse, parseISO } from "date-fns";
 import SmartRescheduleDialog from "./smart-reschedule-dialog";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
 
 const AppointmentCard = ({ appointment, index }: { appointment: Appointment, index: number }) => {
   const doctor = doctors.find((d) => d.id === appointment.doctorId);
@@ -36,7 +37,7 @@ const AppointmentCard = ({ appointment, index }: { appointment: Appointment, ind
                 <div className="flex items-center gap-2">
                     <User className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Patient:</span>
-                    <span className="font-medium">{user.name}</span>
+                    <span className="font-medium">{appointment.patientDetails?.name || user.name}</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <span className="text-muted-foreground">Token #:</span>
@@ -57,6 +58,13 @@ const AppointmentCard = ({ appointment, index }: { appointment: Appointment, ind
 };
 
 export default function AppointmentsList() {
+    const [appointments, setAppointments] = useState(initialAppointments);
+
+    useEffect(() => {
+        // In a real app this would be a fetch or a subscription
+        setAppointments([...initialAppointments]); 
+    }, []);
+
     const upcomingAppointments = appointments
     .filter(appt => appt.status === "Upcoming")
     .sort((a, b) => {
@@ -65,6 +73,7 @@ export default function AppointmentsList() {
         if (dateA.getTime() !== dateB.getTime()) {
             return dateA.getTime() - dateB.getTime();
         }
+        // If dates are same, sort by time
         const timeA = parse(a.time, 'hh:mm a', new Date());
         const timeB = parse(b.time, 'hh:mm a', new Date());
         return timeA.getTime() - timeB.getTime();

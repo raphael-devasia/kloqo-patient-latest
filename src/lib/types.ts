@@ -23,6 +23,8 @@ export type Appointment = {
   doctorName: string;
   doctorAvatar: string;
   doctorClinic: string;
+  specialty: string;
+  fee?: number;
   date: string;
   time: string;
   type: 'Consultation' | 'Follow-up' | 'Check-up';
