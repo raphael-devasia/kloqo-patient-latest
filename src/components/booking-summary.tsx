@@ -10,7 +10,7 @@ import { Calendar, Clock, User, Phone, MapPin, ChevronLeft } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import { Appointment } from '@/lib/types';
-import { appointments as appointmentsData } from '@/lib/data';
+import { appointments as appointmentsData, notifications } from '@/lib/data';
 
 type AppointmentWithPatient = Omit<Appointment, 'id' | 'status'>;
 
@@ -42,6 +42,16 @@ export default function BookingSummary() {
         // Here we just add it to the local data for demo purposes.
         appointmentsData.push(finalAppointment);
         
+        // Add a notification
+        notifications.unshift({
+            id: `notif${notifications.length + 1}`,
+            type: 'appointment',
+            title: 'Appointment Confirmed',
+            message: `Your appointment with ${appointment.doctorName} is set for ${format(new Date(appointment.date), 'MMM d')} at ${appointment.time}. Token: ${String(tokenNumber).padStart(3, '0')}`,
+            date: new Date().toISOString(),
+            isRead: false,
+        });
+
         toast({
             title: "Appointment Booked!",
             description: `Your appointment with ${appointment.doctorName} is confirmed.`,
