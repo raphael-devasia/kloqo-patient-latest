@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MapPin, Clock } from "lucide-react";
+import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MapPin, Clock, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { format, isPast, isTomorrow, formatDistanceToNow, parseISO } from "date-fns";
 import {
@@ -20,6 +20,21 @@ import { Appointment, Doctor } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ToothIcon, FaceIcon } from "./category-icons";
 
+// Haversine formula to calculate distance between two lat/lon points
+const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+  const R = 6371; // Radius of the earth in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c; // Distance in km
+  return d;
+};
+
+
 const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string }) => (
   <div className="flex flex-col items-center justify-center gap-2 text-center">
     {icon}
@@ -27,27 +42,49 @@ const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string })
   </div>
 );
 
-const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-  <Card className="p-4">
-    <div className="flex items-center gap-4">
-      <Avatar className="w-16 h-16 border">
-        <AvatarImage src={doctor.avatar} alt={doctor.name} />
-        <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
-      </Avatar>
-      <div className="flex-1">
-        <h3 className="font-bold text-base">{doctor.name}</h3>
-        <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
-        <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
-      </div>
-      <Button variant="ghost" size="icon">
-        <HeartPulse className="w-5 h-5 text-muted-foreground" />
-      </Button>
-    </div>
-  </Card>
-)
+const DoctorCard = ({ doctor, userLocation }: { doctor: Doctor, userLocation: { latitude: number; longitude: number; } | null }) => {
+    const [distance, setDistance] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (userLocation && doctor.location) {
+        const dist = getDistance(userLocation.latitude, userLocation.longitude, doctor.location.latitude, doctor.location.longitude);
+        setDistance(dist.toFixed(1) + " km");
+        }
+    }, [userLocation, doctor.location]);
+    
+    return (
+        <Card className="p-4 relative">
+            <div className="flex items-center gap-4">
+            <Avatar className="w-16 h-16 border">
+                <AvatarImage src={doctor.avatar} alt={doctor.name} />
+                <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+                <h3 className="font-bold text-base">{doctor.name}</h3>
+                <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
+                <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
+            </div>
+            <Button variant="ghost" size="icon">
+                <HeartPulse className="w-5 h-5 text-muted-foreground" />
+            </Button>
+            </div>
+            <div className="absolute bottom-2 right-2 flex items-center gap-1 text-xs text-muted-foreground">
+                {distance ? (
+                    <>
+                        <MapPin className="w-3 h-3" />
+                        <span>{distance}</span>
+                    </>
+                ) : (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                )}
+            </div>
+        </Card>
+    )
+}
 
 export default function Dashboard() {
   const [location, setLocation] = useState<{ city: string; country: string } | null>(null);
+  const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -55,6 +92,7 @@ export default function Dashboard() {
         async (position) => {
           try {
             const { latitude, longitude } = position.coords;
+            setUserLocation({ latitude, longitude });
             const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
             const data = await response.json();
             const { city, country } = data.address;
@@ -63,18 +101,21 @@ export default function Dashboard() {
             console.error("Error fetching location:", error);
             // Fallback or error handling
             setLocation({ city: 'New York', country: 'USA' });
+            setUserLocation({ latitude: 40.7128, longitude: -74.0060 });
           }
         },
         (error) => {
           console.log("Geolocation error:", error.message);
            // Fallback or error handling
           setLocation({ city: 'New York', country: 'USA' });
+          setUserLocation({ latitude: 40.7128, longitude: -74.0060 });
         }
       );
     } else {
       console.log("Geolocation is not supported by this browser.");
        // Fallback or error handling
       setLocation({ city: 'New York', country: 'USA' });
+      setUserLocation({ latitude: 40.7128, longitude: -74.0060 });
     }
   }, []);
   
@@ -228,7 +269,7 @@ const getRelativeDate = (date: Date) => {
             </div>
             <div className="space-y-3">
               {popularHealers.map((doctor) => (
-                <DoctorCard key={doctor.id} doctor={doctor} />
+                <DoctorCard key={doctor.id} doctor={doctor} userLocation={userLocation} />
               ))}
             </div>
           </section>
