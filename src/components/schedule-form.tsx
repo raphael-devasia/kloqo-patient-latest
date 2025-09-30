@@ -112,7 +112,7 @@ export default function ScheduleForm() {
           <p className="text-lg">{doctor.clinic}</p>
           <p className="text-base text-white/90">{doctor.specialty}</p>
           {doctor.fee && (
-            <p className="text-base text-white/90 font-bold mt-1">${doctor.fee}</p>
+            <p className="text-base text-white/90 font-bold mt-1">₹{doctor.fee}</p>
           )}
         </div>
         
