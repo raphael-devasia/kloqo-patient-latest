@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { Star, ChevronLeft, ChevronRight, CalendarDays, Clock } from "lucide-react";
+import { Star, ChevronLeft, CalendarDays, Clock } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import DatePicker from "./date-picker";
@@ -135,9 +135,7 @@ export default function ScheduleForm() {
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-bold">Select Date</h3>
                 <div className="flex items-center gap-2 text-sm font-medium">
-                  <ChevronLeft className="w-4 h-4 cursor-pointer" />
                   <span>{format(form.getValues('date'), 'MMMM yyyy')}</span>
-                  <ChevronRight className="w-4 h-4 cursor-pointer" />
                 </div>
               </div>
               <Controller
