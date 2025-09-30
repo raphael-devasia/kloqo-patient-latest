@@ -44,6 +44,7 @@ const AppointmentOptions = ({ appointment }: { appointment: Appointment }) => {
 const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
   const doctor = doctors.find((d) => d.id === appointment.doctorId);
   const appointmentDate = parseISO(appointment.date);
+  const token = String(appointment.id.replace('appt', '')).padStart(3, '0');
 
   return (
     <Card className="shadow-md">
@@ -65,8 +66,9 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
             </div>
           </div>
            <div>
-              <p className="text-xs text-muted-foreground">Appointment Type</p>
-              <p className="font-semibold">{appointment.type}</p>
+              <p className="font-bold">{appointment.doctorName}</p>
+              <p className="text-sm text-muted-foreground">{appointment.specialty}</p>
+              <p className="text-sm text-muted-foreground">Token: <span className="font-semibold text-primary">{token}</span></p>
             </div>
           <div className="flex justify-end pt-2">
              <AppointmentOptions appointment={appointment} />
