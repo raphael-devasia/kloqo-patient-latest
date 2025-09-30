@@ -80,7 +80,7 @@ export default function ScheduleForm() {
   }
 
   return (
-    <div className="bg-[#f8f8f8] min-h-full">
+    <div className="bg-white min-h-full">
       <div className="relative h-80">
         <Image
           src={doctor.avatar}
@@ -107,12 +107,12 @@ export default function ScheduleForm() {
       </div>
       
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Card className="rounded-t-3xl -mt-6 shadow-none border-0">
+        <Card className="rounded-t-3xl -mt-6 shadow-none border-0 bg-white">
           <CardContent className="p-6 space-y-6">
             {doctor.bio && (
                 <div className="space-y-2">
                   <h3 className="text-lg font-bold">About Doctor</h3>
-                  <p className="text-sm text-muted-foreground">{doctor.bio}</p>
+                  <p className="text-sm text-foreground/80">{doctor.bio}</p>
                 </div>
               )}
             <div className="space-y-4">
