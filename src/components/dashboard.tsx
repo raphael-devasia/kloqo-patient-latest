@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MapPin, Clock, Loader2, Heart, Hospital, User as UserIcon } from "lucide-react";
 import Link from "next/link";
-import { format, isPast, isTomorrow, formatDistanceToNow, parseISO } from "date-fns";
+import { format, isPast, formatDistanceToNow, parseISO } from "date-fns";
 import {
   Carousel,
   CarouselContent,
@@ -264,9 +264,10 @@ export default function Dashboard() {
     const cardColors = ['bg-[#F2FFE3]', 'bg-[#E7D7C9]'];
     const dateColors = ['bg-[#D9F5B3]', 'bg-[#DBCFB9]'];
     const cardColor = cardColors[index % cardColors.length];
-    const dateColor = dateColors[index % cardColors.length];
+    const dateColor = dateColors[index % dateColors.length];
 
     return (
+      <Link href="/appointments" className="block">
         <Card className={cn("flex-shrink-0 w-64 rounded-2xl shadow-md", cardColor)}>
             <CardContent className="p-4 text-gray-800">
                 <div className="flex justify-between items-start">
@@ -286,6 +287,7 @@ export default function Dashboard() {
                 </div>
             </CardContent>
         </Card>
+      </Link>
     );
 };
 
@@ -339,7 +341,7 @@ const handleLocationUpdate = async (newCity: string) => {
           </div>
         </header>
 
-         <div ref={searchRef} className="relative mt-4">
+         <div ref={searchRef} className="relative mt-auto mb-4">
           <form onSubmit={handleSearchSubmit}>
             <Input
               placeholder="Search Doctors, clinics, specialty..."
@@ -384,7 +386,7 @@ const handleLocationUpdate = async (newCity: string) => {
         </div>
       </div>
       
-      <div className="px-6 -mt-44 space-y-4">
+      <div className="px-6 -mt-[calc(50vh-140px)] space-y-4">
         {upcomingAppointments.length > 0 && (
           <div className="space-y-2">
              <div className="flex justify-center items-center">
@@ -500,5 +502,3 @@ const handleLocationUpdate = async (newCity: string) => {
     </div>
   );
 }
-
-    
