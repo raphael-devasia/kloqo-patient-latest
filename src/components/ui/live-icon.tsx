@@ -3,12 +3,21 @@ import React from 'react';
 const LiveIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
     viewBox="0 0 24 24"
-    fill="currentColor"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     {...props}
   >
-    <path d="M12 6.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM10.5 15.125V8.875L14.5 12l-4 3.125Z" />
-    <path d="M5.013 3.993a1 1 0 0 1 1.05-.06A14.636 14.636 0 0 1 12 5.5c2.33 0 4.545-.54 6.537-1.567a1 1 0 0 1 1.05.06 1.002 1.002 0 0 1 .396 1.034 16.598 16.598 0 0 1-2.185 6.002 16.6 16.6 0 0 1 2.185 6.002 1 1 0 0 1-.396 1.034 1 1 0 0 1-1.05.06A14.636 14.636 0 0 1 12 18.5c-2.33 0-4.545-.54-6.537-1.567a1 1 0 0 1-1.05-.06 1 1 0 0 1-.396-1.034A16.598 16.598 0 0 1 6.202 12a16.598 16.598 0 0 1-2.185-6.002 1 1 0 0 1 .396-1.005Z" />
+    <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
+    <path d="M16.24 7.76a6 6 0 0 1 0 8.49"></path>
+    <path d="M7.76 7.76a6 6 0 0 0 0 8.49"></path>
+    <path d="M18.36 5.64a9 9 0 0 1 0 12.73"></path>
+    <path d="M5.64 5.64a9 9 0 0 0 0 12.73"></path>
   </svg>
 );
 
