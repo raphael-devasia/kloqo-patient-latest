@@ -6,7 +6,7 @@ import { Appointment } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Stethoscope, User, Hash } from "lucide-react";
+import { Stethoscope, User } from "lucide-react";
 import { format, parse, parseISO } from "date-fns";
 import SmartRescheduleDialog from "./smart-reschedule-dialog";
 import { cn } from "@/lib/utils";
@@ -38,7 +38,6 @@ const AppointmentCard = ({ appointment, index }: { appointment: Appointment, ind
                     <span className="font-medium">{user.name}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Hash className="h-4 w-4 text-muted-foreground" />
                     <span className="text-muted-foreground">Token #:</span>
                     <span className="font-medium">{appointment.id.toUpperCase()}</span>
                 </div>
