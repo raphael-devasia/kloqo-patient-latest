@@ -28,7 +28,7 @@ export default function AppointmentsPage() {
           className={cn(
             "pb-2 font-semibold",
             activeTab === "Upcoming"
-              ? "text-red-600 border-b-2 border-red-600"
+              ? "text-primary border-b-2 border-primary"
               : "text-muted-foreground"
           )}
         >
@@ -39,7 +39,7 @@ export default function AppointmentsPage() {
           className={cn(
             "pb-2 font-semibold",
             activeTab === "Completed"
-              ? "text-red-600 border-b-2 border-red-600"
+              ? "text-primary border-b-2 border-primary"
               : "text-muted-foreground"
           )}
         >
@@ -53,7 +53,7 @@ export default function AppointmentsPage() {
 
       <div className="py-4 px-4 border-t bg-background">
         <Link href="/doctors" passHref>
-          <Button className="w-full h-12 rounded-lg text-lg bg-red-600 hover:bg-red-700">
+          <Button className="w-full h-12 rounded-lg text-lg">
             Book new Appointment
           </Button>
         </Link>

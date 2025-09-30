@@ -28,7 +28,7 @@ const AppointmentCard = ({ appointment, onCancelSuccess }: { appointment: Appoin
       <CardContent className="p-4 flex items-center gap-4">
         <div className="flex flex-col items-center w-16">
           <span className="text-sm text-muted-foreground">{format(appointmentDate, 'MMM')}</span>
-          <span className="text-3xl font-bold text-red-600">{format(appointmentDate, 'dd')}</span>
+          <span className="text-3xl font-bold text-primary">{format(appointmentDate, 'dd')}</span>
           <span className="text-sm text-muted-foreground">{format(appointmentDate, 'E')}</span>
         </div>
         <div className="border-l pl-4 flex-1 space-y-2">
