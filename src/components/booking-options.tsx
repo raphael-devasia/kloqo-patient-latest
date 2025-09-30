@@ -151,7 +151,7 @@ export default function BookingOptions() {
             </CardContent>
         </Card>
 
-      <div className="space-y-4">
+      <div className="space-y-4 pt-4">
         <Card
           onClick={() => setBookingFor('self')}
           className={cn("cursor-pointer transition-colors", bookingFor === 'self' ? 'bg-primary/10 border-primary' : 'hover:bg-accent')}
