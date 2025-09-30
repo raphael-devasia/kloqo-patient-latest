@@ -215,19 +215,6 @@ const getRelativeDate = (date: Date) => {
       </div>
       
       <div className="px-6 -mt-20 space-y-4">
-      {nextAppointment && (
-          <div className="bg-accent text-accent-foreground p-4 rounded-xl flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <Bell className="w-5 h-5" />
-              <p className="font-semibold text-sm">Your next medical checkup</p>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <Clock className="w-4 h-4" />
-              <span>{getRelativeDate(parseISO(nextAppointment.date))}</span>
-            </div>
-          </div>
-        )}
-
         {upcomingAppointments.length > 0 && (
           <div className="space-y-4">
              <div className="flex justify-between items-center">
@@ -240,6 +227,19 @@ const getRelativeDate = (date: Date) => {
               {upcomingAppointments.map((appointment, index) => (
                 <AppointmentCard key={appointment.id} appointment={appointment} index={index} />
               ))}
+            </div>
+          </div>
+        )}
+
+        {nextAppointment && (
+          <div className="bg-accent text-accent-foreground p-4 rounded-xl flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <Bell className="w-5 h-5" />
+              <p className="font-semibold text-sm">Your next medical checkup</p>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <Clock className="w-4 h-4" />
+              <span>{getRelativeDate(parseISO(nextAppointment.date))}</span>
             </div>
           </div>
         )}
