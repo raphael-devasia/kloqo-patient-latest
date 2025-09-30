@@ -9,13 +9,8 @@ export default function DoctorsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const specialty = searchParams.get('specialty');
-  const clinic = searchParams.get('clinic');
 
-  const pageTitle = () => {
-    if (specialty) return specialty;
-    if (clinic) return clinic;
-    return 'Doctors';
-  }
+  const pageTitle = specialty ? specialty : "Doctors/Clinics";
 
   return (
     <div className="space-y-4">
@@ -23,9 +18,9 @@ export default function DoctorsPage() {
         <button onClick={() => router.back()} className="absolute left-0">
           <ChevronLeft className="w-6 h-6" />
         </button>
-        <h1 className="text-xl font-bold">{pageTitle()}</h1>
+        <h1 className="text-xl font-bold">{pageTitle}</h1>
       </div>
-      <DoctorsList specialty={specialty} clinic={clinic} />
+      <DoctorsList specialty={specialty} />
     </div>
   );
 }

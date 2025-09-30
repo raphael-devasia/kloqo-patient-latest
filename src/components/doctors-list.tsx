@@ -5,7 +5,7 @@ import { doctors } from "@/lib/data";
 import { Doctor } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Star, Search, ArrowUpDown, Ticket, Hospital } from "lucide-react";
+import { Star, Search, ArrowUpDown, Ticket, Hospital, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState, useMemo } from "react";
 import {
@@ -18,54 +18,41 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
-const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-    <Card className="shadow-md rounded-2xl aspect-square overflow-hidden" style={{ backgroundColor: '#d4E0EE', border: 'none' }}>
-        <CardContent className="p-2 flex flex-col items-center justify-center h-full text-center">
-            <Avatar className="h-12 w-12 md:h-16 md:w-16 rounded-full mb-1 md:mb-2">
-                <AvatarImage src={doctor.avatar} alt={doctor.name} className="object-cover" />
-                <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="space-y-0.5">
-                <h3 className="font-bold text-sm text-card-foreground leading-tight">{doctor.name}</h3>
-                <p className="text-xs text-muted-foreground">{doctor.specialty}</p>
-            </div>
-        </CardContent>
+
+const ClinicCard = ({ clinicName }: { clinicName: string }) => (
+  <Link href={`/clinics/${encodeURIComponent(clinicName)}`}>
+    <Card className="w-full">
+      <CardContent className="p-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-primary/10 rounded-lg">
+            <Hospital className="w-5 h-5 text-primary" />
+          </div>
+          <h2 className="text-lg font-bold">{clinicName}</h2>
+        </div>
+        <ChevronRight className="w-5 h-5 text-muted-foreground" />
+      </CardContent>
     </Card>
-);
-
-const ClinicCard = ({ clinicName, doctors }: { clinicName: string, doctors: Doctor[] }) => (
-  <Card className="w-full">
-    <CardContent className="p-4">
-      <div className="flex items-center gap-2 mb-4">
-        <Hospital className="w-5 h-5 text-primary" />
-        <h2 className="text-lg font-bold">{clinicName}</h2>
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        {doctors.map((doc) => <DoctorCard key={doc.id} doctor={doc} />)}
-      </div>
-    </CardContent>
-  </Card>
+  </Link>
 );
 
 
-export default function DoctorsList({ specialty, clinic }: { specialty?: string | null, clinic?: string | null }) {
-  const [searchTerm, setSearchTerm] = useState("");
+export default function DoctorsList({ specialty }: { specialty?: string | null }) {
+  const [searchTerm, setSearchTerm] = useState(specialty || "");
   const [sortOrder, setSortOrder] = useState("a-z");
 
   const filteredAndSortedDoctors = useMemo(() => {
     let filtered = doctors
       .filter((doctor) => {
-        if (specialty && doctor.specialty.toLowerCase() !== specialty.toLowerCase()) {
-          return false;
-        }
-
-        if (clinic && doctor.clinic.toLowerCase() !== clinic.toLowerCase()) {
-          return false;
-        }
-
         const term = searchTerm.toLowerCase();
         if (!term) return true;
+
+        if (specialty) {
+          return doctor.specialty.toLowerCase() === specialty.toLowerCase() && 
+                 (doctor.name.toLowerCase().includes(term) || doctor.clinic.toLowerCase().includes(term));
+        }
 
         return (
           doctor.name.toLowerCase().includes(term) ||
@@ -83,7 +70,7 @@ export default function DoctorsList({ specialty, clinic }: { specialty?: string 
       default:
         return filtered.sort((a, b) => a.name.localeCompare(b.name));
     }
-  }, [searchTerm, sortOrder, specialty, clinic]);
+  }, [searchTerm, sortOrder, specialty]);
 
   const doctorsByClinic = useMemo(() => {
     return filteredAndSortedDoctors.reduce((acc, doctor) => {
@@ -132,11 +119,11 @@ export default function DoctorsList({ specialty, clinic }: { specialty?: string 
       <div className="space-y-4">
         {clinicNames.length > 0 ? (
           clinicNames.map((clinicName) => (
-            <ClinicCard key={clinicName} clinicName={clinicName} doctors={doctorsByClinic[clinicName]} />
+            <ClinicCard key={clinicName} clinicName={clinicName} />
           ))
         ) : (
           <p className="col-span-full mt-4 text-center text-muted-foreground">
-            No doctors found.
+            No doctors or clinics found.
           </p>
         )}
       </div>
