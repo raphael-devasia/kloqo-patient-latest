@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { doctors } from "@/lib/data";
+import { doctors, appointments } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -50,7 +50,19 @@ export default function ScheduleForm() {
     }
   });
 
-  const { handleSubmit, control, formState: { errors } } = form;
+  const { handleSubmit, control, watch, formState: { errors } } = form;
+  const selectedDate = watch('date');
+
+  const bookedSlots = appointments
+    .filter(
+      (appointment) =>
+        appointment.doctorId === doctor?.id &&
+        appointment.date === format(selectedDate, "yyyy-MM-dd")
+    )
+    .map((appointment) => appointment.time);
+
+  const availableSlotsCount = timeSlots.length - bookedSlots.length;
+
 
   useEffect(() => {
     if (preselectedDoctorId) {
@@ -141,7 +153,7 @@ export default function ScheduleForm() {
             <div className="space-y-4">
                 <div className="flex justify-between items-center">
                     <h3 className="text-lg font-bold">Select Time</h3>
-                    <p className="text-sm text-muted-foreground">9 slots Available</p>
+                    <p className="text-sm text-muted-foreground">{availableSlotsCount} slots Available</p>
                 </div>
                <Controller
                 name="time"
@@ -152,17 +164,30 @@ export default function ScheduleForm() {
                     defaultValue={field.value}
                     className="grid grid-cols-3 gap-3"
                   >
-                    {timeSlots.map((slot) => (
-                      <div key={slot}>
-                        <RadioGroupItem value={slot} id={slot} className="peer sr-only" />
-                        <Label
-                          htmlFor={slot}
-                          className="flex items-center justify-center rounded-lg border-2 border-muted bg-popover p-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 peer-data-[state=checked]:text-primary"
-                        >
-                          {slot}
-                        </Label>
-                      </div>
-                    ))}
+                    {timeSlots.map((slot) => {
+                        const isBooked = bookedSlots.includes(slot);
+                        return (
+                          <div key={slot}>
+                            <RadioGroupItem 
+                              value={slot} 
+                              id={slot} 
+                              className="peer sr-only" 
+                              disabled={isBooked}
+                            />
+                            <Label
+                              htmlFor={slot}
+                              className={cn(
+                                "flex items-center justify-center rounded-lg border-2 border-muted bg-popover p-3 text-sm font-medium",
+                                isBooked 
+                                  ? "cursor-not-allowed bg-muted/50 text-muted-foreground line-through"
+                                  : "hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 peer-data-[state=checked]:text-primary"
+                              )}
+                            >
+                              {slot}
+                            </Label>
+                          </div>
+                        )
+                    })}
                   </RadioGroup>
                 )}
               />
