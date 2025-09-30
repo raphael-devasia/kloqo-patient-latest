@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -21,6 +22,7 @@ import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Stethoscope, User, Calendar as CalendarIcon, Clock } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 const scheduleSchema = z.object({
   specialty: z.string().min(1, "Please select a specialty."),
@@ -34,15 +36,34 @@ type ScheduleFormValues = z.infer<typeof scheduleSchema>;
 const timeSlots = ["09:00 AM", "10:00 AM", "11:00 AM", "02:00 PM", "03:00 PM", "04:00 PM"];
 
 export default function ScheduleForm() {
-  const [selectedSpecialty, setSelectedSpecialty] = useState<string>("");
+  const searchParams = useSearchParams();
+  const preselectedDoctorId = searchParams.get("doctorId");
+  const preselectedSpecialty = searchParams.get("specialty");
+
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string>(preselectedSpecialty || "");
   const { toast } = useToast();
 
   const form = useForm<ScheduleFormValues>({
     resolver: zodResolver(scheduleSchema),
+    defaultValues: {
+        specialty: preselectedSpecialty || "",
+        doctorId: preselectedDoctorId || "",
+    }
   });
 
   const { handleSubmit, control, watch, reset, formState: { errors } } = form;
   const watchedDoctorId = watch("doctorId");
+
+  useEffect(() => {
+    if (preselectedSpecialty) {
+      setSelectedSpecialty(preselectedSpecialty);
+      form.setValue("specialty", preselectedSpecialty);
+    }
+    if (preselectedDoctorId) {
+      form.setValue("doctorId", preselectedDoctorId);
+    }
+  }, [preselectedDoctorId, preselectedSpecialty, form]);
+
 
   const onSubmit = (data: ScheduleFormValues) => {
     console.log(data);
@@ -52,7 +73,12 @@ export default function ScheduleForm() {
       variant: 'default',
       className: 'bg-accent text-accent-foreground'
     });
-    reset();
+    reset({
+        specialty: "",
+        doctorId: "",
+        date: undefined,
+        time: "",
+    });
     setSelectedSpecialty("");
   };
 
@@ -86,7 +112,7 @@ export default function ScheduleForm() {
                       setSelectedSpecialty(value);
                       form.setValue("doctorId", "");
                     }}
-                    defaultValue={field.value}
+                    value={field.value}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select a specialty" />

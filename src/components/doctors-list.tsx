@@ -40,22 +40,24 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
 };
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-    <Card className="w-full">
-        <CardContent className="p-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Avatar className="w-12 h-12 border">
-                <AvatarImage src={doctor.avatar} alt={doctor.name} />
-                <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div>
-                <h3 className="font-bold text-base">{doctor.name}</h3>
-                <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
-                <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
+    <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
+        <Card className="w-full">
+            <CardContent className="p-4 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+                <Avatar className="w-12 h-12 border">
+                    <AvatarImage src={doctor.avatar} alt={doctor.name} />
+                    <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div>
+                    <h3 className="font-bold text-base">{doctor.name}</h3>
+                    <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
+                    <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
+                </div>
             </div>
-          </div>
-           <ChevronRight className="w-5 h-5 text-muted-foreground" />
-        </CardContent>
-    </Card>
+            <ChevronRight className="w-5 h-5 text-muted-foreground" />
+            </CardContent>
+        </Card>
+    </Link>
 );
 
 
@@ -244,5 +246,3 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
     </div>
   );
 }
-
-    
