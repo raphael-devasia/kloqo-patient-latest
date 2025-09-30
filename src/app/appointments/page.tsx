@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 
 export default function AppointmentsPage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"Upcoming" | "Past">("Upcoming");
+  const [activeTab, setActiveTab] = useState<"Upcoming" | "Completed">("Upcoming");
 
   return (
     <div className="relative h-full flex flex-col">
@@ -35,15 +35,15 @@ export default function AppointmentsPage() {
           Upcoming
         </button>
         <button
-          onClick={() => setActiveTab("Past")}
+          onClick={() => setActiveTab("Completed")}
           className={cn(
             "pb-2 font-semibold",
-            activeTab === "Past"
+            activeTab === "Completed"
               ? "text-red-600 border-b-2 border-red-600"
               : "text-muted-foreground"
           )}
         >
-          Past
+          Completed
         </button>
       </div>
 

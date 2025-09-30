@@ -77,7 +77,7 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
   );
 };
 
-export default function AppointmentsList({ filter }: { filter: "Upcoming" | "Past" }) {
+export default function AppointmentsList({ filter }: { filter: "Upcoming" | "Completed" }) {
     const [appointments, setAppointments] = useState(initialAppointments);
 
     useEffect(() => {
@@ -91,7 +91,7 @@ export default function AppointmentsList({ filter }: { filter: "Upcoming" | "Pas
 
     const filteredAppointments = appointments
         .filter(appt => {
-            const status = isPast(parseISO(appt.date)) ? "Past" : "Upcoming";
+            const status = isPast(parseISO(appt.date)) ? "Completed" : "Upcoming";
             return status === filter && appt.status !== 'Cancelled';
         })
         .sort((a, b) => {
