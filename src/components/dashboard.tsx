@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MoreHorizontal, MapPin, ChevronDown, Clock, HelpCircle } from "lucide-react";
 import Link from "next/link";
-import { format, isPast } from "date-fns";
+import { format, isPast, isTomorrow, formatDistanceToNow, parseISO } from "date-fns";
 import {
   Carousel,
   CarouselContent,
@@ -134,6 +134,8 @@ export default function Dashboard() {
   const upcomingAppointments = appointments
     .filter((appt) => appt.status === "Upcoming" && !isPast(new Date(appt.date)))
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+  const nextAppointment = upcomingAppointments[0];
   
   const popularHealers = doctors.slice(0, 2);
 
@@ -176,6 +178,13 @@ export default function Dashboard() {
     );
 };
 
+const getRelativeDate = (date: Date) => {
+    if (isTomorrow(date)) {
+        return 'Tomorrow';
+    }
+    return formatDistanceToNow(date, { addSuffix: true });
+}
+
   return (
     <div className="relative min-h-full">
       <div className="bg-[#869A73] p-6 h-[40vh] rounded-b-[3rem] flex flex-col">
@@ -206,16 +215,18 @@ export default function Dashboard() {
       </div>
       
       <div className="px-6 -mt-20 space-y-4">
-        <div className="bg-accent text-accent-foreground p-4 rounded-xl flex justify-between items-center">
+      {nextAppointment && (
+          <div className="bg-accent text-accent-foreground p-4 rounded-xl flex justify-between items-center">
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5" />
               <p className="font-semibold text-sm">Your next medical checkup</p>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Clock className="w-4 h-4" />
-              <span>Tomorrow</span>
+              <span>{getRelativeDate(parseISO(nextAppointment.date))}</span>
             </div>
-        </div>
+          </div>
+        )}
 
         {upcomingAppointments.length > 0 && (
           <div className="space-y-4">
