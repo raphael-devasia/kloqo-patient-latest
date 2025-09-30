@@ -16,17 +16,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import CancelAppointmentDialog from "./cancel-appointment-dialog";
 
-const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
+const AppointmentCard = ({ appointment, onCancelSuccess }: { appointment: Appointment, onCancelSuccess: (id: string) => void }) => {
   const doctor = doctors.find((d) => d.id === appointment.doctorId);
   const appointmentDate = parseISO(appointment.date);
   const token = String(appointment.id.replace('appt', '')).padStart(3, '0');
-
-  const handleCancel = () => {
-    // In a real app, you'd call an API to cancel.
-    // For this demo, we can just log it or update local state.
-    console.log("Cancelling appointment:", appointment.id);
-  };
 
   return (
     <Card className="shadow-md">
@@ -53,7 +48,7 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
               <p className="text-sm text-muted-foreground">Token: <span className="font-semibold text-primary">{token}</span></p>
             </div>
           <div className="flex justify-end pt-2 gap-2">
-             <Button variant="outline" size="sm" onClick={handleCancel}>Cancel</Button>
+             <CancelAppointmentDialog appointmentId={appointment.id} onCancelSuccess={onCancelSuccess} />
              <SmartRescheduleDialog appointment={appointment} />
           </div>
         </div>
@@ -74,6 +69,14 @@ export default function AppointmentsList({ filter }: { filter: "Upcoming" | "Com
         }
     }, []);
 
+    const handleCancelSuccess = (cancelledAppointmentId: string) => {
+      const updatedAppointments = appointments.map(appt => 
+        appt.id === cancelledAppointmentId ? { ...appt, status: 'Cancelled' } : appt
+      );
+      setAppointments(updatedAppointments);
+      localStorage.setItem('appointments', JSON.stringify(updatedAppointments));
+    };
+
     const filteredAppointments = appointments
         .filter(appt => {
             const status = isPast(parseISO(appt.date)) ? "Completed" : "Upcoming";
@@ -83,7 +86,7 @@ export default function AppointmentsList({ filter }: { filter: "Upcoming" | "Com
             const dateA = parseISO(a.date);
             const dateB = parseISO(b.date);
             if (dateA.getTime() !== dateB.getTime()) {
-                return filter === "Upcoming" ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+                return filter === "Upcoming" ? dateA.getTime() - dateB.getTime() : dateB.getTime() - a.getTime();
             }
             const timeA = parse(a.time, 'hh:mm a', new Date());
             const timeB = parse(b.time, 'hh:mm a', new Date());
@@ -101,7 +104,7 @@ export default function AppointmentsList({ filter }: { filter: "Upcoming" | "Com
   return (
     <div className="space-y-4">
        {filteredAppointments.map(appt => (
-         <AppointmentCard key={appt.id} appointment={appt} />
+         <AppointmentCard key={appt.id} appointment={appt} onCancelSuccess={handleCancelSuccess} />
        ))}
     </div>
   );
