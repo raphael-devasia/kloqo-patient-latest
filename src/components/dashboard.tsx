@@ -196,7 +196,7 @@ export default function Dashboard() {
           </div>
         </header>
 
-        <div className="relative mt-auto mb-4">
+        <div className="relative mt-4">
           <Input
             placeholder="Search Doctors..."
             className="h-10 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
