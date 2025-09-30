@@ -13,6 +13,7 @@ export type Doctor = {
   };
   isFavourite?: boolean;
   bio?: string;
+  fee?: number;
 };
 
 export type Appointment = {

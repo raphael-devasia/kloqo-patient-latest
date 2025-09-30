@@ -111,6 +111,9 @@ export default function ScheduleForm() {
           <h1 className="text-3xl font-bold">{doctor.name}</h1>
           <p className="text-lg">{doctor.clinic}</p>
           <p className="text-base text-white/90">{doctor.specialty}</p>
+          {doctor.fee && (
+            <p className="text-base text-white/90 font-bold mt-1">${doctor.fee}</p>
+          )}
         </div>
         
         <Card className="absolute bottom-6 right-6 bg-white/20 backdrop-blur-sm border-none text-white p-3">
