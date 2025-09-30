@@ -38,14 +38,20 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
     </Card>
 );
 
-export default function DoctorsList() {
+export default function DoctorsList({ specialty }: { specialty?: string | null }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("a-z");
 
   const filteredAndSortedDoctors = useMemo(() => {
     let filtered = doctors
       .filter((doctor) => {
+        if (specialty && doctor.specialty.toLowerCase() !== specialty.toLowerCase()) {
+          return false;
+        }
+
         const term = searchTerm.toLowerCase();
+        if (!term) return true;
+
         return (
           doctor.name.toLowerCase().includes(term) ||
           doctor.specialty.toLowerCase().includes(term) ||
@@ -60,9 +66,9 @@ export default function DoctorsList() {
         return filtered.sort((a, b) => b.rating - a.rating);
       case "a-z":
       default:
-        return filtered.sort((a, b) => a.name.localeCompare(a.name));
+        return filtered.sort((a, b) => a.name.localeCompare(b.name));
     }
-  }, [searchTerm, sortOrder]);
+  }, [searchTerm, sortOrder, specialty]);
 
   return (
     <div className="space-y-6">
