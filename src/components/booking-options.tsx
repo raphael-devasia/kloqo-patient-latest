@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -27,7 +26,7 @@ const patientDetailsSchema = z.object({
   age: z.string().min(1, "Age is required."),
   sex: z.enum(["male", "female", "other"], { required_error: "Please select a gender." }),
   location: z.string().min(3, "Location is required."),
-  phone: z.string().min(10, "Phone number seems too short."),
+  phone: z.string().min(10, "Phone number seems too short.").max(10, "Phone number cannot be more than 10 digits."),
 });
 
 type PatientDetailsFormValues = z.infer<typeof patientDetailsSchema>;
@@ -92,6 +91,8 @@ export default function BookingOptions() {
       doctorName: doctor.name,
       doctorAvatar: doctor.avatar,
       doctorClinic: doctor.clinic,
+      specialty: doctor.specialty,
+      fee: doctor.fee,
       date,
       time,
       type: 'Consultation',
@@ -117,14 +118,14 @@ export default function BookingOptions() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center relative justify-center mt-4">
+      <div className="flex items-center relative justify-center mt-6">
         <button onClick={() => router.back()} className="absolute left-0">
           <ChevronLeft className="w-6 h-6" />
         </button>
         <h1 className="text-xl font-bold">Booking</h1>
       </div>
 
-       <Card className="mt-4">
+       <Card className="mt-8">
             <CardContent className="p-4">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-4">
@@ -291,14 +292,5 @@ export default function BookingOptions() {
     </div>
   );
 }
-
-    
-
-    
-
-
-
-
-    
 
     
