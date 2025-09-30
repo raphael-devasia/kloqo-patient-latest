@@ -178,8 +178,8 @@ export default function Dashboard() {
 
   return (
     <div className="relative min-h-full">
-      <div className="bg-[#869A73] p-6 pt-6 pb-24 rounded-b-[3rem]">
-        <header className="flex items-center justify-between text-white">
+      <div className="bg-[#869A73] p-6 pb-24 rounded-b-[3rem]">
+        <header className="flex items-center justify-between text-white pt-4">
           <div>
             <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
             <div className="flex items-center gap-1.5 opacity-80">
