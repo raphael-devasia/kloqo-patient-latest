@@ -1,3 +1,4 @@
+
 export type Doctor = {
   id: string;
   name: string;
@@ -26,6 +27,13 @@ export type Appointment = {
   time: string;
   type: 'Consultation' | 'Follow-up' | 'Check-up';
   status: 'Upcoming' | 'Past' | 'Cancelled';
+  patientDetails?: {
+    name: string;
+    age: string;
+    sex: 'male' | 'female' | 'other';
+    location: string;
+    phone: string;
+  }
 };
 
 export type UserProfile = {

@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -9,11 +10,31 @@ import { useToast } from '@/hooks/use-toast';
 import { doctors, user, appointments as appointmentsData } from '@/lib/data';
 import { Appointment } from '@/lib/types';
 import { format } from 'date-fns';
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
+
+const patientDetailsSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters."),
+  age: z.string().min(1, "Age is required."),
+  sex: z.enum(["male", "female", "other"], { required_error: "Please select a gender." }),
+  location: z.string().min(3, "Location is required."),
+  phone: z.string().min(10, "Phone number seems too short."),
+});
+
+type PatientDetailsFormValues = z.infer<typeof patientDetailsSchema>;
 
 export default function BookingOptions() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
+  const [bookingFor, setBookingFor] = useState<'self' | 'other'>('self');
 
   const doctorId = searchParams.get('doctorId');
   const date = searchParams.get('date');
@@ -21,7 +42,39 @@ export default function BookingOptions() {
 
   const doctor = doctors.find(d => d.id === doctorId);
 
-  const handleBooking = (forSelf: boolean) => {
+  const form = useForm<PatientDetailsFormValues>({
+    resolver: zodResolver(patientDetailsSchema),
+    defaultValues: {
+      name: '',
+      age: '',
+      sex: undefined,
+      location: '',
+      phone: '',
+    }
+  });
+
+  useEffect(() => {
+    if (bookingFor === 'self') {
+      const userAge = user.dob ? String(new Date().getFullYear() - new Date(user.dob).getFullYear()) : '';
+      form.reset({
+        name: user.name,
+        age: userAge,
+        sex: 'male', // Assuming a default, this could be part of user profile
+        location: user.address,
+        phone: user.phone,
+      });
+    } else {
+      form.reset({
+        name: '',
+        age: '',
+        sex: undefined,
+        location: '',
+        phone: '',
+      });
+    }
+  }, [bookingFor, form, user]);
+
+  const handleBooking = (values: PatientDetailsFormValues) => {
     if (!doctor || !date || !time) {
       toast({
         title: 'Booking Error',
@@ -31,10 +84,8 @@ export default function BookingOptions() {
       router.push('/');
       return;
     }
-
-    // Here you would typically save the new appointment to your database.
-    // For this demo, we'll just show a toast.
-    const newAppointment: Omit<Appointment, 'id'> = {
+    
+    const newAppointment: Omit<Appointment, 'id' | 'status'> = {
       doctorId: doctor.id,
       doctorName: doctor.name,
       doctorAvatar: doctor.avatar,
@@ -42,20 +93,13 @@ export default function BookingOptions() {
       date,
       time,
       type: 'Consultation',
-      status: 'Upcoming',
+      patientDetails: values,
     };
-    console.log('New Appointment:', newAppointment);
     
-    const patientName = forSelf ? user.name : 'someone else';
-
-    toast({
-      title: 'Appointment Booked!',
-      description: `Your appointment for ${patientName} with ${doctor.name} on ${format(new Date(date), 'PPP')} at ${time} is confirmed.`,
-      variant: 'default',
-      className: 'bg-accent text-accent-foreground',
-    });
-
-    router.push('/appointments');
+    // For demo: store in session storage to pass to summary page
+    sessionStorage.setItem('newAppointment', JSON.stringify(newAppointment));
+    
+    router.push('/summary');
   };
 
   return (
@@ -69,8 +113,8 @@ export default function BookingOptions() {
 
       <div className="space-y-4">
         <Card
-          onClick={() => handleBooking(true)}
-          className="cursor-pointer hover:bg-accent transition-colors"
+          onClick={() => setBookingFor('self')}
+          className={cn("cursor-pointer transition-colors", bookingFor === 'self' ? 'bg-primary/10 border-primary' : 'hover:bg-accent')}
         >
           <CardContent className="p-6 flex items-center gap-4">
             <div className="p-3 bg-primary/10 rounded-lg">
@@ -84,8 +128,8 @@ export default function BookingOptions() {
         </Card>
 
         <Card
-          onClick={() => handleBooking(false)}
-          className="cursor-pointer hover:bg-accent transition-colors"
+          onClick={() => setBookingFor('other')}
+          className={cn("cursor-pointer transition-colors", bookingFor === 'other' ? 'bg-primary/10 border-primary' : 'hover:bg-accent')}
         >
           <CardContent className="p-6 flex items-center gap-4">
             <div className="p-3 bg-primary/10 rounded-lg">
@@ -99,11 +143,99 @@ export default function BookingOptions() {
         </Card>
       </div>
 
-      <div className="pt-4 text-center">
-        <p className="text-sm text-muted-foreground">
-            You will be able to add patient details after confirming.
-        </p>
-      </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleBooking)} className="space-y-6 pt-4">
+          <h2 className="text-lg font-semibold">Patient Details</h2>
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Full Name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="grid grid-cols-2 gap-4">
+             <FormField
+              control={form.control}
+              name="age"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Age</FormLabel>
+                  <FormControl>
+                    <Input type="number" placeholder="Age" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="sex"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Sex</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      className="flex space-x-4 pt-2"
+                    >
+                      <FormItem className="flex items-center space-x-2">
+                        <FormControl>
+                          <RadioGroupItem value="male" id="male" />
+                        </FormControl>
+                        <Label htmlFor="male">Male</Label>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-2">
+                        <FormControl>
+                          <RadioGroupItem value="female" id="female" />
+                        </FormControl>
+                        <Label htmlFor="female">Female</Label>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Location</FormLabel>
+                <FormControl>
+                  <Input placeholder="City, State" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="Contact number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="pt-4">
+             <Button type="submit" className="w-full h-12 rounded-xl text-lg">Confirm Appointment</Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }
