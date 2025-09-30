@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { Star, ChevronLeft, MessageSquare, ChevronRight } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import DatePicker from "./date-picker";
@@ -101,14 +101,20 @@ export default function ScheduleForm() {
                 <span className="font-bold text-lg">{doctor.rating}</span>
             </div>
           <h1 className="text-3xl font-bold">{doctor.name}</h1>
-          <p className="text-sm">{doctor.clinic}</p>
           <p className="text-lg">{doctor.specialty}</p>
+          <p className="text-sm">{doctor.clinic}</p>
         </div>
       </div>
       
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card className="rounded-t-3xl -mt-6 shadow-none border-0">
           <CardContent className="p-6 space-y-6">
+            {doctor.bio && (
+                <div className="space-y-2">
+                  <h3 className="text-lg font-bold">About Doctor</h3>
+                  <p className="text-sm text-muted-foreground">{doctor.bio}</p>
+                </div>
+              )}
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-bold">Select Date</h3>

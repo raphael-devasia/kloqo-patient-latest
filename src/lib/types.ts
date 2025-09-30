@@ -12,6 +12,7 @@ export type Doctor = {
     longitude: number;
   };
   isFavourite?: boolean;
+  bio?: string;
 };
 
 export type Appointment = {
