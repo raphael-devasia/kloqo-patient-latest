@@ -1,12 +1,12 @@
 
 "use client";
 
-import { appointments, doctors } from "@/lib/data";
+import { appointments, doctors, user } from "@/lib/data";
 import { Appointment } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Stethoscope } from "lucide-react";
+import { Stethoscope, User, Hash } from "lucide-react";
 import { format, parse, parseISO } from "date-fns";
 import SmartRescheduleDialog from "./smart-reschedule-dialog";
 import { cn } from "@/lib/utils";
@@ -19,22 +19,33 @@ const AppointmentCard = ({ appointment, index }: { appointment: Appointment, ind
   return (
     <Card className={cn("shadow-md", cardColor)}>
       <CardContent className="p-4">
-        <div className="flex flex-col items-center justify-center text-center">
-          <div className="flex flex-col items-center gap-2">
-            <Avatar className="h-12 w-12 border">
-              <AvatarImage src={doctor?.avatar} alt={doctor?.name} />
-              <AvatarFallback>{doctor?.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="flex-1">
-              <p className="font-semibold text-base">{doctor?.name}</p>
-              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                 <Stethoscope className="h-4 w-4" />
-                <span>{doctor?.specialty}</span>
-              </div>
+        <div className="flex items-start gap-4">
+          <Avatar className="h-12 w-12 border">
+            <AvatarImage src={doctor?.avatar} alt={doctor?.name} />
+            <AvatarFallback>{doctor?.name.charAt(0)}</AvatarFallback>
+          </Avatar>
+          <div className="flex-1">
+            <p className="font-semibold text-base">{doctor?.name}</p>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+               <Stethoscope className="h-4 w-4" />
+              <span>{doctor?.specialty}</span>
+            </div>
+             <div className="border-t border-gray-300 my-3"></div>
+            <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                    <User className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-muted-foreground">Patient:</span>
+                    <span className="font-medium">{user.name}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Hash className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-muted-foreground">Appointment ID:</span>
+                    <span className="font-medium">{appointment.id.toUpperCase()}</span>
+                </div>
             </div>
           </div>
         </div>
-        <div className="flex justify-center items-center mt-4">
+        <div className="flex justify-end items-center mt-4">
           <div className="flex gap-4">
             <SmartRescheduleDialog appointment={appointment} />
             <Button variant="destructive" size="sm" className="bg-red-500 hover:bg-red-600 text-white">Cancel</Button>
