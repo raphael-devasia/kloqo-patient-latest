@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 import { ToothIcon, FaceIcon } from "./category-icons";
 import { appointments } from "@/lib/data";
 import NotificationsDialog from "./notifications-dialog";
+import LocationDialog from "./location-dialog";
 
 
 // Haversine formula to calculate distance between two lat/lon points
@@ -210,18 +211,41 @@ export default function Dashboard() {
     );
 };
 
+const handleLocationUpdate = async (newCity: string) => {
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?city=${newCity}&format=json&limit=1`);
+      const data = await response.json();
+      if (data && data.length > 0) {
+        const { lat, lon, display_name } = data[0];
+        const addressParts = display_name.split(', ');
+        const city = addressParts[0];
+        const country = addressParts[addressParts.length - 1];
+
+        setUserLocation({ latitude: parseFloat(lat), longitude: parseFloat(lon) });
+        setLocation({ city, country });
+      } else {
+        console.error("Location not found");
+        // Optionally: show a toast notification to the user
+      }
+    } catch (error) {
+      console.error("Error fetching new location:", error);
+    }
+  };
+
   return (
     <div className="relative min-h-full">
       <div className="bg-[#869A73] p-6 h-[50vh] rounded-b-[3rem] flex flex-col">
         <header className="flex items-center justify-between text-white pt-4">
           <div>
             <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
-            <div className="flex items-center gap-1.5 text-sm">
+            <LocationDialog onLocationUpdate={handleLocationUpdate}>
+              <div className="flex items-center gap-1.5 text-sm cursor-pointer">
                 <MapPin className="w-4 h-4" />
                 <p>
                   {location ? `${location.city}, ${location.country}` : 'Finding your location...'}
                 </p>
               </div>
+            </LocationDialog>
           </div>
           <div className="flex items-center gap-2">
             <NotificationsDialog />
