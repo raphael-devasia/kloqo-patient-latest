@@ -11,6 +11,7 @@ export type Doctor = {
     latitude: number;
     longitude: number;
   };
+  isFavourite?: boolean;
 };
 
 export type Appointment = {

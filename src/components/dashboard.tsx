@@ -2,12 +2,12 @@
 
 "use client";
 
-import { user, doctors, appointments } from "@/lib/data";
+import { user, doctors as initialDoctors } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MapPin, Clock, Loader2 } from "lucide-react";
+import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MapPin, Clock, Loader2, Heart } from "lucide-react";
 import Link from "next/link";
 import { format, isPast, isTomorrow, formatDistanceToNow, parseISO } from "date-fns";
 import {
@@ -15,10 +15,12 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel"
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Appointment, Doctor } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ToothIcon, FaceIcon } from "./category-icons";
+import { appointments } from "@/lib/data";
+
 
 // Haversine formula to calculate distance between two lat/lon points
 const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
@@ -42,7 +44,15 @@ const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string })
   </div>
 );
 
-const DoctorCard = ({ doctor, userLocation }: { doctor: Doctor, userLocation: { latitude: number; longitude: number; } | null }) => {
+const DoctorCard = ({ 
+  doctor, 
+  userLocation,
+  onToggleFavourite
+}: { 
+  doctor: Doctor, 
+  userLocation: { latitude: number; longitude: number; } | null 
+  onToggleFavourite: (doctorId: string) => void;
+}) => {
     const [distance, setDistance] = useState<string | null>(null);
 
     useEffect(() => {
@@ -64,8 +74,8 @@ const DoctorCard = ({ doctor, userLocation }: { doctor: Doctor, userLocation: { 
                 <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
                 <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
             </div>
-            <Button variant="ghost" size="icon">
-                <HeartPulse className="w-5 h-5 text-muted-foreground" />
+            <Button variant="ghost" size="icon" onClick={() => onToggleFavourite(doctor.id)}>
+                <Heart className={cn("w-5 h-5", doctor.isFavourite ? "text-red-500 fill-red-500" : "text-muted-foreground")} />
             </Button>
             </div>
             <div className="absolute bottom-2 right-2 flex items-center gap-1 text-xs text-muted-foreground">
@@ -85,6 +95,24 @@ const DoctorCard = ({ doctor, userLocation }: { doctor: Doctor, userLocation: { 
 export default function Dashboard() {
   const [location, setLocation] = useState<{ city: string; country: string } | null>(null);
   const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null);
+  const [doctors, setDoctors] = useState<Doctor[]>(initialDoctors);
+  const [activeTab, setActiveTab] = useState<'near' | 'favourites'>('near');
+
+  const handleToggleFavourite = (doctorId: string) => {
+    setDoctors(prevDoctors =>
+      prevDoctors.map(doc =>
+        doc.id === doctorId ? { ...doc, isFavourite: !doc.isFavourite } : doc
+      )
+    );
+  };
+
+  const displayedDoctors = useMemo(() => {
+    if (activeTab === 'favourites') {
+      return doctors.filter(doc => doc.isFavourite);
+    }
+    return doctors.slice(0, 2); // Show first 2 for "Near you"
+  }, [activeTab, doctors]);
+  
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -124,8 +152,6 @@ export default function Dashboard() {
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   const nextAppointment = upcomingAppointments[0];
-  
-  const popularHealers = doctors.slice(0, 2);
 
   const categories = [
     { label: "Dentistry", icon: <ToothIcon className="w-8 h-8 text-primary" /> },
@@ -258,19 +284,53 @@ const getRelativeDate = (date: Date) => {
                 <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
               </Link>
             </div>
-            <div className="grid grid-cols-2 gap-4 w-1/2 pr-2">
-                <Card className="flex items-center justify-center gap-1 p-0 h-8 bg-primary/10 border-primary/20">
-                  <span className="font-semibold text-primary text-xs whitespace-nowrap">Near you</span>
+            <div className="flex gap-2">
+                <Card 
+                  onClick={() => setActiveTab('near')}
+                  className={cn(
+                    "flex-1 flex items-center justify-center gap-1 p-0 h-8 cursor-pointer",
+                    activeTab === 'near' ? 'bg-primary/10 border-primary/20' : ''
+                  )}
+                >
+                  <span className={cn(
+                    "font-semibold text-xs whitespace-nowrap",
+                    activeTab === 'near' ? 'text-primary' : 'text-muted-foreground'
+                  )}>
+                    Near you
+                  </span>
                 </Card>
-                <Card className="flex items-center justify-center gap-1 p-0 h-8">
-                  <Star className="w-4 h-4 text-muted-foreground"/>
-                  <span className="font-semibold text-muted-foreground text-xs whitespace-nowrap">Favourites</span>
+                <Card 
+                  onClick={() => setActiveTab('favourites')}
+                  className={cn(
+                    "flex-1 flex items-center justify-center gap-1 p-0 h-8 cursor-pointer",
+                    activeTab === 'favourites' ? 'bg-primary/10 border-primary/20' : ''
+                  )}
+                >
+                  <Star className={cn(
+                    "w-4 h-4",
+                    activeTab === 'favourites' ? 'text-primary' : 'text-muted-foreground'
+                  )}/>
+                  <span className={cn(
+                    "font-semibold text-xs whitespace-nowrap",
+                    activeTab === 'favourites' ? 'text-primary' : 'text-muted-foreground'
+                  )}>
+                    Favourites
+                  </span>
                 </Card>
             </div>
             <div className="space-y-3">
-              {popularHealers.map((doctor) => (
-                <DoctorCard key={doctor.id} doctor={doctor} userLocation={userLocation} />
-              ))}
+              {displayedDoctors.length > 0 ? (
+                displayedDoctors.map((doctor) => (
+                  <DoctorCard 
+                    key={doctor.id} 
+                    doctor={doctor} 
+                    userLocation={userLocation}
+                    onToggleFavourite={handleToggleFavourite}
+                  />
+                ))
+              ) : (
+                <p className="text-center text-muted-foreground pt-4">You have no favourite doctors yet.</p>
+              )}
             </div>
           </section>
         </div>

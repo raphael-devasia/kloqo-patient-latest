@@ -18,11 +18,11 @@ export const user: UserProfile = {
 };
 
 export const doctors: Doctor[] = [
-  { id: 'doc1', name: 'Dr. Priya Varma', specialty: 'Cardiology', avatar: findImage('doctor-1'), clinic: 'Wellness Clinic', rating: 4.9, reviews: 128, currentToken: 23, location: { latitude: 40.7128, longitude: -74.0060 } },
-  { id: 'doc2', name: 'Dr. Katherine Rose', specialty: 'Dermatology', avatar: findImage('doctor-2'), clinic: 'City Clinic', rating: 4.8, reviews: 92, currentToken: 15, location: { latitude: 40.7580, longitude: -73.9855 } },
-  { id: 'doc3', name: 'Dr. Varun Vikas', specialty: 'Pediatrics', avatar: findImage('doctor-3'), clinic: 'Wellness Clinic', rating: 5.0, reviews: 215, currentToken: 31, location: { latitude: 40.7128, longitude: -74.0060 } },
-  { id: 'doc4', name: 'Dr. Dona Wilson', specialty: 'Neurology', avatar: findImage('doctor-4'), clinic: 'Healthway Medical', rating: 4.7, reviews: 89, currentToken: 11, location: { latitude: 40.730610, longitude: -73.935242 } },
-  { id: 'doc5', name: 'Dr. Ashiq Syed', specialty: 'Dentistry', avatar: findImage('doctor-5'), clinic: 'Bright Smiles Dental', rating: 4.9, reviews: 152, currentToken: 45, location: { latitude: 40.7484, longitude: -73.9857 } },
+  { id: 'doc1', name: 'Dr. Priya Varma', specialty: 'Cardiology', avatar: findImage('doctor-1'), clinic: 'Wellness Clinic', rating: 4.9, reviews: 128, currentToken: 23, location: { latitude: 40.7128, longitude: -74.0060 }, isFavourite: true },
+  { id: 'doc2', name: 'Dr. Katherine Rose', specialty: 'Dermatology', avatar: findImage('doctor-2'), clinic: 'City Clinic', rating: 4.8, reviews: 92, currentToken: 15, location: { latitude: 40.7580, longitude: -73.9855 }, isFavourite: false },
+  { id: 'doc3', name: 'Dr. Varun Vikas', specialty: 'Pediatrics', avatar: findImage('doctor-3'), clinic: 'Wellness Clinic', rating: 5.0, reviews: 215, currentToken: 31, location: { latitude: 40.7128, longitude: -74.0060 }, isFavourite: false },
+  { id: 'doc4', name: 'Dr. Dona Wilson', specialty: 'Neurology', avatar: findImage('doctor-4'), clinic: 'Healthway Medical', rating: 4.7, reviews: 89, currentToken: 11, location: { latitude: 40.730610, longitude: -73.935242 }, isFavourite: true },
+  { id: 'doc5', name: 'Dr. Ashiq Syed', specialty: 'Dentistry', avatar: findImage('doctor-5'), clinic: 'Bright Smiles Dental', rating: 4.9, reviews: 152, currentToken: 45, location: { latitude: 40.7484, longitude: -73.9857 }, isFavourite: false },
 ];
 
 export const appointments: Appointment[] = [
