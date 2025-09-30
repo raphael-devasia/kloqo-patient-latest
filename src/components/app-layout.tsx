@@ -14,7 +14,7 @@ import LiveIcon from './ui/live-icon';
 const menuItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/appointments", label: "Appointments", icon: CalendarDays },
-  { href: "/schedule", label: "Live", icon: LiveIcon },
+  { href: "/live", label: "Live", icon: LiveIcon },
   { href: "/profile", label: "Profile", icon: User },
 ];
 

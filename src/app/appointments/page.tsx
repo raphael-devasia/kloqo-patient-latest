@@ -11,11 +11,6 @@ export default function AppointmentsPage() {
         </div>
         <AppointmentsList />
       </div>
-       <Link href="/schedule">
-        <button className="fixed bottom-24 right-6 bg-primary text-primary-foreground h-14 w-14 rounded-full shadow-lg flex items-center justify-center">
-          <Plus className="w-8 h-8" />
-        </button>
-      </Link>
     </div>
   );
 }
