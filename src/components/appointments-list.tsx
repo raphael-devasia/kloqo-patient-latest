@@ -17,34 +17,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const AppointmentOptions = ({ appointment }: { appointment: Appointment }) => {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm">Options</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem>
-          <Edit className="mr-2 h-4 w-4" />
-          <span>Edit Appointment</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <XCircle className="mr-2 h-4 w-4" />
-          <span>Cancel Appointment</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <CalendarPlus className="mr-2 h-4 w-4" />
-          <span>Add to Calendar</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
-
 const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
   const doctor = doctors.find((d) => d.id === appointment.doctorId);
   const appointmentDate = parseISO(appointment.date);
   const token = String(appointment.id.replace('appt', '')).padStart(3, '0');
+
+  const handleCancel = () => {
+    // In a real app, you'd call an API to cancel.
+    // For this demo, we can just log it or update local state.
+    console.log("Cancelling appointment:", appointment.id);
+  };
 
   return (
     <Card className="shadow-md">
@@ -70,8 +52,9 @@ const AppointmentCard = ({ appointment }: { appointment: Appointment }) => {
               <p className="text-sm text-muted-foreground">{appointment.specialty}</p>
               <p className="text-sm text-muted-foreground">Token: <span className="font-semibold text-primary">{token}</span></p>
             </div>
-          <div className="flex justify-end pt-2">
-             <AppointmentOptions appointment={appointment} />
+          <div className="flex justify-end pt-2 gap-2">
+             <Button variant="outline" size="sm" onClick={handleCancel}>Cancel</Button>
+             <SmartRescheduleDialog appointment={appointment} />
           </div>
         </div>
       </CardContent>
