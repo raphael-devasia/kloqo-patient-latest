@@ -183,9 +183,9 @@ const getRelativeDate = (date: Date) => {
         <header className="flex items-center justify-between text-white pt-4">
           <div>
             <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 text-sm">
                 <MapPin className="w-4 h-4" />
-                <p className="text-xs">
+                <p>
                   {location ? `${location.city}, ${location.country}` : 'Finding your location...'}
                 </p>
               </div>
@@ -206,9 +206,9 @@ const getRelativeDate = (date: Date) => {
         </div>
       </div>
       
-      <div className="px-6 -mt-48 space-y-4">
+      <div className="px-6 -mt-44 space-y-4">
         {upcomingAppointments.length > 0 && (
-          <div className="space-y-4">
+          <div className="space-y-2">
              <div className="flex justify-center items-center">
                     <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
                 </div>
@@ -221,7 +221,7 @@ const getRelativeDate = (date: Date) => {
         )}
 
         {nextAppointment && (
-          <div className="bg-accent text-accent-foreground p-4 rounded-xl flex justify-between items-center">
+          <div className="bg-yellow-100 text-yellow-800 p-4 rounded-xl flex justify-between items-center border border-yellow-200">
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5" />
               <p className="font-semibold text-sm">Your next medical checkup</p>
