@@ -39,7 +39,7 @@ const AppointmentCard = ({ appointment, index }: { appointment: Appointment, ind
                 </div>
                 <div className="flex items-center gap-2">
                     <Hash className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Appointment ID:</span>
+                    <span className="text-muted-foreground">Token #:</span>
                     <span className="font-medium">{appointment.id.toUpperCase()}</span>
                 </div>
             </div>
