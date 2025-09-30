@@ -18,6 +18,7 @@ import {
 import { useEffect, useState } from "react";
 import { Appointment, Doctor } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { ToothIcon, FaceIcon } from "./category-icons";
 
 const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string }) => (
   <div className="flex flex-col items-center justify-center gap-2 text-center">
@@ -44,52 +45,6 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
     </div>
   </Card>
 )
-
-const ToothIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        {...props}
-    >
-        <path d="M11 2c-2.5 1.5-2.5 4.5 0 6" />
-        <path d="M13 2c2.5 1.5 2.5 4.5 0 6" />
-        <path d="M4 12c-1.5 1.5-1.5 3.5 0 5s3.5 1.5 5 0" />
-        <path d="M20 12c1.5 1.5 1.5 3.5 0 5s-3.5 1.5-5 0" />
-        <path d="M7 19c-1-2-1-4 0-6" />
-        <path d="M17 19c1-2 1-4 0-6" />
-        <path d="M12 22v-4" />
-        <path d="M12 14c-1.5-1.5-1.5-3.5 0-5" />
-        <path d="M12 14c1.5-1.5 1.5-3.5 0-5" />
-    </svg>
-);
-
-const FaceIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <circle cx="12" cy="12" r="10" />
-    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-    <line x1="9" y1="9" x2="9.01" y2="9" />
-    <line x1="15" y1="9" x2="15.01" y2="9" />
-  </svg>
-);
-
 
 export default function Dashboard() {
   const [location, setLocation] = useState<{ city: string; country: string } | null>(null);
@@ -237,7 +192,7 @@ const getRelativeDate = (date: Date) => {
           <section className="space-y-4">
             <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold text-gray-800">Categories</h2>
-                <Link href="#">
+                <Link href="/categories">
                     <Button variant="link" className="text-primary pr-0 font-semibold">See All</Button>
                 </Link>
             </div>
