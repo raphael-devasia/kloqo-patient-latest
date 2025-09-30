@@ -46,7 +46,7 @@ export default function CancelAppointmentDialog({ appointmentId, onCancelSuccess
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Go Back</AlertDialogCancel>
-          <AlertDialogAction onClick={handleCancelConfirm} className="bg-destructive hover:bg-destructive/90">
+          <AlertDialogAction onClick={handleCancelConfirm} className="bg-red-500 hover:bg-red-600 text-white">
             Yes, Cancel Appointment
           </AlertDialogAction>
         </AlertDialogFooter>
