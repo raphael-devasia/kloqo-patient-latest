@@ -3,9 +3,9 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, User, Users, Calendar, Clock } from 'lucide-react';
+import { ChevronLeft, User, Calendar, Clock, PlusCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { doctors, user, appointments as appointmentsData } from '@/lib/data';
 import { Appointment } from '@/lib/types';
@@ -20,6 +20,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import Image from 'next/image';
 
 const patientDetailsSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -123,7 +124,7 @@ export default function BookingOptions() {
         <h1 className="text-xl font-bold">Booking</h1>
       </div>
 
-       <Card>
+       <Card className="mt-4">
             <CardContent className="p-4">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-4">
@@ -150,37 +151,42 @@ export default function BookingOptions() {
                 </div>
             </CardContent>
         </Card>
+      
+      <div className="space-y-4 pt-6">
+        <h2 className="text-lg font-semibold text-center">Who is this appointment for?</h2>
+        <div className="flex justify-center items-start gap-8">
+          <div 
+            onClick={() => setBookingFor('self')}
+            className={cn(
+              "flex flex-col items-center gap-2 cursor-pointer p-2 rounded-lg",
+              bookingFor === 'self' && 'bg-primary/10'
+            )}
+          >
+            <Avatar className={cn(
+              "h-16 w-16 border-2",
+              bookingFor === 'self' ? 'border-primary' : 'border-transparent'
+            )}>
+              <Image src={user.avatar} alt={user.name} width={64} height={64} className="object-cover" />
+            </Avatar>
+            <span className="text-sm font-medium">{user.name.split(' ')[0]} (You)</span>
+          </div>
 
-      <div className="space-y-4 pt-4">
-        <Card
-          onClick={() => setBookingFor('self')}
-          className={cn("cursor-pointer transition-colors", bookingFor === 'self' ? 'bg-primary/10 border-primary' : 'hover:bg-accent')}
-        >
-          <CardContent className="p-6 flex items-center gap-4">
-            <div className="p-3 bg-primary/10 rounded-lg">
-              <User className="w-6 h-6 text-primary" />
+          <div 
+            onClick={() => setBookingFor('other')}
+            className={cn(
+              "flex flex-col items-center gap-2 cursor-pointer p-2 rounded-lg",
+              bookingFor === 'other' && 'bg-primary/10'
+            )}
+          >
+            <div className={cn(
+                "h-16 w-16 rounded-full border-2 flex items-center justify-center bg-muted/50",
+                 bookingFor === 'other' ? 'border-primary' : 'border-dashed'
+            )}>
+                <PlusCircle className={cn("w-8 h-8", bookingFor === 'other' ? 'text-primary' : 'text-muted-foreground')} />
             </div>
-            <div>
-              <h2 className="text-lg font-semibold">For Myself</h2>
-              <p className="text-sm text-muted-foreground">Book an appointment for {user.name}.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card
-          onClick={() => setBookingFor('other')}
-          className={cn("cursor-pointer transition-colors", bookingFor === 'other' ? 'bg-primary/10 border-primary' : 'hover:bg-accent')}
-        >
-          <CardContent className="p-6 flex items-center gap-4">
-            <div className="p-3 bg-primary/10 rounded-lg">
-              <Users className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold">For Someone Else</h2>
-              <p className="text-sm text-muted-foreground">Book for a family member or a friend.</p>
-            </div>
-          </CardContent>
-        </Card>
+            <span className="text-sm font-medium">Add Patient</span>
+          </div>
+        </div>
       </div>
 
       <Form {...form}>
@@ -283,4 +289,5 @@ export default function BookingOptions() {
     
 
     
+
 
