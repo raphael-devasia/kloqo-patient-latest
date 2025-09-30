@@ -193,9 +193,6 @@ export default function Dashboard() {
             <Button variant="ghost" size="icon" className="rounded-full bg-white/20 hover:bg-white/30">
               <Bell className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="rounded-full bg-white/20 hover:bg-white/30">
-              <HelpCircle className="h-5 w-5" />
-            </Button>
           </div>
         </header>
 
