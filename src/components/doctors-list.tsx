@@ -38,7 +38,7 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
     </Card>
 );
 
-export default function DoctorsList({ specialty }: { specialty?: string | null }) {
+export default function DoctorsList({ specialty, clinic }: { specialty?: string | null, clinic?: string | null }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("a-z");
 
@@ -46,6 +46,10 @@ export default function DoctorsList({ specialty }: { specialty?: string | null }
     let filtered = doctors
       .filter((doctor) => {
         if (specialty && doctor.specialty.toLowerCase() !== specialty.toLowerCase()) {
+          return false;
+        }
+
+        if (clinic && doctor.clinic.toLowerCase() !== clinic.toLowerCase()) {
           return false;
         }
 
@@ -68,7 +72,7 @@ export default function DoctorsList({ specialty }: { specialty?: string | null }
       default:
         return filtered.sort((a, b) => a.name.localeCompare(b.name));
     }
-  }, [searchTerm, sortOrder, specialty]);
+  }, [searchTerm, sortOrder, specialty, clinic]);
 
   return (
     <div className="space-y-6">
