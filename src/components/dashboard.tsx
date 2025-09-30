@@ -100,6 +100,7 @@ export default function Dashboard() {
   const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null);
   const [doctors, setDoctors] = useState<Doctor[]>(initialDoctors);
   const [activeTab, setActiveTab] = useState<'near' | 'favourites'>('near');
+  const [relativeDate, setRelativeDate] = useState<string>('');
 
   const handleToggleFavourite = (doctorId: string) => {
     setDoctors(prevDoctors =>
@@ -156,6 +157,19 @@ export default function Dashboard() {
 
   const nextAppointment = upcomingAppointments[0];
 
+  const getRelativeDate = (date: Date) => {
+      if (isTomorrow(date)) {
+          return 'Tomorrow';
+      }
+      return formatDistanceToNow(date, { addSuffix: true });
+  }
+
+  useEffect(() => {
+    if (nextAppointment) {
+      setRelativeDate(getRelativeDate(parseISO(nextAppointment.date)));
+    }
+  }, [nextAppointment]);
+
   const categories = [
     { label: "Dentistry", icon: <ToothIcon className="w-8 h-8 text-primary" /> },
     { label: "Cardiology", icon: <HeartPulse className="w-8 h-8 text-primary" /> },
@@ -194,13 +208,6 @@ export default function Dashboard() {
         </Card>
     );
 };
-
-const getRelativeDate = (date: Date) => {
-    if (isTomorrow(date)) {
-        return 'Tomorrow';
-    }
-    return formatDistanceToNow(date, { addSuffix: true });
-}
 
   return (
     <div className="relative min-h-full">
@@ -253,7 +260,7 @@ const getRelativeDate = (date: Date) => {
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Clock className="w-4 h-4" />
-              <span>{getRelativeDate(parseISO(nextAppointment.date))}</span>
+              <span>{relativeDate || '...'}</span>
             </div>
           </div>
         )}
