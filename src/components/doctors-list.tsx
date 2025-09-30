@@ -5,7 +5,7 @@ import { doctors } from "@/lib/data";
 import { Doctor } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Star, Search, ArrowUpDown, Ticket } from "lucide-react";
+import { Star, Search, ArrowUpDown, Ticket, Hospital } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState, useMemo } from "react";
 import {
@@ -37,6 +37,21 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
         </CardContent>
     </Card>
 );
+
+const ClinicCard = ({ clinicName, doctors }: { clinicName: string, doctors: Doctor[] }) => (
+  <Card className="w-full">
+    <CardContent className="p-4">
+      <div className="flex items-center gap-2 mb-4">
+        <Hospital className="w-5 h-5 text-primary" />
+        <h2 className="text-lg font-bold">{clinicName}</h2>
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        {doctors.map((doc) => <DoctorCard key={doc.id} doctor={doc} />)}
+      </div>
+    </CardContent>
+  </Card>
+);
+
 
 export default function DoctorsList({ specialty, clinic }: { specialty?: string | null, clinic?: string | null }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,6 +89,18 @@ export default function DoctorsList({ specialty, clinic }: { specialty?: string 
     }
   }, [searchTerm, sortOrder, specialty, clinic]);
 
+  const doctorsByClinic = useMemo(() => {
+    return filteredAndSortedDoctors.reduce((acc, doctor) => {
+      if (!acc[doctor.clinic]) {
+        acc[doctor.clinic] = [];
+      }
+      acc[doctor.clinic].push(doctor);
+      return acc;
+    }, {} as Record<string, Doctor[]>);
+  }, [filteredAndSortedDoctors]);
+
+  const clinicNames = Object.keys(doctorsByClinic);
+
   return (
     <div className="space-y-6">
       <div className="flex gap-2">
@@ -106,9 +133,11 @@ export default function DoctorsList({ specialty, clinic }: { specialty?: string 
         </DropdownMenu>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        {filteredAndSortedDoctors.length > 0 ? (
-          filteredAndSortedDoctors.map((doc) => <DoctorCard key={doc.id} doctor={doc} />)
+      <div className="space-y-4">
+        {clinicNames.length > 0 ? (
+          clinicNames.map((clinicName) => (
+            <ClinicCard key={clinicName} clinicName={clinicName} doctors={doctorsByClinic[clinicName]} />
+          ))
         ) : (
           <p className="col-span-full mt-4 text-center text-muted-foreground">
             No doctors found.
