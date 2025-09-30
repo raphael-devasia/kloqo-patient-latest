@@ -20,6 +20,7 @@ import { Appointment, Doctor } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ToothIcon, FaceIcon } from "./category-icons";
 import { appointments } from "@/lib/data";
+import NotificationsDialog from "./notifications-dialog";
 
 
 // Haversine formula to calculate distance between two lat/lon points
@@ -223,9 +224,7 @@ export default function Dashboard() {
               </div>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="rounded-full bg-white/20 hover:bg-white/30">
-              <Bell className="h-5 w-5" />
-            </Button>
+            <NotificationsDialog />
           </div>
         </header>
 
@@ -280,11 +279,13 @@ export default function Dashboard() {
               <CarouselContent className="-ml-2">
                 {categories.map((category, index) => (
                   <CarouselItem key={index} className="pl-2 basis-1/4">
-                    <CategoryCard 
-                      icon={category.icon} 
-                      label={category.label} 
-                      href={`/doctors?specialty=${encodeURIComponent(category.label)}`}
-                    />
+                    <Link href={`/doctors?specialty=${encodeURIComponent(category.label)}`}>
+                        <CategoryCard 
+                        icon={category.icon} 
+                        label={category.label} 
+                        href={`/doctors?specialty=${encodeURIComponent(category.label)}`}
+                        />
+                    </Link>
                   </CarouselItem>
                 ))}
               </CarouselContent>

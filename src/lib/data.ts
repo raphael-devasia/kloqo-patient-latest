@@ -1,6 +1,6 @@
 
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import type { Appointment, Doctor, UserProfile } from '@/lib/types';
+import type { Appointment, Doctor, UserProfile, Notification } from '@/lib/types';
 import { subDays, format, addDays } from 'date-fns';
 
 const findImage = (id: string) => PlaceHolderImages.find(img => img.id === id)?.imageUrl || '';
@@ -101,3 +101,38 @@ export const userSchedule = {
     { "date": format(addDays(new Date(), 2), 'yyyy-MM-dd'), "start_time": "01:00 PM", "end_time": "02:00 PM", "title": "Team Lunch" },
   ]
 };
+
+export const notifications: Notification[] = [
+  {
+    id: 'notif1',
+    type: 'appointment',
+    title: 'Appointment Confirmed',
+    message: 'Your appointment with Dr. Priya Varma is confirmed for tomorrow at 10:00 AM. Your token number is 065.',
+    date: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
+    isRead: false,
+  },
+  {
+    id: 'notif2',
+    type: 'delay',
+    title: 'Doctor Running Late',
+    message: 'Dr. Katherine Rose is running approximately 30 minutes late for today\'s appointments.',
+    date: format(new Date(), 'yyyy-MM-dd'),
+    isRead: false,
+  },
+  {
+    id: 'notif3',
+    type: 'availability',
+    title: 'Schedule Change',
+    message: 'Dr. Varun Vikas has new availability next week. Check the schedule to book a new slot.',
+    date: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
+    isRead: true,
+  },
+   {
+    id: 'notif4',
+    type: 'appointment',
+    title: 'Upcoming Appointment',
+    message: 'Reminder: You have a follow-up with Dr. Dona Wilson in 2 days.',
+    date: format(addDays(new Date(), 2), 'yyyy-MM-dd'),
+    isRead: false,
+  },
+];

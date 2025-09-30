@@ -38,3 +38,12 @@ export type UserProfile = {
   };
   avatar: string;
 };
+
+export type Notification = {
+  id: string;
+  type: 'appointment' | 'delay' | 'availability';
+  title: string;
+  message: string;
+  date: string;
+  isRead: boolean;
+};
