@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MoreHorizontal, MapPin, ChevronDown, Clock, HelpCircle } from "lucide-react";
+import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MapPin, Clock } from "lucide-react";
 import Link from "next/link";
 import { format, isPast, isTomorrow, formatDistanceToNow, parseISO } from "date-fns";
 import {
@@ -16,16 +16,8 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel"
 import { useEffect, useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Appointment, Doctor } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-
 
 const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string }) => (
   <div className="flex flex-col items-center justify-center gap-2 text-center">
@@ -214,7 +206,7 @@ const getRelativeDate = (date: Date) => {
         </div>
       </div>
       
-      <div className="px-6 -mt-24 space-y-4">
+      <div className="px-6 -mt-32 space-y-4">
         {upcomingAppointments.length > 0 && (
           <div className="space-y-4">
              <div className="flex justify-center items-center">
