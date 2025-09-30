@@ -155,30 +155,30 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
   }, [searchTerm, sortOrder, specialty]);
   
   const clinics = useMemo(() => {
-      const clinicMap = new Map<string, { name: string; location: { latitude: number; longitude: number; } }>();
-      const term = searchTerm.toLowerCase();
-      
-      let doctorsToConsider = specialty ? 
-        doctors.filter(d => d.specialty.toLowerCase() === specialty.toLowerCase()) : 
-        doctors;
+    const clinicMap = new Map<string, { name: string; location: { latitude: number; longitude: number } }>();
+    const term = searchTerm.toLowerCase();
 
-      if (searchTerm) {
-        doctorsToConsider = doctorsToConsider.filter(doctor => 
-          doctor.clinic.toLowerCase().includes(term) || 
-          doctor.name.toLowerCase().includes(term) ||
-          doctor.specialty.toLowerCase().includes(term)
-        );
-      }
+    // Determine the pool of doctors to consider for clinic listing
+    let doctorsToConsiderForClinics = doctors;
+    if (specialty) {
+        // If a specialty is selected, clinics should only be those that have doctors of that specialty.
+        doctorsToConsiderForClinics = doctors.filter(d => d.specialty.toLowerCase() === specialty.toLowerCase());
+    }
 
-      doctorsToConsider.forEach(doctor => {
-          if (!clinicMap.has(doctor.clinic) && (doctor.clinic.toLowerCase().includes(term) || !searchTerm)) {
-              clinicMap.set(doctor.clinic, { name: doctor.clinic, location: doctor.location });
-          }
-      });
-      return Array.from(clinicMap.values());
-  }, [searchTerm, specialty]);
+    doctorsToConsiderForClinics.forEach(doctor => {
+        // Add clinic if it hasn't been added and it matches the search term (if any)
+        if (!clinicMap.has(doctor.clinic)) {
+            if (!searchTerm || doctor.clinic.toLowerCase().includes(term)) {
+                clinicMap.set(doctor.clinic, { name: doctor.clinic, location: doctor.location });
+            }
+        }
+    });
 
-  const showClinics = !specialty;
+    return Array.from(clinicMap.values());
+}, [searchTerm, specialty]);
+
+  const showClinics = !specialty || (specialty && clinics.length > 0 && searchTerm);
+
 
   return (
     <div className="space-y-6">
@@ -244,3 +244,5 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
     </div>
   );
 }
+
+    

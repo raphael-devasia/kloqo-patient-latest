@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MapPin, Clock, Loader2, Heart } from "lucide-react";
+import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MapPin, Clock, Loader2, Heart, Hospital, User as UserIcon } from "lucide-react";
 import Link from "next/link";
 import { format, isPast, isTomorrow, formatDistanceToNow, parseISO } from "date-fns";
 import {
@@ -15,7 +15,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel"
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { Appointment, Doctor } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ToothIcon, FaceIcon } from "./category-icons";
@@ -98,6 +98,15 @@ const DoctorCard = ({
     )
 }
 
+type Suggestion = {
+  type: 'doctor' | 'clinic' | 'specialty';
+  label: string;
+  id: string;
+  avatar?: string;
+  specialty?: string;
+};
+
+
 export default function Dashboard() {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
@@ -106,24 +115,71 @@ export default function Dashboard() {
   const [doctors, setDoctors] = useState<Doctor[]>(initialDoctors);
   const [activeTab, setActiveTab] = useState<'near' | 'favourites'>('near');
   const [relativeDate, setRelativeDate] = useState<string>('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
 
-  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const term = searchTerm.trim();
     if (!term) return;
 
-    // Check if it's a known clinic
-    const matchingClinic = initialDoctors.find(
-      (doc) => doc.clinic.toLowerCase() === term.toLowerCase()
-    );
-    if (matchingClinic) {
-      router.push(`/clinics/${encodeURIComponent(matchingClinic.clinic)}`);
-      return;
-    }
-
-    // Default to searching doctors page
     router.push(`/doctors?search=${encodeURIComponent(term)}`);
+    setSearchTerm('');
+    setIsSearchFocused(false);
   };
+  
+  const handleSuggestionClick = (suggestion: Suggestion) => {
+    setSearchTerm('');
+    setIsSearchFocused(false);
+    if (suggestion.type === 'clinic') {
+      router.push(`/clinics/${encodeURIComponent(suggestion.label)}`);
+    } else if (suggestion.type === 'specialty') {
+        router.push(`/doctors?specialty=${encodeURIComponent(suggestion.label)}`);
+    } else { // doctor
+      router.push(`/doctors?search=${encodeURIComponent(suggestion.label)}`);
+    }
+  };
+
+  const suggestions = useMemo((): Suggestion[] => {
+    if (!searchTerm.trim()) return [];
+
+    const term = searchTerm.toLowerCase();
+    const results: Suggestion[] = [];
+    const addedClinics = new Set<string>();
+    const addedSpecialties = new Set<string>();
+
+    initialDoctors.forEach(doctor => {
+      // Add doctors
+      if (doctor.name.toLowerCase().includes(term)) {
+        results.push({ type: 'doctor', label: doctor.name, id: `doc-${doctor.id}`, avatar: doctor.avatar, specialty: doctor.specialty });
+      }
+      // Add clinics
+      if (doctor.clinic.toLowerCase().includes(term) && !addedClinics.has(doctor.clinic)) {
+        results.push({ type: 'clinic', label: doctor.clinic, id: `clinic-${doctor.clinic}` });
+        addedClinics.add(doctor.clinic);
+      }
+      // Add specialties
+      if (doctor.specialty.toLowerCase().includes(term) && !addedSpecialties.has(doctor.specialty)) {
+        results.push({ type: 'specialty', label: doctor.specialty, id: `spec-${doctor.specialty}` });
+        addedSpecialties.add(doctor.specialty);
+      }
+    });
+
+    return results.slice(0, 7); // Limit to 7 suggestions
+  }, [searchTerm]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [searchRef]);
 
   const handleToggleFavourite = (doctorId: string) => {
     setDoctors(prevDoctors =>
@@ -183,20 +239,12 @@ export default function Dashboard() {
 
   const nextAppointment = upcomingAppointments[0];
 
-  const getRelativeDate = (date: Date) => {
-      if (isTomorrow(date)) {
-          return 'Tomorrow';
-      }
-      return formatDistanceToNow(date, { addSuffix: true });
-  }
-
   useEffect(() => {
     if (nextAppointment) {
       const updateRelativeDate = () => {
-        setRelativeDate(getRelativeDate(parseISO(nextAppointment.date)));
+        setRelativeDate(formatDistanceToNow(parseISO(nextAppointment.date), { addSuffix: true }));
       };
       updateRelativeDate();
-      // Update every minute to keep the relative time fresh
       const interval = setInterval(updateRelativeDate, 60000);
       return () => clearInterval(interval);
     }
@@ -261,6 +309,15 @@ const handleLocationUpdate = async (newCity: string) => {
       console.error("Error fetching new location:", error);
     }
   };
+  
+  const getSuggestionIcon = (type: Suggestion['type']) => {
+    switch(type) {
+      case 'doctor': return <UserIcon className="w-4 h-4 text-muted-foreground" />;
+      case 'clinic': return <Hospital className="w-4 h-4 text-muted-foreground" />;
+      case 'specialty': return <Stethoscope className="w-4 h-4 text-muted-foreground" />;
+      default: return null;
+    }
+  }
 
   return (
     <div className="relative min-h-full">
@@ -282,15 +339,49 @@ const handleLocationUpdate = async (newCity: string) => {
           </div>
         </header>
 
-        <form onSubmit={handleSearch} className="relative mt-4">
-          <Input
-            placeholder="Search Doctors..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="h-10 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
-          />
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-primary-foreground/80"/>
-        </form>
+         <div ref={searchRef} className="relative mt-4">
+          <form onSubmit={handleSearchSubmit}>
+            <Input
+              placeholder="Search Doctors, clinics, specialty..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+              className="h-10 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
+            />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-primary-foreground/80"/>
+          </form>
+          {isSearchFocused && suggestions.length > 0 && (
+            <Card className="absolute top-full mt-2 w-full z-20 max-h-80 overflow-y-auto">
+              <CardContent className="p-2">
+                <ul>
+                  {suggestions.map((suggestion) => (
+                    <li key={suggestion.id}>
+                      <button
+                        onClick={() => handleSuggestionClick(suggestion)}
+                        className="w-full text-left p-2.5 flex items-center gap-3 rounded-lg hover:bg-accent"
+                      >
+                         {suggestion.avatar ? (
+                          <Avatar className="w-8 h-8">
+                            <AvatarImage src={suggestion.avatar} alt={suggestion.label} />
+                            <AvatarFallback>{suggestion.label.charAt(0)}</AvatarFallback>
+                          </Avatar>
+                        ) : (
+                          getSuggestionIcon(suggestion.type)
+                        )}
+                        <div>
+                          <p className="font-semibold text-sm">{suggestion.label}</p>
+                          {suggestion.specialty && (
+                            <p className="text-xs text-muted-foreground">{suggestion.specialty}</p>
+                          )}
+                        </div>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          )}
+        </div>
       </div>
       
       <div className="px-6 -mt-44 space-y-4">
@@ -409,3 +500,5 @@ const handleLocationUpdate = async (newCity: string) => {
     </div>
   );
 }
+
+    
