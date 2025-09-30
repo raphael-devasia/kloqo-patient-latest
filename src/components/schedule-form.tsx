@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -13,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { Star, ChevronLeft, Share2, MessageSquare, ChevronRight } from "lucide-react";
+import { Star, ChevronLeft, MessageSquare, ChevronRight } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import DatePicker from "./date-picker";
@@ -100,8 +101,8 @@ export default function ScheduleForm() {
                 <span className="font-bold text-lg">{doctor.rating}</span>
             </div>
           <h1 className="text-3xl font-bold">{doctor.name}</h1>
-          <p className="text-lg">{doctor.specialty}</p>
           <p className="text-sm">{doctor.clinic}</p>
+          <p className="text-lg">{doctor.specialty}</p>
         </div>
       </div>
       
