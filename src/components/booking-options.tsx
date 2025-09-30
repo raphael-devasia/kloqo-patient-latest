@@ -243,6 +243,12 @@ export default function BookingOptions() {
                         </FormControl>
                         <Label htmlFor="female">Female</Label>
                       </FormItem>
+                      <FormItem className="flex items-center space-x-2">
+                        <FormControl>
+                          <RadioGroupItem value="other" id="other" />
+                        </FormControl>
+                        <Label htmlFor="other">Other</Label>
+                      </FormItem>
                     </RadioGroup>
                   </FormControl>
                   <FormMessage />
@@ -291,3 +297,6 @@ export default function BookingOptions() {
     
 
 
+
+
+    
