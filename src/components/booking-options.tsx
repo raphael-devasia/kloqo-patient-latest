@@ -263,7 +263,7 @@ export default function BookingOptions() {
               <FormItem>
                 <FormLabel>Location</FormLabel>
                 <FormControl>
-                  <Input placeholder="City, State" {...field} />
+                  <Input placeholder="Calicut" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
