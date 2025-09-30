@@ -182,7 +182,12 @@ export default function Dashboard() {
         <header className="flex items-center justify-between text-white">
           <div>
             <h2 className="text-2xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
-            <p className="text-sm opacity-80">Let us to make you better</p>
+            <div className="flex items-center gap-1.5 opacity-80">
+                <MapPin className="w-4 h-4" />
+                <p className="text-sm">
+                  {location ? `${location.city}, ${location.country}` : 'Finding your location...'}
+                </p>
+              </div>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" className="rounded-full bg-white/20 hover:bg-white/30">
