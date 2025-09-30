@@ -93,9 +93,6 @@ export default function ScheduleForm() {
             <Button variant="ghost" size="icon" className="bg-white/80 rounded-full h-10 w-10" onClick={() => router.back()}>
                 <ChevronLeft className="h-6 w-6" />
             </Button>
-            <Button variant="ghost" size="icon" className="bg-white/80 rounded-full h-10 w-10">
-                <Share2 className="h-5 w-5" />
-            </Button>
         </div>
         <div className="absolute bottom-6 left-6 text-white">
             <div className="flex items-center gap-2 mb-2">
