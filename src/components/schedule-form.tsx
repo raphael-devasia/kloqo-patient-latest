@@ -101,8 +101,8 @@ export default function ScheduleForm() {
                 <span className="font-bold text-lg">{doctor.rating}</span>
             </div>
           <h1 className="text-3xl font-bold">{doctor.name}</h1>
-          <p className="text-lg">{doctor.specialty}</p>
           <p className="text-sm">{doctor.clinic}</p>
+          <p className="text-lg">{doctor.specialty}</p>
         </div>
       </div>
       
