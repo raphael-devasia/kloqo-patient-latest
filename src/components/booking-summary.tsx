@@ -10,7 +10,7 @@ import { Calendar, Clock, User, Phone, MapPin, ChevronLeft } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import { Appointment } from '@/lib/types';
-import { appointments as appointmentsData, notifications } from '@/lib/data';
+import { appointments as initialAppointments, notifications } from '@/lib/data';
 
 type AppointmentWithPatient = Omit<Appointment, 'id' | 'status'>;
 
@@ -31,6 +31,14 @@ export default function BookingSummary() {
 
   const handleConfirm = () => {
     if (appointment) {
+        let appointmentsData = [];
+        const storedAppointments = localStorage.getItem('appointments');
+        if (storedAppointments) {
+            appointmentsData = JSON.parse(storedAppointments);
+        } else {
+            appointmentsData = initialAppointments;
+        }
+
         const tokenNumber = appointmentsData.length + 1;
         const finalAppointment = {
             ...appointment,
@@ -40,7 +48,8 @@ export default function BookingSummary() {
         
         // In a real app, you would save this to your database.
         // Here we just add it to the local data for demo purposes.
-        appointmentsData.push(finalAppointment);
+        const updatedAppointments = [...appointmentsData, finalAppointment];
+        localStorage.setItem('appointments', JSON.stringify(updatedAppointments));
         
         // Add a notification
         notifications.unshift({
