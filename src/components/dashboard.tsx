@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { user, doctors, appointments } from "@/lib/data";
@@ -6,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MoreHorizontal, MapPin, ChevronDown } from "lucide-react";
+import { Bell, Search, HeartPulse, Brain, Eye, Stethoscope, Star, MoreHorizontal, MapPin, ChevronDown, HelpCircle } from "lucide-react";
 import Link from "next/link";
 import { format, isPast } from "date-fns";
 import {
@@ -118,7 +119,7 @@ export default function Dashboard() {
           }
         },
         (error) => {
-          console.error("Geolocation error:", error);
+          console.log("Geolocation error:", error.message);
            // Fallback or error handling
           setLocation({ city: 'New York', country: 'USA' });
         }
@@ -178,23 +179,22 @@ export default function Dashboard() {
   return (
     <div className="relative min-h-full">
       <div className="bg-[#869A73] p-6 pt-6 pb-24 rounded-b-[3rem]">
-        <header className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-white">Hello {user.name.split(' ')[0]}!</h2>
-          <Link href="/profile">
-              <Avatar className="h-10 w-10 border-2 border-white">
-                <Image
-                  src={user.avatar}
-                  alt={user.name}
-                  width={40}
-                  height={40}
-                  className="object-cover"
-                  data-ai-hint="person portrait"
-                />
-              </Avatar>
-          </Link>
+        <header className="flex items-center justify-between text-white">
+          <div>
+            <h2 className="text-2xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
+            <p className="text-sm opacity-80">Let us to make you better</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" className="rounded-full bg-white/20 hover:bg-white/30">
+              <Bell className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon" className="rounded-full bg-white/20 hover:bg-white/30">
+              <HelpCircle className="h-5 w-5" />
+            </Button>
+          </div>
         </header>
 
-        <div className="relative mt-4">
+        <div className="relative mt-6">
           <Input
             placeholder="Search Doctors..."
             className="h-10 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
