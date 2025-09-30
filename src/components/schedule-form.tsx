@@ -27,11 +27,14 @@ const scheduleSchema = z.object({
 
 type ScheduleFormValues = z.infer<typeof scheduleSchema>;
 
-const timeSlots = [
-    "08:00 AM", "09:30 AM", "10:00 AM", 
-    "10:30 AM", "11:00 AM", "11:30 AM",
-    "12:00 PM", "12:30 PM", "02:00 PM"
-];
+const timeSlots = {
+    morning: ["08:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM"],
+    afternoon: ["12:00 PM", "12:30 PM", "02:00 PM"],
+    evening: []
+};
+
+const allTimeSlots = [...timeSlots.morning, ...timeSlots.afternoon, ...timeSlots.evening];
+
 
 export default function ScheduleForm() {
   const router = useRouter();
@@ -61,7 +64,7 @@ export default function ScheduleForm() {
     )
     .map((appointment) => appointment.time);
 
-  const availableSlotsCount = timeSlots.length - bookedSlots.length;
+  const availableSlotsCount = allTimeSlots.length - bookedSlots.length;
 
 
   useEffect(() => {
@@ -107,8 +110,8 @@ export default function ScheduleForm() {
         </div>
         <div className="absolute bottom-6 left-6 text-white w-[calc(100%-3rem)]">
           <h1 className="text-3xl font-bold">{doctor.name}</h1>
-          <p className="text-lg">{doctor.clinic}</p>
-          <p className="text-base text-white/90">{doctor.specialty}</p>
+          <p className="text-lg">{doctor.specialty}</p>
+          <p className="text-base text-white/90">{doctor.clinic}</p>
           {doctor.fee && (
             <p className="text-base text-white/90 font-bold mt-1">₹{doctor.fee}</p>
           )}
@@ -161,32 +164,86 @@ export default function ScheduleForm() {
                   <RadioGroup
                     onValueChange={field.onChange}
                     defaultValue={field.value}
-                    className="grid grid-cols-3 gap-3"
+                    className="space-y-4"
                   >
-                    {timeSlots.map((slot) => {
-                        const isBooked = bookedSlots.includes(slot);
-                        return (
-                          <div key={slot}>
-                            <RadioGroupItem 
-                              value={slot} 
-                              id={slot} 
-                              className="peer sr-only" 
-                              disabled={isBooked}
-                            />
-                            <Label
-                              htmlFor={slot}
-                              className={cn(
-                                "flex items-center justify-center rounded-lg border-2 border-muted bg-popover p-3 text-sm font-medium",
-                                isBooked 
-                                  ? "cursor-not-allowed bg-muted/50 text-muted-foreground line-through"
-                                  : "hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 peer-data-[state=checked]:text-primary"
-                              )}
-                            >
-                              {slot}
-                            </Label>
-                          </div>
-                        )
-                    })}
+                    {timeSlots.morning.length > 0 && (
+                        <div className="space-y-3">
+                            <h4 className="font-semibold text-base">Morning</h4>
+                            <div className="grid grid-cols-3 gap-3">
+                                {timeSlots.morning.map((slot) => {
+                                    const isBooked = bookedSlots.includes(slot);
+                                    return (
+                                    <div key={slot}>
+                                        <RadioGroupItem value={slot} id={slot} className="peer sr-only" disabled={isBooked} />
+                                        <Label
+                                        htmlFor={slot}
+                                        className={cn(
+                                            "flex items-center justify-center rounded-lg border-2 border-muted bg-popover p-3 text-sm font-medium",
+                                            isBooked 
+                                            ? "cursor-not-allowed bg-muted/50 text-muted-foreground line-through"
+                                            : "hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 peer-data-[state=checked]:text-primary"
+                                        )}
+                                        >
+                                        {slot}
+                                        </Label>
+                                    </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )}
+                     {timeSlots.afternoon.length > 0 && (
+                        <div className="space-y-3">
+                            <h4 className="font-semibold text-base">Afternoon</h4>
+                            <div className="grid grid-cols-3 gap-3">
+                                {timeSlots.afternoon.map((slot) => {
+                                    const isBooked = bookedSlots.includes(slot);
+                                    return (
+                                    <div key={slot}>
+                                        <RadioGroupItem value={slot} id={slot} className="peer sr-only" disabled={isBooked} />
+                                        <Label
+                                        htmlFor={slot}
+                                        className={cn(
+                                            "flex items-center justify-center rounded-lg border-2 border-muted bg-popover p-3 text-sm font-medium",
+                                            isBooked 
+                                            ? "cursor-not-allowed bg-muted/50 text-muted-foreground line-through"
+                                            : "hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 peer-data-[state=checked]:text-primary"
+                                        )}
+                                        >
+                                        {slot}
+                                        </Label>
+                                    </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )}
+                     {timeSlots.evening.length > 0 && (
+                        <div className="space-y-3">
+                            <h4 className="font-semibold text-base">Evening</h4>
+                            <div className="grid grid-cols-3 gap-3">
+                                {timeSlots.evening.map((slot) => {
+                                    const isBooked = bookedSlots.includes(slot);
+                                    return (
+                                    <div key={slot}>
+                                        <RadioGroupItem value={slot} id={slot} className="peer sr-only" disabled={isBooked} />
+                                        <Label
+                                        htmlFor={slot}
+                                        className={cn(
+                                            "flex items-center justify-center rounded-lg border-2 border-muted bg-popover p-3 text-sm font-medium",
+                                            isBooked 
+                                            ? "cursor-not-allowed bg-muted/50 text-muted-foreground line-through"
+                                            : "hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 peer-data-[state=checked]:text-primary"
+                                        )}
+                                        >
+                                        {slot}
+                                        </Label>
+                                    </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )}
                   </RadioGroup>
                 )}
               />
