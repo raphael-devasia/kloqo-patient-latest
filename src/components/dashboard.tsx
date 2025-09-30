@@ -322,83 +322,85 @@ const handleLocationUpdate = async (newCity: string) => {
 
   return (
     <div className="relative min-h-full">
-      <div className="bg-[#869A73] p-6 h-96 rounded-b-[3rem] flex flex-col">
-        <header className="flex items-center justify-between text-white pt-4">
-          <div>
-            <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
-            <LocationDialog onLocationUpdate={handleLocationUpdate} onUseCurrentLocation={handleUseCurrentLocation}>
-              <div className="flex items-center gap-1.5 text-sm cursor-pointer">
-                <MapPin className="w-4 h-4" />
-                <p>
-                  {location ? `${location.city}, ${location.country}` : 'Finding your location...'}
-                </p>
-              </div>
-            </LocationDialog>
-          </div>
-          <div className="flex items-center gap-2">
-            <NotificationsDialog />
-          </div>
-        </header>
-      </div>
-      
-      <div className="px-6 -mt-20 space-y-6">
-        <div ref={searchRef} className="relative">
-          <form onSubmit={handleSearchSubmit}>
-            <Input
-              placeholder="Search Doctors, clinics, specialty..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onFocus={() => setIsSearchFocused(true)}
-              className="h-12 rounded-xl border bg-card pl-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary/80 shadow-md"
-            />
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground"/>
-          </form>
-          {isSearchFocused && suggestions.length > 0 && (
-            <Card className="absolute top-full mt-2 w-full z-20 max-h-80 overflow-y-auto">
-              <CardContent className="p-2">
-                <ul>
-                  {suggestions.map((suggestion) => (
-                    <li key={suggestion.id}>
-                      <button
-                        onClick={() => handleSuggestionClick(suggestion)}
-                        className="w-full text-left p-2.5 flex items-center gap-3 rounded-lg hover:bg-accent"
-                      >
-                         {suggestion.avatar ? (
-                          <Avatar className="w-8 h-8">
-                            <AvatarImage src={suggestion.avatar} alt={suggestion.label} />
-                            <AvatarFallback>{suggestion.label.charAt(0)}</AvatarFallback>
-                          </Avatar>
-                        ) : (
-                          getSuggestionIcon(suggestion.type)
-                        )}
-                        <div>
-                          <p className="font-semibold text-sm">{suggestion.label}</p>
-                          {suggestion.specialty && (
-                            <p className="text-xs text-muted-foreground">{suggestion.specialty}</p>
+      <div className="bg-[#869A73] p-6 h-96 rounded-b-[3rem] flex flex-col justify-between">
+        <div>
+          <header className="flex items-center justify-between text-white pt-4">
+            <div>
+              <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
+              <LocationDialog onLocationUpdate={handleLocationUpdate} onUseCurrentLocation={handleUseCurrentLocation}>
+                <div className="flex items-center gap-1.5 text-sm cursor-pointer">
+                  <MapPin className="w-4 h-4" />
+                  <p>
+                    {location ? `${location.city}, ${location.country}` : 'Finding your location...'}
+                  </p>
+                </div>
+              </LocationDialog>
+            </div>
+            <div className="flex items-center gap-2">
+              <NotificationsDialog />
+            </div>
+          </header>
+
+          <div ref={searchRef} className="relative mt-6">
+            <form onSubmit={handleSearchSubmit}>
+              <Input
+                placeholder="Search Doctors, clinics, specialty..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onFocus={() => setIsSearchFocused(true)}
+                className="h-12 rounded-xl border bg-card pl-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary/80 shadow-md"
+              />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground"/>
+            </form>
+            {isSearchFocused && suggestions.length > 0 && (
+              <Card className="absolute top-full mt-2 w-full z-20 max-h-80 overflow-y-auto">
+                <CardContent className="p-2">
+                  <ul>
+                    {suggestions.map((suggestion) => (
+                      <li key={suggestion.id}>
+                        <button
+                          onClick={() => handleSuggestionClick(suggestion)}
+                          className="w-full text-left p-2.5 flex items-center gap-3 rounded-lg hover:bg-accent"
+                        >
+                          {suggestion.avatar ? (
+                            <Avatar className="w-8 h-8">
+                              <AvatarImage src={suggestion.avatar} alt={suggestion.label} />
+                              <AvatarFallback>{suggestion.label.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                          ) : (
+                            getSuggestionIcon(suggestion.type)
                           )}
-                        </div>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          )}
+                          <div>
+                            <p className="font-semibold text-sm">{suggestion.label}</p>
+                            {suggestion.specialty && (
+                              <p className="text-xs text-muted-foreground">{suggestion.specialty}</p>
+                            )}
+                          </div>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
 
         {upcomingAppointments.length > 0 && (
-          <div className="space-y-4">
-             <div className="flex justify-center items-center">
-                    <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
+            <div className="space-y-4 -mx-6 px-6">
+                <div className="flex justify-center items-center">
+                    <h2 className="text-xl font-bold text-white">Upcoming appointments</h2>
                 </div>
-            <div className="flex space-x-4 overflow-x-auto pb-4 -mx-6 px-6">
-              {upcomingAppointments.map((appointment, index) => (
-                <AppointmentCard key={appointment.id} appointment={appointment} index={index} />
-              ))}
+                <div className="flex space-x-4 overflow-x-auto pb-4">
+                    {upcomingAppointments.map((appointment, index) => (
+                        <AppointmentCard key={appointment.id} appointment={appointment} index={index} />
+                    ))}
+                </div>
             </div>
-          </div>
         )}
-
+      </div>
+      
+      <div className="px-6 space-y-6 pt-6">
         {nextAppointment && (
           <div className="bg-yellow-100 text-yellow-800 p-4 rounded-xl flex justify-between items-center border border-yellow-200">
             <div className="flex items-center gap-3">
@@ -501,5 +503,3 @@ const handleLocationUpdate = async (newCity: string) => {
     </div>
   );
 }
-
-    
