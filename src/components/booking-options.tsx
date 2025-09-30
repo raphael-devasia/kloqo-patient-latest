@@ -1,10 +1,11 @@
 
+
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, User, Users } from 'lucide-react';
+import { ChevronLeft, User, Users, Calendar, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { doctors, user, appointments as appointmentsData } from '@/lib/data';
 import { Appointment } from '@/lib/types';
@@ -18,6 +19,7 @@ import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 const patientDetailsSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -100,6 +102,17 @@ export default function BookingOptions() {
     
     router.push('/summary');
   };
+  
+  if (!doctor || !date || !time) {
+    return (
+        <div className="flex items-center justify-center h-full p-4 text-center">
+            <div>
+                <p className="text-muted-foreground">Appointment details are missing.</p>
+                <Button onClick={() => router.push('/')} className="mt-4">Go to Home</Button>
+            </div>
+        </div>
+    );
+  }
 
   return (
     <div className="space-y-6 p-4">
@@ -109,6 +122,33 @@ export default function BookingOptions() {
         </button>
         <h1 className="text-xl font-bold">Booking</h1>
       </div>
+
+       <Card>
+            <CardHeader>
+                <div className="flex items-center gap-4">
+                    <Avatar className="h-16 w-16 border">
+                        <AvatarImage src={doctor.avatar} alt={doctor.name} />
+                        <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                        <CardTitle className="text-xl">{doctor.name}</CardTitle>
+                        <CardDescription>{doctor.clinic}</CardDescription>
+                    </div>
+                </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                 <div className="border-t pt-4 space-y-3">
+                    <div className="flex items-center gap-3">
+                        <Calendar className="w-5 h-5 text-primary"/>
+                        <span className="font-semibold">{format(new Date(date), 'EEEE, MMMM d, yyyy')}</span>
+                    </div>
+                     <div className="flex items-center gap-3">
+                        <Clock className="w-5 h-5 text-primary"/>
+                        <span className="font-semibold">{time}</span>
+                    </div>
+                 </div>
+            </CardContent>
+        </Card>
 
       <div className="space-y-4">
         <Card
