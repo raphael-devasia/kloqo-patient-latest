@@ -72,14 +72,12 @@ export default function ScheduleForm() {
 
 
   const onSubmit = (data: ScheduleFormValues) => {
-    console.log(data);
-    toast({
-      title: "Appointment Booked!",
-      description: `Your appointment with ${doctor?.name} on ${format(data.date, 'PPP')} at ${data.time} is confirmed.`,
-      variant: 'default',
-      className: 'bg-accent text-accent-foreground'
+    const params = new URLSearchParams({
+        doctorId: data.doctorId,
+        date: format(data.date, 'yyyy-MM-dd'),
+        time: data.time,
     });
-    router.push('/appointments');
+    router.push(`/book-for?${params.toString()}`);
   };
 
   if (!doctor) {
