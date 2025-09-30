@@ -323,7 +323,7 @@ const handleLocationUpdate = async (newCity: string) => {
 
   return (
     <div className="relative min-h-full">
-      <div className="bg-[#869A73] p-6 h-[50vh] rounded-b-[3rem] flex flex-col">
+      <div className="bg-[#869A73] p-6 h-48 rounded-b-[3rem] flex flex-col">
         <header className="flex items-center justify-between text-white pt-4">
           <div>
             <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
@@ -340,17 +340,19 @@ const handleLocationUpdate = async (newCity: string) => {
             <NotificationsDialog />
           </div>
         </header>
-
-         <div ref={searchRef} className="relative mt-auto mb-4">
+      </div>
+      
+      <div className="px-6 -mt-20 space-y-6">
+        <div ref={searchRef} className="relative">
           <form onSubmit={handleSearchSubmit}>
             <Input
               placeholder="Search Doctors, clinics, specialty..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onFocus={() => setIsSearchFocused(true)}
-              className="h-10 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
+              className="h-12 rounded-xl border bg-card pl-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary/80 shadow-md"
             />
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-primary-foreground/80"/>
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground"/>
           </form>
           {isSearchFocused && suggestions.length > 0 && (
             <Card className="absolute top-full mt-2 w-full z-20 max-h-80 overflow-y-auto">
@@ -384,11 +386,9 @@ const handleLocationUpdate = async (newCity: string) => {
             </Card>
           )}
         </div>
-      </div>
-      
-      <div className="px-6 -mt-[calc(50vh-140px)] space-y-4">
+
         {upcomingAppointments.length > 0 && (
-          <div className="space-y-2">
+          <div className="space-y-4">
              <div className="flex justify-center items-center">
                     <h2 className="text-xl font-bold text-gray-800">Upcoming appointments</h2>
                 </div>
