@@ -22,6 +22,7 @@ import { ToothIcon, FaceIcon } from "./category-icons";
 import { appointments } from "@/lib/data";
 import NotificationsDialog from "./notifications-dialog";
 import LocationDialog from "./location-dialog";
+import { useRouter } from "next/navigation";
 
 
 // Haversine formula to calculate distance between two lat/lon points
@@ -98,11 +99,31 @@ const DoctorCard = ({
 }
 
 export default function Dashboard() {
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState("");
   const [location, setLocation] = useState<{ city: string; country: string } | null>(null);
   const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null);
   const [doctors, setDoctors] = useState<Doctor[]>(initialDoctors);
   const [activeTab, setActiveTab] = useState<'near' | 'favourites'>('near');
   const [relativeDate, setRelativeDate] = useState<string>('');
+
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const term = searchTerm.trim();
+    if (!term) return;
+
+    // Check if it's a known clinic
+    const matchingClinic = initialDoctors.find(
+      (doc) => doc.clinic.toLowerCase() === term.toLowerCase()
+    );
+    if (matchingClinic) {
+      router.push(`/clinics/${encodeURIComponent(matchingClinic.clinic)}`);
+      return;
+    }
+
+    // Default to searching doctors page
+    router.push(`/doctors?search=${encodeURIComponent(term)}`);
+  };
 
   const handleToggleFavourite = (doctorId: string) => {
     setDoctors(prevDoctors =>
@@ -261,13 +282,15 @@ const handleLocationUpdate = async (newCity: string) => {
           </div>
         </header>
 
-        <div className="relative mt-4">
+        <form onSubmit={handleSearch} className="relative mt-4">
           <Input
             placeholder="Search Doctors..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="h-10 rounded-full border-0 bg-primary-foreground/20 pl-12 text-base text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground/80"
           />
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-primary-foreground/80"/>
-        </div>
+        </form>
       </div>
       
       <div className="px-6 -mt-44 space-y-4">

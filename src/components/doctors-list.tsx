@@ -99,8 +99,8 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; location
 };
 
 
-export default function DoctorsList({ specialty }: { specialty?: string | null }) {
-  const [searchTerm, setSearchTerm] = useState("");
+export default function DoctorsList({ specialty, initialSearchTerm }: { specialty?: string | null, initialSearchTerm?: string | null }) {
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm || "");
   const [sortOrder, setSortOrder] = useState("a-z");
   const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null);
 

@@ -9,6 +9,7 @@ export default function DoctorsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const specialty = searchParams.get('specialty');
+  const searchTerm = searchParams.get('search');
 
   const pageTitle = specialty ? specialty : "Clinic / Doctors";
 
@@ -20,7 +21,7 @@ export default function DoctorsPage() {
         </button>
         <h1 className="text-xl font-bold">{pageTitle}</h1>
       </div>
-      <DoctorsList specialty={specialty} />
+      <DoctorsList specialty={specialty} initialSearchTerm={searchTerm} />
     </div>
   );
 }
