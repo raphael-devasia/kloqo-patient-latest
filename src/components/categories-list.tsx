@@ -4,6 +4,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { HeartPulse, Brain, Eye, Stethoscope } from "lucide-react";
 import { ToothIcon, FaceIcon } from "./category-icons";
+import { useMemo } from "react";
 
 const categories = [
     { label: "Dentistry", icon: <ToothIcon className="w-8 h-8 text-primary" /> },
@@ -25,12 +26,24 @@ const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string })
     </Card>
 );
 
-export default function CategoriesList() {
+export default function CategoriesList({ searchTerm = "" }: { searchTerm?: string }) {
+  const filteredCategories = useMemo(() => {
+    return categories.filter(category =>
+      category.label.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm]);
+
   return (
     <div className="grid grid-cols-3 gap-4">
-      {categories.map((category) => (
-        <CategoryCard key={category.label} icon={category.icon} label={category.label} />
-      ))}
+      {filteredCategories.length > 0 ? (
+        filteredCategories.map((category) => (
+          <CategoryCard key={category.label} icon={category.icon} label={category.label} />
+        ))
+      ) : (
+        <p className="col-span-full text-center text-muted-foreground">
+          No categories found.
+        </p>
+      )}
     </div>
   );
 }
