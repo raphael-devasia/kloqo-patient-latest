@@ -16,13 +16,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Separator } from "./ui/separator";
 
 type LocationDialogProps = {
   children: React.ReactNode;
   onLocationUpdate: (city: string) => void;
+  onUseCurrentLocation: () => void;
 };
 
-export default function LocationDialog({ children, onLocationUpdate }: LocationDialogProps) {
+export default function LocationDialog({ children, onLocationUpdate, onUseCurrentLocation }: LocationDialogProps) {
   const [open, setOpen] = useState(false);
   const [city, setCity] = useState("");
   const { toast } = useToast();
@@ -42,6 +44,15 @@ export default function LocationDialog({ children, onLocationUpdate }: LocationD
     setCity("");
   };
 
+  const handleUseCurrentLocation = () => {
+    onUseCurrentLocation();
+    setOpen(false);
+    toast({
+        title: "Location Updated",
+        description: "We're finding doctors near you.",
+    });
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -52,9 +63,18 @@ export default function LocationDialog({ children, onLocationUpdate }: LocationD
             Change Location
           </DialogTitle>
           <DialogDescription>
-            Enter a new city to see doctors and clinics near you.
+            Enter a new city or use your current location to find doctors near you.
           </DialogDescription>
         </DialogHeader>
+        
+        <Button variant="outline" onClick={handleUseCurrentLocation}>Use my current location</Button>
+        
+        <div className="flex items-center space-x-2">
+          <Separator className="flex-1" />
+          <span className="text-xs text-muted-foreground">OR</span>
+          <Separator className="flex-1" />
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid w-full gap-1.5">
             <Label htmlFor="city">City Name</Label>

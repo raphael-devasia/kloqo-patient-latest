@@ -119,38 +119,41 @@ export default function Dashboard() {
     return doctors.slice(0, 2); // Show first 2 for "Near you"
   }, [activeTab, doctors]);
   
+  const fetchAndSetLocation = async (latitude: number, longitude: number) => {
+    try {
+      setUserLocation({ latitude, longitude });
+      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+      const data = await response.json();
+      const { city, country } = data.address;
+      setLocation({ city, country });
+    } catch (error) {
+      console.error("Error fetching location:", error);
+      // Fallback or error handling
+      setLocation({ city: 'New York', country: 'USA' });
+      setUserLocation({ latitude: 40.7128, longitude: -74.0060 });
+    }
+  };
 
-  useEffect(() => {
+  const handleUseCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          try {
-            const { latitude, longitude } = position.coords;
-            setUserLocation({ latitude, longitude });
-            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
-            const data = await response.json();
-            const { city, country } = data.address;
-            setLocation({ city, country });
-          } catch (error) {
-            console.error("Error fetching location:", error);
-            // Fallback or error handling
-            setLocation({ city: 'New York', country: 'USA' });
-            setUserLocation({ latitude: 40.7128, longitude: -74.0060 });
-          }
+        (position) => {
+          fetchAndSetLocation(position.coords.latitude, position.coords.longitude);
         },
         (error) => {
           console.log("Geolocation error:", error.message);
-           // Fallback or error handling
-          setLocation({ city: 'New York', country: 'USA' });
-          setUserLocation({ latitude: 40.7128, longitude: -74.0060 });
+          // Fallback to default if user denies permission
+          fetchAndSetLocation(40.7128, -74.0060);
         }
       );
     } else {
       console.log("Geolocation is not supported by this browser.");
-       // Fallback or error handling
-      setLocation({ city: 'New York', country: 'USA' });
-      setUserLocation({ latitude: 40.7128, longitude: -74.0060 });
+      fetchAndSetLocation(40.7128, -74.0060);
     }
+  };
+
+  useEffect(() => {
+    handleUseCurrentLocation();
   }, []);
   
   const upcomingAppointments = appointments
@@ -168,7 +171,13 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (nextAppointment) {
-      setRelativeDate(getRelativeDate(parseISO(nextAppointment.date)));
+      const updateRelativeDate = () => {
+        setRelativeDate(getRelativeDate(parseISO(nextAppointment.date)));
+      };
+      updateRelativeDate();
+      // Update every minute to keep the relative time fresh
+      const interval = setInterval(updateRelativeDate, 60000);
+      return () => clearInterval(interval);
     }
   }, [nextAppointment]);
 
@@ -238,7 +247,7 @@ const handleLocationUpdate = async (newCity: string) => {
         <header className="flex items-center justify-between text-white pt-4">
           <div>
             <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
-            <LocationDialog onLocationUpdate={handleLocationUpdate}>
+            <LocationDialog onLocationUpdate={handleLocationUpdate} onUseCurrentLocation={handleUseCurrentLocation}>
               <div className="flex items-center gap-1.5 text-sm cursor-pointer">
                 <MapPin className="w-4 h-4" />
                 <p>
