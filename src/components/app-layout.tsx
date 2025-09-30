@@ -5,17 +5,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Home,
-  Search,
   CalendarDays,
-  Mail,
   User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import LiveIcon from './ui/live-icon';
 
 const menuItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/appointments", label: "Appointments", icon: CalendarDays },
-  { href: "/schedule", label: "Schedule", icon: Search },
+  { href: "/schedule", label: "Live", icon: LiveIcon },
   { href: "/profile", label: "Profile", icon: User },
 ];
 
