@@ -40,11 +40,11 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
 };
 
 
-const CategoryCard = ({ icon, label }: { icon: React.ReactNode, label: string }) => (
-  <div className="flex flex-col items-center justify-center gap-2 text-center">
+const CategoryCard = ({ icon, label, href }: { icon: React.ReactNode, label: string, href: string }) => (
+  <Link href={href} className="flex flex-col items-center justify-center gap-2 text-center">
     {icon}
     <span className="text-xs font-medium">{label}</span>
-  </div>
+  </Link>
 );
 
 const DoctorCard = ({ 
@@ -170,7 +170,7 @@ export default function Dashboard() {
     const cardColors = ['bg-[#F2FFE3]', 'bg-[#E7D7C9]'];
     const dateColors = ['bg-[#D9F5B3]', 'bg-[#DBCFB9]'];
     const cardColor = cardColors[index % cardColors.length];
-    const dateColor = dateColors[index % dateColors.length];
+    const dateColor = dateColors[index % cardColors.length];
 
     return (
         <Card className={cn("flex-shrink-0 w-64 rounded-2xl shadow-md", cardColor)}>
@@ -273,7 +273,11 @@ const getRelativeDate = (date: Date) => {
               <CarouselContent className="-ml-2">
                 {categories.map((category, index) => (
                   <CarouselItem key={index} className="pl-2 basis-1/4">
-                    <CategoryCard icon={category.icon} label={category.label} />
+                    <CategoryCard 
+                      icon={category.icon} 
+                      label={category.label} 
+                      href={`/doctors?specialty=${encodeURIComponent(category.label)}`}
+                    />
                   </CarouselItem>
                 ))}
               </CarouselContent>
