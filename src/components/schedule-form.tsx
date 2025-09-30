@@ -81,7 +81,7 @@ export default function ScheduleForm() {
 
   return (
     <div className="bg-white min-h-full">
-      <div className="relative h-80">
+      <div className="relative h-96">
         <Image
           src={doctor.avatar}
           alt={doctor.name}
@@ -89,21 +89,26 @@ export default function ScheduleForm() {
           objectFit="cover"
           className="rounded-b-3xl"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-b-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-b-3xl"></div>
         <div className="absolute top-6 left-4 right-4 flex justify-between items-center">
             <Button variant="ghost" size="icon" className="bg-white/80 rounded-full h-10 w-10" onClick={() => router.back()}>
                 <ChevronLeft className="h-6 w-6" />
             </Button>
         </div>
-        <div className="absolute bottom-6 left-6 text-white">
-            <div className="flex items-center gap-2 mb-2">
-                <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                <span className="font-bold text-lg">{doctor.rating}</span>
-            </div>
+        <div className="absolute bottom-6 left-6 text-white w-[calc(100%-3rem)]">
           <h1 className="text-3xl font-bold">{doctor.name}</h1>
-          <p className="text-lg">{doctor.specialty}</p>
-          <p className="text-sm">{doctor.clinic}</p>
+          <p className="text-lg">{doctor.clinic}</p>
+          <p className="text-base text-white/90">{doctor.specialty}</p>
         </div>
+        
+        <Card className="absolute bottom-6 right-6 bg-white/20 backdrop-blur-sm border-none text-white p-3">
+          <CardContent className="p-0">
+            <div className="flex items-center gap-2 text-sm">
+                <CalendarDays className="w-4 h-4"/>
+                <span className="font-medium">Mon - Fri</span>
+            </div>
+          </CardContent>
+        </Card>
       </div>
       
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -112,28 +117,6 @@ export default function ScheduleForm() {
             <div className="space-y-2">
               <h3 className="text-lg font-bold">About Doctor</h3>
               <p className="text-sm text-foreground/80">{doctor.bio}</p>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold">Weekly Availability</h3>
-              <Card className="border-border/50">
-                  <CardContent className="p-4 space-y-3">
-                      <div className="flex justify-between items-center text-sm">
-                          <div className="flex items-center gap-2 text-foreground">
-                              <CalendarDays className="w-4 h-4 text-muted-foreground"/>
-                              <span className="font-medium">Working Days</span>
-                          </div>
-                          <span className="text-muted-foreground font-medium">Mon - Fri</span>
-                      </div>
-                      <div className="flex justify-between items-center text-sm">
-                          <div className="flex items-center gap-2 text-foreground">
-                              <Clock className="w-4 h-4 text-muted-foreground"/>
-                              <span className="font-medium">Working Hours</span>
-                          </div>
-                          <span className="text-muted-foreground font-medium">08:00 AM - 05:00 PM</span>
-                      </div>
-                  </CardContent>
-              </Card>
             </div>
 
             <div className="space-y-4">
