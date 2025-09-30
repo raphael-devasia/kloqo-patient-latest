@@ -35,6 +35,25 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
   return d;
 };
 
+const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
+    <Card className="w-full">
+        <CardContent className="p-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Avatar className="w-12 h-12 border">
+                <AvatarImage src={doctor.avatar} alt={doctor.name} />
+                <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+            <div>
+                <h3 className="font-bold text-base">{doctor.name}</h3>
+                <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
+                <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
+            </div>
+          </div>
+           <ChevronRight className="w-5 h-5 text-muted-foreground" />
+        </CardContent>
+    </Card>
+);
+
 
 const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; location: { latitude: number; longitude: number; } }, userLocation: { latitude: number; longitude: number; } | null }) => {
   const [distance, setDistance] = useState<string | null>(null);
@@ -133,13 +152,22 @@ export default function DoctorsList({ specialty }: { specialty?: string | null }
   
   const clinics = useMemo(() => {
       const clinicMap = new Map<string, { name: string; location: { latitude: number; longitude: number; } }>();
-      filteredAndSortedDoctors.forEach(doctor => {
-          if (!clinicMap.has(doctor.clinic)) {
+      const term = searchTerm.toLowerCase();
+      
+      const doctorsToConsider = specialty ? 
+        doctors.filter(d => d.specialty.toLowerCase() === specialty.toLowerCase()) : 
+        doctors;
+
+      doctorsToConsider.forEach(doctor => {
+          if (!clinicMap.has(doctor.clinic) && doctor.clinic.toLowerCase().includes(term)) {
               clinicMap.set(doctor.clinic, { name: doctor.clinic, location: doctor.location });
           }
       });
       return Array.from(clinicMap.values());
-  }, [filteredAndSortedDoctors]);
+  }, [searchTerm, specialty]);
+
+  const showResults = searchTerm.length > 0;
+  const showClinics = !specialty && clinics.length > 0;
 
 
   return (
@@ -175,11 +203,46 @@ export default function DoctorsList({ specialty }: { specialty?: string | null }
       </div>
 
       <div className="space-y-4">
-        {clinics.length > 0 ? (
-          clinics.map((clinic) => (
-            <ClinicCard key={clinic.name} clinic={clinic} userLocation={userLocation} />
-          ))
-        ) : (
+        {showClinics && !showResults && (
+            clinics.map((clinic) => (
+                <ClinicCard key={clinic.name} clinic={clinic} userLocation={userLocation} />
+            ))
+        )}
+
+        {showResults && (
+             <>
+                {clinics.length > 0 && (
+                    <div className="space-y-2">
+                        <h2 className="text-lg font-bold">Clinics</h2>
+                        <div className="space-y-4">
+                            {clinics.map((clinic) => (
+                                <ClinicCard key={clinic.name} clinic={clinic} userLocation={userLocation} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+                {filteredAndSortedDoctors.length > 0 && (
+                    <div className="space-y-2">
+                         <h2 className="text-lg font-bold">Doctors</h2>
+                         <div className="space-y-4">
+                            {filteredAndSortedDoctors.map((doctor) => (
+                                <DoctorCard key={doctor.id} doctor={doctor} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </>
+        )}
+
+        {specialty && filteredAndSortedDoctors.length > 0 && !showResults && (
+             <div className="space-y-4">
+                {filteredAndSortedDoctors.map((doctor) => (
+                    <DoctorCard key={doctor.id} doctor={doctor} />
+                ))}
+            </div>
+        )}
+
+        {((showResults && clinics.length === 0 && filteredAndSortedDoctors.length === 0) || (!showClinics && filteredAndSortedDoctors.length === 0 && !showResults) || (specialty && filteredAndSortedDoctors.length === 0)) && (
           <p className="col-span-full mt-4 text-center text-muted-foreground">
             No doctors or clinics found.
           </p>
@@ -188,3 +251,5 @@ export default function DoctorsList({ specialty }: { specialty?: string | null }
     </div>
   );
 }
+
+    
