@@ -181,7 +181,7 @@ export default function Dashboard() {
       <div className="bg-[#869A73] p-6 pt-6 pb-24 rounded-b-[3rem]">
         <header className="flex items-center justify-between text-white">
           <div>
-            <h2 className="text-2xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
+            <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
             <div className="flex items-center gap-1.5 opacity-80">
                 <MapPin className="w-4 h-4" />
                 <p className="text-sm">
