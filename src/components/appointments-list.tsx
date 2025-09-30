@@ -86,7 +86,7 @@ export default function AppointmentsList({ filter }: { filter: "Upcoming" | "Com
             const dateA = parseISO(a.date);
             const dateB = parseISO(b.date);
             if (dateA.getTime() !== dateB.getTime()) {
-                return filter === "Upcoming" ? dateA.getTime() - dateB.getTime() : dateB.getTime() - a.getTime();
+                return filter === "Upcoming" ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
             }
             const timeA = parse(a.time, 'hh:mm a', new Date());
             const timeB = parse(b.time, 'hh:mm a', new Date());
