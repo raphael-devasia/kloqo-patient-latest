@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -108,7 +107,7 @@ export default function BookingOptions() {
         <button onClick={() => router.back()} className="absolute left-0">
           <ChevronLeft className="w-6 h-6" />
         </button>
-        <h1 className="text-xl font-bold">Book For</h1>
+        <h1 className="text-xl font-bold">Booking</h1>
       </div>
 
       <div className="space-y-4">
@@ -239,3 +238,5 @@ export default function BookingOptions() {
     </div>
   );
 }
+
+    
