@@ -31,8 +31,14 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
       
   const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('');
 
-  const textColorStyle = isDashboard ? { color: cardStyle?.backgroundColor ? 'white' : 'hsl(var(--primary-foreground))' } : {};
-  const mutedColorStyle = isDashboard ? { color: 'rgba(255, 255, 255, 0.8)' } : {};
+  const textColorStyle = cardStyle?.backgroundColor ? { color: 'hsl(var(--card-foreground))' } : {};
+  const mutedColorStyle = cardStyle?.backgroundColor ? { color: 'hsl(var(--muted-foreground))' } : {};
+  
+  if (cardStyle?.backgroundColor) {
+    textColorStyle.color = '#000'; // Or a more suitable dark color
+    mutedColorStyle.color = 'rgba(0, 0, 0, 0.7)';
+  }
+
 
   return (
     <Card className="shadow-md" style={cardStyle}>
@@ -56,8 +62,8 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
                 </div>
             ) : (
                 <div>
-                    <p className="text-xs text-muted-foreground">For</p>
-                    <p className={cn("font-semibold", isDashboard ? "text-sm" : "")}>{appointment.patientDetails?.name || user.name}</p>
+                    <p className="text-xs text-muted-foreground" style={mutedColorStyle}>For</p>
+                    <p className={cn("font-semibold", isDashboard ? "text-sm" : "")} style={textColorStyle}>{appointment.patientDetails?.name || user.name}</p>
                 </div>
             )}
           </div>
@@ -65,7 +71,7 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
               <p className={cn("font-bold", isDashboard ? "text-base" : "")} style={textColorStyle}>{appointment.doctorName}</p>
               <p className={cn("text-sm text-muted-foreground", isDashboard ? "text-xs" : "text-sm")} style={mutedColorStyle}>{appointment.specialty}</p>
               {!isDashboard && (
-                <p className="text-sm text-muted-foreground">Token: <span className="font-semibold text-primary">{token}</span></p>
+                <p className="text-sm text-muted-foreground" style={mutedColorStyle}>Token: <span className="font-semibold text-primary" style={textColorStyle}>{token}</span></p>
               )}
             </div>
           {!isDashboard && (
