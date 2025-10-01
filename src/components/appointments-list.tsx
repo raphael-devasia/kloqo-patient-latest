@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import AppointmentCard from "./appointment-card";
 
-const pastelColors = ['rgba(214, 151, 89, 0.5)', 'rgba(160, 125, 138, 0.5)', 'rgba(141, 184, 165, 0.5)', 'rgba(245, 183, 177, 0.5)', 'rgba(174, 214, 241, 0.5)', 'rgba(249, 231, 159, 0.5)'];
+const pastelColors = ['rgba(214, 151, 89, 0.3)', 'rgba(160, 125, 138, 0.3)', 'rgba(141, 184, 165, 0.3)', 'rgba(245, 183, 177, 0.3)', 'rgba(174, 214, 241, 0.3)', 'rgba(249, 231, 159, 0.3)'];
 
 
 export default function AppointmentsList({ filter }: { filter: "Upcoming" | "History" }) {
