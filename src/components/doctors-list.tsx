@@ -40,7 +40,7 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
 };
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-    <Card className="w-full bg-white rounded-2xl shadow-sm flex items-center px-4 py-3 border-0">
+    <Card className="w-full bg-white rounded-2xl shadow-sm flex items-center px-4 py-3 border-0 my-2">
       <div className="flex items-center gap-3 flex-1">
         <Avatar className="w-12 h-12 border-2 border-white shadow-sm">
           <AvatarImage src={doctor.avatar} alt={doctor.name} />
@@ -79,7 +79,7 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
 
   return (
     <Link href={`/clinics/${encodeURIComponent(clinic.name)}`}>
-      <Card className="w-full relative my-2">
+      <Card className="w-full relative my-2 border-0">
         <CardContent className="p-4 flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-primary/10 rounded-lg">
