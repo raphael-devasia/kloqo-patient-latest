@@ -40,7 +40,7 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
 };
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-    <Card className="w-full bg-white rounded-2xl shadow-sm flex items-center px-4 py-3 mb-3 border-0">
+    <Card className="w-full bg-white rounded-2xl shadow-sm flex items-center px-4 py-3 border-0">
       <div className="flex items-center gap-3 flex-1">
         <Avatar className="w-12 h-12 border-2 border-white shadow-sm">
           <AvatarImage src={doctor.avatar} alt={doctor.name} />
@@ -257,4 +257,6 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
 }
 
     
+    
+
     
