@@ -88,10 +88,6 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
             <div>
               <h2 className="text-lg font-bold">{clinic.name}</h2>
               <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
-                <MapPin className="w-4 h-4" />
-                <span>{clinic.city}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
                 <Phone className="w-4 h-4" />
                 <span>{clinic.phone}</span>
               </div>
@@ -99,17 +95,17 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
           </div>
           <ChevronRight className="w-5 h-5 text-muted-foreground self-center" />
         </CardContent>
-        {distance && (
-          <div className="absolute bottom-2 right-2 flex items-center gap-1 text-xs text-muted-foreground">
-            <MapPin className="w-3 h-3" />
-            <span>{distance}</span>
-          </div>
-        )}
-        {!distance && (
-            <div className="absolute bottom-2 right-2">
+        <div className="absolute bottom-2 right-2 flex flex-col items-end gap-1 text-xs text-muted-foreground">
+            <span className="font-medium">{clinic.city}</span>
+            {distance ? (
+                <div className="flex items-center gap-1">
+                    <MapPin className="w-3 h-3" />
+                    <span>{distance}</span>
+                </div>
+            ) : (
                 <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
-            </div>
-        )}
+            )}
+        </div>
       </Card>
     </Link>
   );
@@ -261,4 +257,5 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
   );
 }
 
+    
     
