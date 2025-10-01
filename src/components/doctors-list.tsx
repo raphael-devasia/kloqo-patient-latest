@@ -40,7 +40,7 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
 };
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-    <Card className="w-full bg-white rounded-2xl shadow-sm flex items-center px-4 py-3 border-0 my-2">
+    <Card className="w-full bg-white rounded-2xl shadow-sm flex items-center px-4 py-3 my-4 border-0">
       <div className="flex items-center gap-3 flex-1">
         <Avatar className="w-12 h-12 border-2 border-white shadow-sm">
           <AvatarImage src={doctor.avatar} alt={doctor.name} />
@@ -79,14 +79,14 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
 
   return (
     <Link href={`/clinics/${encodeURIComponent(clinic.name)}`}>
-      <Card className="w-full relative my-2 border-0">
+      <Card className="w-full relative my-4 border-0">
         <CardContent className="p-4 flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-primary/10 rounded-lg">
               <Hospital className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <h2 className="text-lg font-bold">{clinic.name}</h2>
+              <h2 className="font-bold text-base">{clinic.name}</h2>
               <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
                 <Phone className="w-4 h-4" />
                 <span>{clinic.phone}</span>
@@ -255,11 +255,3 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
     </div>
   );
 }
-
-    
-
-    
-
-    
-
-    
