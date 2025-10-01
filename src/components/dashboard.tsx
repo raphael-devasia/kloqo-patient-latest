@@ -72,20 +72,22 @@ const DoctorCard = ({
     
     return (
         <Card className="p-4 relative">
-            <div className="flex items-center gap-4">
-            <Avatar className="w-16 h-16 border">
-                <AvatarImage src={doctor.avatar} alt={doctor.name} />
-                <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="flex-1">
-                <h3 className="font-bold text-base">{doctor.name}</h3>
-                <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
-                <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
-            </div>
-            <Button variant="ghost" size="icon" onClick={() => onToggleFavourite(doctor.id)}>
+            <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
+              <div className="flex items-center gap-4">
+                <Avatar className="w-16 h-16 border">
+                    <AvatarImage src={doctor.avatar} alt={doctor.name} />
+                    <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                    <h3 className="font-bold text-base">{doctor.name}</h3>
+                    <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
+                    <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
+                </div>
+              </div>
+            </Link>
+            <Button variant="ghost" size="icon" onClick={() => onToggleFavourite(doctor.id)} className="absolute top-2 right-2">
                 <Heart className={cn("w-5 h-5", doctor.isFavourite ? "text-red-500 fill-red-500" : "text-muted-foreground")} />
             </Button>
-            </div>
             <div className="absolute bottom-2 right-2 flex items-center gap-1 text-xs text-muted-foreground">
                 {distance ? (
                     <>
@@ -392,7 +394,7 @@ const handleLocationUpdate = async (newCity: string) => {
                     {upcomingAppointments.map((appointment, index) => (
                       <CarouselItem key={appointment.id} className="pl-4 basis-auto">
                         <div className="w-64">
-                          <Link href="/appointments" className="block">
+                          <Link href="/appointments">
                             <AppointmentCard 
                               appointment={appointment} 
                               onCancelSuccess={handleCancelSuccess} 
@@ -439,13 +441,11 @@ const handleLocationUpdate = async (newCity: string) => {
               <CarouselContent className="-ml-2">
                 {categories.map((category, index) => (
                   <CarouselItem key={index} className="pl-2 basis-1/4">
-                    <Link href={`/doctors?specialty=${encodeURIComponent(category.label)}`}>
-                        <CategoryCard 
-                        icon={category.icon} 
-                        label={category.label} 
-                        href={`/doctors?specialty=${encodeURIComponent(category.label)}`}
-                        />
-                    </Link>
+                    <CategoryCard 
+                      icon={category.icon} 
+                      label={category.label} 
+                      href={`/doctors?specialty=${encodeURIComponent(category.label)}`}
+                    />
                   </CarouselItem>
                 ))}
               </CarouselContent>
@@ -496,13 +496,12 @@ const handleLocationUpdate = async (newCity: string) => {
             <div className="space-y-3">
               {displayedDoctors.length > 0 ? (
                 displayedDoctors.map((doctor) => (
-                  <Link key={doctor.id} href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
                     <DoctorCard 
+                      key={doctor.id}
                       doctor={doctor} 
                       userLocation={userLocation}
                       onToggleFavourite={handleToggleFavourite}
                     />
-                  </Link>
                 ))
               ) : (
                 <p className="text-center text-muted-foreground pt-4">You have no favourite doctors yet.</p>
