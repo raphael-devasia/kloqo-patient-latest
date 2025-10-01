@@ -71,7 +71,7 @@ const DoctorCard = ({
     }, [userLocation, doctor.location]);
     
     return (
-        <Card className="p-4 relative">
+        <Card className="p-4 relative border-0">
           <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`} className="block">
             <div className="flex items-center gap-4">
                 <Avatar className="w-16 h-16 border">
@@ -413,7 +413,7 @@ const handleLocationUpdate = async (newCity: string) => {
       
       <div className="px-6 space-y-6 pt-6">
         {nextAppointment && (
-          <div className="bg-yellow-100 text-yellow-800 p-3 rounded-xl flex flex-wrap justify-between items-center border border-yellow-200 w-full max-w-full overflow-x-auto gap-2 sm:p-4">
+          <div className="bg-yellow-100 text-yellow-800 p-3 rounded-xl flex flex-wrap justify-between items-center w-full max-w-full overflow-x-auto gap-2 sm:p-4">
 
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5 animate-dangle" />
@@ -463,8 +463,8 @@ const handleLocationUpdate = async (newCity: string) => {
                 <Card 
                   onClick={() => setActiveTab('near')}
                   className={cn(
-                    "flex-1 flex items-center justify-center gap-1 p-0 h-8 cursor-pointer",
-                    activeTab === 'near' ? 'bg-primary/10 border-primary/20' : ''
+                    "flex-1 flex items-center justify-center gap-1 p-0 h-8 cursor-pointer border-0",
+                    activeTab === 'near' ? 'bg-primary/10' : ''
                   )}
                 >
                   <span className={cn(
@@ -477,8 +477,8 @@ const handleLocationUpdate = async (newCity: string) => {
                 <Card 
                   onClick={() => setActiveTab('favourites')}
                   className={cn(
-                    "flex-1 flex items-center justify-center gap-1 p-0 h-8 cursor-pointer",
-                    activeTab === 'favourites' ? 'bg-primary/10 border-primary/20' : ''
+                    "flex-1 flex items-center justify-center gap-1 p-0 h-8 cursor-pointer border-0",
+                    activeTab === 'favourites' ? 'bg-primary/10' : ''
                   )}
                 >
                   <Star className={cn(
