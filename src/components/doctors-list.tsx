@@ -226,8 +226,8 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
 
       <Tabs defaultValue="clinics" className="w-full mt-4">
         <TabsList className="w-full">
-          <TabsTrigger value="clinics" className="flex-1 data-[state=active]:bg-[#D5B257] data-[state=active]:text-white">Clinics</TabsTrigger>
-          <TabsTrigger value="doctors" className="flex-1 data-[state=active]:bg-[#D5B257] data-[state=active]:text-white">Doctors</TabsTrigger>
+          <TabsTrigger value="clinics" className="flex-1 data-[state=active]:bg-[#D5B257] data-[state=active]:text-white font-bold">Clinics</TabsTrigger>
+          <TabsTrigger value="doctors" className="flex-1 data-[state=active]:bg-[#D5B257] data-[state=active]:text-white font-bold">Doctors</TabsTrigger>
         </TabsList>
         <TabsContent value="clinics">
           {showClinics && clinics.length > 0 ? (
