@@ -28,25 +28,30 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
     (appointment.patientDetails?.name === user.name)
       ? user 
       : (savedPatients.find(p => p.name === appointment.patientDetails?.name) || user);
+      
+  const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('');
+
+  const textColorStyle = isDashboard ? { color: cardStyle?.backgroundColor ? 'white' : 'hsl(var(--primary-foreground))' } : {};
+  const mutedColorStyle = isDashboard ? { color: 'rgba(255, 255, 255, 0.8)' } : {};
 
   return (
     <Card className="shadow-md" style={cardStyle}>
       <CardContent className="p-4 flex items-center gap-4">
         <div className={cn("flex flex-col items-center", isDashboard ? "w-12" : "w-16")}>
-          <span className={cn("text-muted-foreground", isDashboard ? "text-xs" : "text-sm")}>{format(appointmentDate, 'MMM')}</span>
-          <span className={cn("font-bold text-primary", isDashboard ? "text-2xl" : "text-3xl")}>{format(appointmentDate, 'dd')}</span>
-          <span className={cn("text-muted-foreground", isDashboard ? "text-xs" : "text-sm")}>{format(appointmentDate, 'E')}</span>
+          <span className={cn("text-muted-foreground", isDashboard ? "text-xs" : "text-sm")} style={mutedColorStyle}>{format(appointmentDate, 'MMM')}</span>
+          <span className={cn("font-bold text-primary", isDashboard ? "text-2xl" : "text-3xl")} style={textColorStyle}>{format(appointmentDate, 'dd')}</span>
+          <span className={cn("text-muted-foreground", isDashboard ? "text-xs" : "text-sm")} style={mutedColorStyle}>{format(appointmentDate, 'E')}</span>
         </div>
         <div className="border-l pl-4 flex-1 space-y-2">
           <div className="flex justify-between">
             <div>
-              <p className="text-xs text-muted-foreground">Time</p>
-              <p className={cn("font-semibold", isDashboard ? "text-sm" : "")}>{appointment.time}</p>
+              <p className="text-xs text-muted-foreground" style={mutedColorStyle}>Time</p>
+              <p className={cn("font-semibold", isDashboard ? "text-sm" : "")} style={textColorStyle}>{appointment.time}</p>
             </div>
             {isDashboard ? (
                 <div className="flex items-center">
                     <Avatar className="h-8 w-8 border">
-                        <AvatarFallback>{patient.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                        <AvatarFallback>{getInitials(patient.name)}</AvatarFallback>
                     </Avatar>
                 </div>
             ) : (
@@ -57,8 +62,8 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
             )}
           </div>
            <div>
-              <p className={cn("font-bold", isDashboard ? "text-base" : "")}>{appointment.doctorName}</p>
-              <p className={cn("text-sm text-muted-foreground", isDashboard ? "text-xs" : "text-sm")}>{appointment.specialty}</p>
+              <p className={cn("font-bold", isDashboard ? "text-base" : "")} style={textColorStyle}>{appointment.doctorName}</p>
+              <p className={cn("text-sm text-muted-foreground", isDashboard ? "text-xs" : "text-sm")} style={mutedColorStyle}>{appointment.specialty}</p>
               {!isDashboard && (
                 <p className="text-sm text-muted-foreground">Token: <span className="font-semibold text-primary">{token}</span></p>
               )}

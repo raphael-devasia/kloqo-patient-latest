@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { user, doctors as initialDoctors, savedPatients } from "@/lib/data";
@@ -42,6 +43,7 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
   return d < 0.1 ? 0.1 : d;
 };
 
+const pastelColors = ['#D69759', '#A07D8A', '#8DB8A5', '#F5B7B1', '#AED6F1', '#F9E79F'];
 
 const CategoryCard = ({ icon, label, href }: { icon: React.ReactNode, label: string, href: string }) => (
   <Link href={href} className="flex flex-col items-center justify-center gap-2 text-center">
@@ -384,14 +386,14 @@ const handleLocationUpdate = async (newCity: string) => {
                   className="w-full"
                 >
                   <CarouselContent className="-ml-2 pb-4">
-                    {upcomingAppointments.map((appointment) => (
+                    {upcomingAppointments.map((appointment, index) => (
                       <CarouselItem key={appointment.id} className="pl-4 basis-auto">
                         <div className="w-64">
                           <AppointmentCard 
                             appointment={appointment} 
                             onCancelSuccess={handleCancelSuccess} 
                             variant="dashboard"
-                            cardStyle={{ backgroundColor: appointment.doctorName === 'Dr. Priya Varma' ? '#D69759' : '#A07D8A' }}
+                            cardStyle={{ backgroundColor: pastelColors[index % pastelColors.length] }}
                           />
                         </div>
                       </CarouselItem>
