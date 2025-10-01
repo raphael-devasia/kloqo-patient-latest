@@ -62,13 +62,7 @@ export default function ProfileForm() {
             <div className="flex items-center gap-4">
               <div className="relative">
                 <Avatar className="h-20 w-20 border-2 border-primary">
-                    <Image
-                      src={user.avatar}
-                      alt={user.name}
-                      width={80}
-                      height={80}
-                      className="object-cover"
-                    />
+                    <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
               </div>
               <div>
@@ -189,3 +183,5 @@ export default function ProfileForm() {
     </Card>
   );
 }
+
+    

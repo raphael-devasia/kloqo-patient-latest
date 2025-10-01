@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -179,7 +180,7 @@ export default function BookingOptions() {
               "h-16 w-16 border-2",
               bookingFor === 'self' ? 'border-primary' : 'border-transparent'
             )}>
-              <Image src={user.avatar} alt={user.name} width={64} height={64} className="object-cover" />
+              <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <span className="text-sm font-medium">{user.name.split(' ')[0]} (You)</span>
           </div>
@@ -197,7 +198,7 @@ export default function BookingOptions() {
                     "h-16 w-16 border-2",
                     bookingFor === patient.name ? 'border-primary' : 'border-transparent'
                     )}>
-                    <Image src={patient.avatar} alt={patient.name} width={64} height={64} className="object-cover" />
+                        <AvatarFallback>{patient.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <span className="text-sm font-medium">{patient.name.split(' ')[0]}</span>
                 </div>
@@ -323,5 +324,7 @@ export default function BookingOptions() {
     </div>
   );
 }
+
+    
 
     
