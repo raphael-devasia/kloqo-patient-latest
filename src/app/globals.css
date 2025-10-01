@@ -108,5 +108,5 @@ body {
 }
 
 .doctors-page, .schedule-page {
-  background-color: hsl(var(--background));
+  background-image: linear-gradient(to bottom, #E1EFC7, #FFFFFF);
 }
