@@ -89,17 +89,17 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
               <h2 className="font-bold text-base" style={{ color: '#89A950' }}>{clinic.name}</h2>
               <div className="flex items-center gap-2 mt-1">
                 <Phone className="w-4 h-4 text-black" />
-                <span className="font-bold text-black">{clinic.phone}</span>
+                <span className="font-bold text-black text-sm">{clinic.phone}</span>
               </div>
             </div>
           </div>
         </CardContent>
         <div className="absolute bottom-2 right-2 flex flex-col items-end gap-1 text-xs text-black">
-            <span className="font-medium">{clinic.city}</span>
+            <span className="font-medium text-black">{clinic.city}</span>
             {distance ? (
                 <div className="flex items-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    <span>{distance}</span>
+                    <MapPin className="w-3 h-3 text-black" />
+                    <span className="text-black">{distance}</span>
                 </div>
             ) : (
                 <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
@@ -225,7 +225,7 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
       </div>
 
       <Tabs defaultValue="clinics" className="w-full mt-4">
-        <TabsList className="w-full bg-muted text-muted-foreground">
+        <TabsList className="w-full bg-white text-muted-foreground">
           <TabsTrigger value="clinics" className="flex-1 data-[state=active]:bg-[#DDB05E] data-[state=active]:text-white">Clinics</TabsTrigger>
           <TabsTrigger value="doctors" className="flex-1 data-[state=active]:bg-[#DDB05E] data-[state=active]:text-white">Doctors</TabsTrigger>
         </TabsList>
