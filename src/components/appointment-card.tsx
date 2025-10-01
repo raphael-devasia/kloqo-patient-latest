@@ -45,7 +45,7 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardClassName, variant 
             {isDashboard ? (
                 <div className="flex items-center">
                     <Avatar className="h-8 w-8 border">
-                        <AvatarFallback>{patient.name.charAt(0)}</AvatarFallback>
+                        <AvatarFallback>{patient.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                     </Avatar>
                 </div>
             ) : (

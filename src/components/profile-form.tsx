@@ -62,7 +62,7 @@ export default function ProfileForm() {
             <div className="flex items-center gap-4">
               <div className="relative">
                 <Avatar className="h-20 w-20 border-2 border-primary">
-                    <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                    <AvatarFallback>AD</AvatarFallback>
                 </Avatar>
               </div>
               <div>

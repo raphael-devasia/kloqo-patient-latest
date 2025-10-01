@@ -180,7 +180,7 @@ export default function BookingOptions() {
               "h-16 w-16 border-2",
               bookingFor === 'self' ? 'border-primary' : 'border-transparent'
             )}>
-              <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+              <AvatarFallback>AD</AvatarFallback>
             </Avatar>
             <span className="text-sm font-medium">{user.name.split(' ')[0]} (You)</span>
           </div>
@@ -198,7 +198,7 @@ export default function BookingOptions() {
                     "h-16 w-16 border-2",
                     bookingFor === patient.name ? 'border-primary' : 'border-transparent'
                     )}>
-                        <AvatarFallback>{patient.name.charAt(0)}</AvatarFallback>
+                        <AvatarFallback>{patient.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                     </Avatar>
                     <span className="text-sm font-medium">{patient.name.split(' ')[0]}</span>
                 </div>
