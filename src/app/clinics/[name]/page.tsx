@@ -47,10 +47,6 @@ export default function ClinicDetailsPage({ params }: { params: { name: string }
         <div className="flex flex-col items-center bg-[#7A997D] rounded-2xl shadow-lg px-4 pt-6 pb-6 mt-16 w-full relative z-20 text-white">
           <div className="flex items-center gap-2 mb-1 flex-wrap justify-center">
             <h1 className="text-xl font-bold text-center break-words">{clinicName}</h1>
-            <Badge variant="secondary" className="bg-white/20 text-white border-0">
-                <Check className="w-3 h-3 mr-1" />
-                Verified
-            </Badge>
           </div>
           <div className="text-base mb-2 text-center opacity-90">Multi Super Specialty Hospital</div>
           <div className="flex flex-wrap items-center gap-4 text-sm mb-2 justify-center opacity-90">
