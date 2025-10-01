@@ -390,6 +390,7 @@ const handleLocationUpdate = async (newCity: string) => {
                           <AppointmentCard 
                             appointment={appointment} 
                             onCancelSuccess={handleCancelSuccess} 
+                            variant="dashboard"
                             cardClassName="bg-white"
                           />
                         </div>

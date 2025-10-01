@@ -13,11 +13,13 @@ type AppointmentCardProps = {
   appointment: Appointment;
   onCancelSuccess: (id: string) => void;
   cardClassName?: string;
+  variant?: 'dashboard' | 'default';
 };
 
-const AppointmentCard = ({ appointment, onCancelSuccess, cardClassName }: AppointmentCardProps) => {
+const AppointmentCard = ({ appointment, onCancelSuccess, cardClassName, variant = 'default' }: AppointmentCardProps) => {
   const appointmentDate = parseISO(appointment.date);
   const token = `A${String(appointment.id.replace('appt', '')).padStart(3, '0')}`;
+  const isDashboard = variant === 'dashboard';
 
   return (
     <Card className={cn("shadow-md", cardClassName)}>
@@ -41,12 +43,16 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardClassName }: Appoin
            <div>
               <p className="font-bold">{appointment.doctorName}</p>
               <p className="text-sm text-muted-foreground">{appointment.specialty}</p>
-              <p className="text-sm text-muted-foreground">Token: <span className="font-semibold text-primary">{token}</span></p>
+              {!isDashboard && (
+                <p className="text-sm text-muted-foreground">Token: <span className="font-semibold text-primary">{token}</span></p>
+              )}
             </div>
-          <div className="flex justify-end pt-2 gap-2">
-             <CancelAppointmentDialog appointmentId={appointment.id} onCancelSuccess={onCancelSuccess} />
-             <SmartRescheduleDialog appointment={appointment} />
-          </div>
+          {!isDashboard && (
+            <div className="flex justify-end pt-2 gap-2">
+              <CancelAppointmentDialog appointmentId={appointment.id} onCancelSuccess={onCancelSuccess} />
+              <SmartRescheduleDialog appointment={appointment} />
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
