@@ -45,31 +45,32 @@ export default function TokenTracker() {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-center items-center gap-8 text-center h-64">
-          <div className="flex flex-col items-center gap-4">
-            <div className="rounded-lg bg-secondary/50 p-4 w-40">
-              <p className="text-sm font-medium text-muted-foreground">
-                Current Token
-              </p>
-              <p className="text-4xl font-bold text-primary">{currentToken}</p>
+            <div className="flex flex-col items-center justify-center gap-4">
+              <div className="rounded-lg bg-secondary/50 p-4 w-40">
+                <p className="text-sm font-medium text-muted-foreground">
+                  Current Token
+                </p>
+                <p className="text-4xl font-bold text-primary">{currentToken}</p>
+              </div>
             </div>
-            
-            <div className="rounded-lg bg-primary/10 p-4 w-40">
-              <p className="text-sm font-medium text-muted-foreground">
-                Your Token
-              </p>
-              <p className="text-4xl font-bold">{yourToken}</p>
-            </div>
-          </div>
 
-          <div className="flex flex-col items-center justify-between h-full">
-            <div className="w-16 text-center">
-                <p className="text-sm font-medium text-muted-foreground">Queue</p>
-                 <p className="text-lg font-bold">{tokensRemaining > 0 ? `${tokensRemaining}` : 'Go'}</p>
+            <div className="flex flex-col items-center justify-between h-full">
+                <div className="w-16 text-center">
+                    <p className="text-sm font-medium text-muted-foreground">Queue</p>
+                    <p className="text-lg font-bold">{tokensRemaining > 0 ? `${tokensRemaining}` : 'Go'}</p>
+                </div>
+                <Progress value={progress} className="w-3 h-full" orientation="vertical" />
+                <Users className="h-6 w-6 text-muted-foreground" />
             </div>
-            <Progress value={progress} className="w-3 h-full" orientation="vertical" />
-             <Users className="h-6 w-6 text-muted-foreground" />
-          </div>
 
+            <div className="flex flex-col items-center justify-center gap-4">
+              <div className="rounded-lg bg-primary/10 p-4 w-40">
+                <p className="text-sm font-medium text-muted-foreground">
+                  Your Token
+                </p>
+                <p className="text-4xl font-bold">{yourToken}</p>
+              </div>
+            </div>
         </div>
         
         <div className="flex items-center justify-center gap-2 rounded-lg border bg-background p-3 text-sm font-medium">
