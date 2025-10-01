@@ -59,13 +59,7 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
               <p className="text-xs text-muted-foreground" style={mutedColorStyle}>Time</p>
               <p className={cn("font-semibold", isDashboard ? "text-sm" : "", isAppointmentPage && "text-sm")} style={textColorStyle}>{appointment.time}</p>
             </div>
-            {isDashboard ? (
-                <div className="flex items-center">
-                    <Avatar className="h-8 w-8 border">
-                        <AvatarFallback>{getInitials(patient.name)}</AvatarFallback>
-                    </Avatar>
-                </div>
-            ) : (
+            {isDashboard ? null : (
                 <div>
                     <p className={cn("font-semibold text-right", isDashboard ? "text-sm" : "", isAppointmentPage && "text-sm")} style={textColorStyle}>{appointment.patientDetails?.name || user.name}</p>
                 </div>
@@ -73,7 +67,12 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
           </div>
            <div>
               <p className={cn("font-bold", isDashboard ? "text-base" : "", isAppointmentPage && "text-base")} style={textColorStyle}>{appointment.doctorName}</p>
-              <p className={cn("text-sm text-muted-foreground", isDashboard ? "text-xs" : "text-sm", isAppointmentPage && "text-xs")} style={mutedColorStyle}>{appointment.specialty}</p>
+              {isDashboard && (
+                <p className={cn("text-xs text-muted-foreground", "mt-0.5")} style={mutedColorStyle}>{appointment.specialty}</p>
+              )}
+              {!isDashboard && (
+                <p className={cn("text-sm text-muted-foreground", isAppointmentPage && "text-xs")} style={mutedColorStyle}>{appointment.specialty}</p>
+              )}
               {!isDashboard && (
                 <p className="text-sm text-muted-foreground" style={mutedColorStyle}>Token: <span className="font-semibold text-primary" style={textColorStyle}>{token}</span></p>
               )}

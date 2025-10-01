@@ -6,7 +6,7 @@ import { doctors } from "@/lib/data";
 import { Doctor } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Star, Search, ArrowUpDown, Ticket, Hospital, ChevronRight, MapPin, Loader2 } from "lucide-react";
+import { Star, Search, ArrowUpDown, Ticket, Hospital, ChevronRight, MapPin, Loader2, Heart } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState, useMemo, useEffect } from "react";
 import {
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
 // Haversine formula to calculate distance between two lat/lon points
@@ -40,24 +41,28 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
 };
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
+  <Card className="w-full bg-white rounded-2xl shadow-sm flex items-center px-4 py-3 mb-3 border-0">
+    <div className="flex items-center gap-3 flex-1">
+      <Avatar className="w-12 h-12 border-2 border-white shadow-sm">
+        <AvatarImage src={doctor.avatar} alt={doctor.name} />
+        <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
+      </Avatar>
+      <div className="flex flex-col justify-center">
+        <div className="flex items-center gap-2">
+          <span className="block font-semibold text-base text-gray-900">{doctor.name}</span>
+        </div>
+        <div className="flex items-center gap-1 mt-1">
+          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+          <span className="text-sm font-medium text-gray-800">{doctor.rating?.toFixed(1) || '4.9'}</span>
+          <span className="mx-1 text-gray-400">•</span>
+          <span className="text-sm text-gray-500">{doctor.specialty}</span>
+        </div>
+      </div>
+    </div>
     <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
-        <Card className="w-full">
-            <CardContent className="p-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-                <Avatar className="w-12 h-12 border">
-                    <AvatarImage src={doctor.avatar} alt={doctor.name} />
-                    <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <div>
-                    <h3 className="font-bold text-base">{doctor.name}</h3>
-                    <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
-                    <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
-                </div>
-            </div>
-            <ChevronRight className="w-5 h-5 text-muted-foreground" />
-            </CardContent>
-        </Card>
+      <button className="ml-2 px-4 py-2 rounded-full bg-primary hover:bg-primary/90 text-white text-sm font-semibold shadow active:scale-95 transition-all">Book Now</button>
     </Link>
+  </Card>
 );
 
 
@@ -67,10 +72,10 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; location
   useEffect(() => {
     if (userLocation && clinic.location) {
       const dist = getDistance(userLocation.latitude, userLocation.longitude, clinic.location.latitude, clinic.location.longitude);
-      setDistance(dist.toFixed(1) + " km");
+      setDistance(Math.round(dist).toString() + " km");
     }
   }, [userLocation, clinic.location]);
-  
+
   return (
     <Link href={`/clinics/${encodeURIComponent(clinic.name)}`}>
       <Card className="w-full">
@@ -85,19 +90,19 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; location
           </div>
           <div className="flex items-center gap-2">
             {distance ? (
-                <>
-                    <MapPin className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-sm font-medium text-muted-foreground">{distance}</span>
-                </>
+              <>
+                <MapPin className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm font-medium text-muted-foreground">{distance}</span>
+              </>
             ) : (
-                <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+              <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
             )}
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </div>
         </CardContent>
       </Card>
     </Link>
-  )
+  );
 };
 
 
@@ -214,35 +219,34 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
         </DropdownMenu>
       </div>
 
-      <div className="space-y-4">
-        {showClinics && clinics.length > 0 && (
-            <div className="space-y-2">
-                <h2 className="text-lg font-bold">Clinics</h2>
-                <div className="space-y-4">
-                    {clinics.map((clinic) => (
-                        <ClinicCard key={clinic.name} clinic={clinic} userLocation={userLocation} />
-                    ))}
-                </div>
+      <Tabs defaultValue="clinics" className="w-full mt-4">
+        <TabsList className="w-full">
+          <TabsTrigger value="clinics" className="flex-1 data-[state=active]:bg-primary data-[state=active]:text-white">Clinics</TabsTrigger>
+          <TabsTrigger value="doctors" className="flex-1 data-[state=active]:bg-primary data-[state=active]:text-white">Doctors</TabsTrigger>
+        </TabsList>
+        <TabsContent value="clinics">
+          {showClinics && clinics.length > 0 ? (
+            <div className="space-y-4">
+              {clinics.map((clinic) => (
+                <ClinicCard key={clinic.name} clinic={clinic} userLocation={userLocation} />
+              ))}
             </div>
-        )}
-
-        {filteredAndSortedDoctors.length > 0 && (
-            <div className="space-y-2">
-                 <h2 className="text-lg font-bold">Doctors</h2>
-                 <div className="space-y-4">
-                    {filteredAndSortedDoctors.map((doctor) => (
-                        <DoctorCard key={doctor.id} doctor={doctor} />
-                    ))}
-                </div>
+          ) : (
+            <p className="col-span-full mt-4 text-center text-muted-foreground">No clinics found.</p>
+          )}
+        </TabsContent>
+        <TabsContent value="doctors">
+          {filteredAndSortedDoctors.length > 0 ? (
+            <div className="space-y-4">
+              {filteredAndSortedDoctors.map((doctor) => (
+                <DoctorCard key={doctor.id} doctor={doctor} />
+              ))}
             </div>
-        )}
-
-        {clinics.length === 0 && filteredAndSortedDoctors.length === 0 && (
-          <p className="col-span-full mt-4 text-center text-muted-foreground">
-            No doctors or clinics found.
-          </p>
-        )}
-      </div>
+          ) : (
+            <p className="col-span-full mt-4 text-center text-muted-foreground">No doctors found.</p>
+          )}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

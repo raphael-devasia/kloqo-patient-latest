@@ -213,7 +213,10 @@ export default function Dashboard() {
       setUserLocation({ latitude, longitude });
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
       const data = await response.json();
-      const { city, country } = data.address;
+      // Robustly extract city (fallback to town, village, state, county, hamlet)
+      const address = data.address || {};
+      const city = address.city || address.town || address.village || address.hamlet || address.state_district || address.state || address.county || 'Unknown';
+      const country = address.country || 'Unknown';
       setLocation({ city, country });
     } catch (error) {
       console.error("Error fetching location:", error);
@@ -389,12 +392,16 @@ const handleLocationUpdate = async (newCity: string) => {
                     {upcomingAppointments.map((appointment, index) => (
                       <CarouselItem key={appointment.id} className="pl-4 basis-auto">
                         <div className="w-64">
-                          <AppointmentCard 
-                            appointment={appointment} 
-                            onCancelSuccess={handleCancelSuccess} 
-                            variant="dashboard"
-                            cardStyle={{ backgroundColor: pastelColors[index % pastelColors.length] }}
-                          />
+                          <Link href="/appointments" passHref legacyBehavior>
+  <a className="block">
+    <AppointmentCard 
+      appointment={appointment} 
+      onCancelSuccess={handleCancelSuccess} 
+      variant="dashboard"
+      cardStyle={{ backgroundColor: pastelColors[index % pastelColors.length] }}
+    />
+  </a>
+</Link>
                         </div>
                       </CarouselItem>
                     ))}
@@ -406,7 +413,8 @@ const handleLocationUpdate = async (newCity: string) => {
       
       <div className="px-6 space-y-6 pt-6">
         {nextAppointment && (
-          <div className="bg-yellow-100 text-yellow-800 p-4 rounded-xl flex justify-between items-center border border-yellow-200">
+          <div className="bg-yellow-100 text-yellow-800 p-3 rounded-xl flex flex-wrap justify-between items-center border border-yellow-200 w-full max-w-full overflow-x-auto gap-2 sm:p-4">
+
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5 animate-dangle" />
               <p className="font-semibold text-sm">Your next appointment</p>
@@ -489,17 +497,18 @@ const handleLocationUpdate = async (newCity: string) => {
             </div>
             <div className="space-y-3">
               {displayedDoctors.length > 0 ? (
-                displayedDoctors.map((doctor) => (
-                  <DoctorCard 
-                    key={doctor.id} 
-                    doctor={doctor} 
-                    userLocation={userLocation}
-                    onToggleFavourite={handleToggleFavourite}
-                  />
-                ))
-              ) : (
-                <p className="text-center text-muted-foreground pt-4">You have no favourite doctors yet.</p>
-              )}
+  displayedDoctors.map((doctor) => (
+    <Link key={doctor.id} href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
+  <DoctorCard 
+    doctor={doctor} 
+    userLocation={userLocation}
+    onToggleFavourite={handleToggleFavourite}
+  />
+</Link>
+  ))
+) : (
+  <p className="text-center text-muted-foreground pt-4">You have no favourite doctors yet.</p>
+)}
             </div>
           </section>
         </div>

@@ -1,4 +1,3 @@
-
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import type { Appointment, Doctor, UserProfile, Notification } from '@/lib/types';
 import { subDays, format, addDays } from 'date-fns';
@@ -19,27 +18,91 @@ export const user: UserProfile = {
 };
 
 export const savedPatients: UserProfile[] = [
-    {
-        name: 'Ava Sam',
-        email: 'ava.sam@example.com',
-        phone: '111-222-3333',
-        dob: '2018-08-20',
-        address: '456 Child St, Playful Town, 20202',
-        emergencyContact: {
-            name: 'Alex Doe',
-            phone: '123-456-7890',
-        },
-        avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhc2lhbiUyMGdpcmx8ZW58MHx8fHwxNzU4NjI2MzYyfDA&ixlib=rb-4.1.0&q=80&w=1080',
-    }
+  {
+    name: 'Ava Sam',
+    email: 'ava.sam@example.com',
+    phone: '111-222-3333',
+    dob: '2018-08-20',
+    address: '456 Child St, Playful Town, 20202',
+    emergencyContact: {
+      name: 'Alex Doe',
+      phone: '123-456-7890',
+    },
+    avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhc2lhbiUyMGdpcmx8ZW58MHx8fHwxNzU4NjI2MzYyfDA&ixlib=rb-4.1.0&q=80&w=1080',
+  }
 ];
 
 export const doctors: Doctor[] = [
-  { id: 'doc1', name: 'Dr. Priya Varma', specialty: 'Cardiology', avatar: findImage('doctor-1'), clinic: 'Wellness Clinic', rating: 4.9, reviews: 128, currentToken: 58, location: { latitude: 40.7128, longitude: -74.0060 }, isFavourite: true, bio: 'Dr. Priya Varma is a renowned cardiologist with over 15 years of experience in treating heart conditions. She is dedicated to providing compassionate and comprehensive care to her patients.', fee: 500 },
-  { id: 'doc2', name: 'Dr. Katherine Rose', specialty: 'Dermatology', avatar: findImage('doctor-2'), clinic: 'City Clinic', rating: 4.8, reviews: 92, currentToken: 32, location: { latitude: 40.7580, longitude: -73.9855 }, isFavourite: false, bio: 'Dr. Katherine Rose is a board-certified dermatologist specializing in cosmetic and medical dermatology. She is passionate about helping her patients achieve healthy, beautiful skin.', fee: 350 },
-  { id: 'doc3', name: 'Dr. Varun Vikas', specialty: 'Pediatrics', avatar: findImage('doctor-3'), clinic: 'Wellness Clinic', rating: 5.0, reviews: 215, currentToken: 41, location: { latitude: 40.7128, longitude: -74.0060 }, isFavourite: false, bio: 'Dr. Varun Vikas is a caring and experienced pediatrician who is committed to the health and well-being of children. He takes a family-centered approach to care.', fee: 250 },
-  { id: 'doc4', name: 'Dr. Dona Wilson', specialty: 'Neurology', avatar: findImage('doctor-4'), clinic: 'Healthway Medical', rating: 4.7, reviews: 89, currentToken: 18, location: { latitude: 40.730610, longitude: -73.935242 }, isFavourite: true, bio: 'Dr. Dona Wilson is a neurologist who specializes in the diagnosis and treatment of disorders of the nervous system. She has a special interest in migraine and epilepsy.', fee: 450 },
-  { id: 'doc5', name: 'Dr. Ashiq Syed', specialty: 'Dentistry', avatar: findImage('doctor-5'), clinic: 'Bright Smiles Dental', rating: 4.9, reviews: 152, currentToken: 25, location: { latitude: 40.7484, longitude: -73.9857 }, isFavourite: false, bio: 'Dr. Ashiq Syed is a friendly and skilled dentist who provides a wide range of dental services. He is known for his gentle touch and ability to put even the most anxious patients at ease.', fee: 200 },
-  { id: 'doc6', name: 'Dr. Swee', specialty: 'General', avatar: findImage('doctor-2'), clinic: 'General Hospital', rating: 4.5, reviews: 75, currentToken: 10, location: { latitude: 40.76, longitude: -73.98 }, isFavourite: false, bio: 'Dr. Swee is a dedicated general practitioner with a holistic approach to patient care.', fee: 150 },
+  { 
+    id: 'doc1', 
+    name: 'Dr. Priya Varma', 
+    specialty: 'Cardiology', 
+    avatar: findImage('doctor-1'), 
+    clinic: 'Wellness Clinic', 
+    rating: 4.9, 
+    reviews: 128, 
+    currentToken: 58, 
+    location: { latitude: 40.7128, longitude: -74.0060 }, 
+    isFavourite: true, 
+    bio: 'Dr. Priya Varma is a renowned cardiologist with over 15 years of experience in treating heart conditions. She is dedicated to providing compassionate and comprehensive care to her patients.', 
+    fee: 500 
+  },
+  { 
+    id: 'doc2', 
+    name: 'Dr. Katherine Rose', 
+    specialty: 'Dermatology', 
+    avatar: findImage('doctor-2'), 
+    clinic: 'City Clinic', 
+    rating: 4.8, 
+    reviews: 92, 
+    currentToken: 32, 
+    location: { latitude: 40.7580, longitude: -73.9855 }, 
+    isFavourite: false, 
+    bio: 'Dr. Katherine Rose is a board-certified dermatologist specializing in cosmetic and medical dermatology. She is passionate about helping her patients achieve healthy, beautiful skin.', 
+    fee: 350 
+  },
+  { 
+    id: 'doc4', 
+    name: 'Dr. Dona Wilson', 
+    specialty: 'Neurology', 
+    avatar: findImage('doctor-4'), 
+    clinic: 'Healthway Medical', 
+    rating: 4.7, 
+    reviews: 89, 
+    currentToken: 18, 
+    location: { latitude: 40.730610, longitude: -73.935242 }, 
+    isFavourite: true, 
+    bio: 'Dr. Dona Wilson is a neurologist who specializes in the diagnosis and treatment of disorders of the nervous system. She has a special interest in migraine and epilepsy.', 
+    fee: 450 
+  },
+  { 
+    id: 'doc5', 
+    name: 'Dr. Ashiq Syed', 
+    specialty: 'Dentistry', 
+    avatar: findImage('doctor-5'), 
+    clinic: 'Bright Smiles Dental', 
+    rating: 4.9, 
+    reviews: 152, 
+    currentToken: 25, 
+    location: { latitude: 40.7484, longitude: -73.9857 }, 
+    isFavourite: false, 
+    bio: 'Dr. Ashiq Syed is a friendly and skilled dentist who provides a wide range of dental services. He is known for his gentle touch and ability to put even the most anxious patients at ease.', 
+    fee: 200 
+  },
+  { 
+    id: 'doc6', 
+    name: 'Dr. Swee', 
+    specialty: 'General', 
+    avatar: findImage('doctor-2'), 
+    clinic: 'General Hospital', 
+    rating: 4.5, 
+    reviews: 75, 
+    currentToken: 10, 
+    location: { latitude: 40.76, longitude: -73.98 }, 
+    isFavourite: false, 
+    bio: 'Dr. Swee is a dedicated general practitioner with a holistic approach to patient care.', 
+    fee: 150 
+  },
 ];
 
 export const appointments: Appointment[] = [
@@ -49,10 +112,18 @@ export const appointments: Appointment[] = [
     doctorName: 'Dr. Priya Varma',
     doctorAvatar: findImage('doctor-1'),
     doctorClinic: 'Wellness Clinic',
+    specialty: 'Cardiology',
     date: format(addDays(new Date(), 3), 'yyyy-MM-dd'),
     time: '10:00 AM',
     type: 'Consultation',
     status: 'Upcoming',
+    patientDetails: {
+      name: 'Alex Doe',
+      age: '34',
+      sex: 'male',
+      location: 'Wellness City',
+      phone: '123-456-7890'
+    }
   },
   {
     id: 'appt2',
@@ -60,39 +131,37 @@ export const appointments: Appointment[] = [
     doctorName: 'Dr. Rohan Pillai',
     doctorAvatar: findImage('doctor-2'),
     doctorClinic: 'City Clinic',
+    specialty: 'Dermatology',
     date: format(addDays(new Date(), 10), 'yyyy-MM-dd'),
     time: '02:30 PM',
     type: 'Follow-up',
     status: 'Upcoming',
+    patientDetails: {
+      name: 'Alex Doe',
+      age: '34',
+      sex: 'male',
+      location: 'Wellness City',
+      phone: '123-456-7890'
+    }
   },
-   {
+  {
     id: 'appt5',
     doctorId: 'doc3',
     doctorName: 'Dr. Anjali Menon',
     doctorAvatar: findImage('doctor-3'),
     doctorClinic: 'Wellness Clinic',
-    date: format(addDays(new Date(), 5), 'yyyy-MM-dd'),
-    time: '09:30 AM',
-    type: 'Consultation',
-    status: 'Upcoming',
-    patientDetails: {
-        name: 'Alex Doe',
-        age: '34',
-        sex: 'male',
-        location: 'Wellness City',
-        phone: '123-456-7890'
-    }
-  },
-  {
-    id: 'appt3',
-    doctorId: 'doc3',
-    doctorName: 'Dr. Anjali Menon',
-    doctorAvatar: findImage('doctor-3'),
-    doctorClinic: 'Wellness Clinic',
+    specialty: 'Pediatrics',
     date: format(subDays(new Date(), 14), 'yyyy-MM-dd'),
     time: '11:00 AM',
     type: 'Check-up',
     status: 'Past',
+    patientDetails: {
+      name: 'Ava Sam',
+      age: '5',
+      sex: 'female',
+      location: 'Playful Town',
+      phone: '111-222-3333',
+    }
   },
   {
     id: 'appt4',
@@ -100,10 +169,18 @@ export const appointments: Appointment[] = [
     doctorName: 'Dr. Priya Varma',
     doctorAvatar: findImage('doctor-1'),
     doctorClinic: 'Wellness Clinic',
+    specialty: 'Cardiology',
     date: format(subDays(new Date(), 30), 'yyyy-MM-dd'),
     time: '09:00 AM',
     type: 'Consultation',
     status: 'Past',
+    patientDetails: {
+      name: 'Alex Doe',
+      age: '34',
+      sex: 'male',
+      location: 'Wellness City',
+      phone: '123-456-7890'
+    }
   },
   {
     id: 'appt6',
@@ -111,6 +188,7 @@ export const appointments: Appointment[] = [
     doctorName: 'Dr. Swee',
     doctorAvatar: findImage('doctor-2'),
     doctorClinic: 'General Hospital',
+    specialty: 'General',
     date: format(addDays(new Date(), 8), 'yyyy-MM-dd'),
     time: '09:30 AM',
     type: 'Consultation',
@@ -168,7 +246,7 @@ export const notifications: Notification[] = [
     date: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
     isRead: true,
   },
-   {
+  {
     id: 'notif4',
     type: 'appointment',
     title: 'Upcoming Appointment',

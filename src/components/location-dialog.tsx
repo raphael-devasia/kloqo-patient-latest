@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -27,7 +27,34 @@ type LocationDialogProps = {
 export default function LocationDialog({ children, onLocationUpdate, onUseCurrentLocation }: LocationDialogProps) {
   const [open, setOpen] = useState(false);
   const [city, setCity] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const { toast } = useToast();
+
+  // Fetch city suggestions
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (city.length > 1) {
+        fetch(`https://nominatim.openstreetmap.org/search?city=${encodeURIComponent(city)}&format=json&limit=5`)
+          .then(res => res.json())
+          .then(data => {
+            const seen = new Set();
+            setSuggestions(
+              data
+                .map((item: any) => item.display_name)
+                .filter((name: string) => {
+                  if (seen.has(name)) return false;
+                  seen.add(name);
+                  return true;
+                })
+            );
+          });
+      } else {
+        setSuggestions([]);
+      }
+    }, 250);
+    return () => clearTimeout(timeout);
+  }, [city]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,8 +109,30 @@ export default function LocationDialog({ children, onLocationUpdate, onUseCurren
               id="city"
               placeholder="e.g., San Francisco"
               value={city}
-              onChange={(e) => setCity(e.target.value)}
+              onChange={e => {
+                setCity(e.target.value);
+                setShowSuggestions(true);
+              }}
+              autoComplete="off"
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
             />
+            {showSuggestions && suggestions.length > 0 && (
+              <ul className="absolute z-30 bg-white border border-gray-200 mt-1 w-full rounded shadow max-h-48 overflow-y-auto">
+                {suggestions.map((suggestion, idx) => (
+                  <li
+                    key={idx}
+                    className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                    onMouseDown={() => {
+                      setCity(suggestion);
+                      setShowSuggestions(false);
+                    }}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <DialogFooter>
             <Button type="submit">Update Location</Button>
