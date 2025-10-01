@@ -6,7 +6,7 @@ import { doctors } from "@/lib/data";
 import { Doctor } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Star, Search, ArrowUpDown, Ticket, Hospital, ChevronRight, MapPin, Loader2, Heart } from "lucide-react";
+import { Star, Search, ArrowUpDown, Ticket, Hospital, ChevronRight, MapPin, Loader2, Heart, Phone } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState, useMemo, useEffect } from "react";
 import {
@@ -49,7 +49,9 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
       </Avatar>
       <div className="flex flex-col justify-center">
         <div className="flex items-center gap-2">
-          <span className="block font-semibold text-base text-gray-900">{doctor.name}</span>
+          <Link href={`/doctors/${doctor.id}`}>
+            <span className="block font-semibold text-base text-gray-900">{doctor.name}</span>
+          </Link>
         </div>
         <div className="flex items-center gap-1 mt-1">
           <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
@@ -66,7 +68,7 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
 );
 
 
-const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; location: { latitude: number; longitude: number; } }, userLocation: { latitude: number; longitude: number; } | null }) => {
+const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: string; phone: string; location: { latitude: number; longitude: number; } }, userLocation: { latitude: number; longitude: number; } | null }) => {
   const [distance, setDistance] = useState<string | null>(null);
 
   useEffect(() => {
@@ -79,13 +81,21 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; location
   return (
     <Link href={`/clinics/${encodeURIComponent(clinic.name)}`}>
       <Card className="w-full">
-        <CardContent className="p-4 flex items-center justify-between">
+        <CardContent className="p-4 flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-primary/10 rounded-lg">
               <Hospital className="w-5 h-5 text-primary" />
             </div>
             <div>
               <h2 className="text-lg font-bold">{clinic.name}</h2>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                <MapPin className="w-4 h-4" />
+                <span>{clinic.city}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                <Phone className="w-4 h-4" />
+                <span>{clinic.phone}</span>
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -162,7 +172,7 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
   }, [searchTerm, sortOrder, specialty]);
   
   const clinics = useMemo(() => {
-    const clinicMap = new Map<string, { name: string; location: { latitude: number; longitude: number } }>();
+    const clinicMap = new Map<string, { name: string; city: string; phone: string; location: { latitude: number; longitude: number } }>();
     const term = searchTerm.toLowerCase();
 
     // Determine the pool of doctors to consider for clinic listing
@@ -176,7 +186,7 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
         // Add clinic if it hasn't been added and it matches the search term (if any)
         if (!clinicMap.has(doctor.clinic)) {
             if (!searchTerm || doctor.clinic.toLowerCase().includes(term)) {
-                clinicMap.set(doctor.clinic, { name: doctor.clinic, location: doctor.location });
+                clinicMap.set(doctor.clinic, { name: doctor.clinic, location: doctor.location, city: doctor.clinicCity || 'Unknown City', phone: doctor.clinicPhone || 'N/A' });
             }
         }
     });

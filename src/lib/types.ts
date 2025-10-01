@@ -5,6 +5,8 @@ export type Doctor = {
   specialty: string;
   avatar: string;
   clinic: string;
+  clinicCity?: string;
+  clinicPhone?: string;
   rating: number;
   reviews: number;
   currentToken: number;
@@ -59,4 +61,3 @@ export type Notification = {
   date: string;
   isRead: boolean;
 };
-
