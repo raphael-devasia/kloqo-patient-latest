@@ -76,7 +76,7 @@ export default function TokenTracker() {
         </div>
         
         {/* Estimated Time */}
-        <div className="flex items-center justify-center gap-2 rounded-lg bg-background p-3 text-sm font-medium">
+        <div className="flex items-center justify-center gap-2 rounded-lg bg-background p-3 text-sm font-medium shadow-md">
           <Clock className="h-5 w-5 text-muted-foreground" />
           <span>Estimated Wait Time:</span>
           <span className="font-bold text-primary">
