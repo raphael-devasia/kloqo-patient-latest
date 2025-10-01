@@ -83,11 +83,11 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
         <CardContent className="p-4 flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-primary/10 rounded-lg">
-              <Hospital className="w-5 h-5 text-primary" />
+              <Hospital className="w-5 h-5 text-black" />
             </div>
             <div>
               <h2 className="font-bold text-sm">{clinic.name}</h2>
-              <div className="flex items-center gap-2 text-foreground mt-1">
+              <div className="flex items-center gap-2 text-black mt-1">
                 <Phone className="w-4 h-4" />
                 <span className="font-bold text-sm">{clinic.phone}</span>
               </div>
