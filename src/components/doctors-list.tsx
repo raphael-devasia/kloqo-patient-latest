@@ -200,7 +200,7 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
             placeholder="Search doctor, specialty, or clinic"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="h-12 rounded-xl pl-4 pr-12 text-base bg-[#EBEBEB] text-foreground placeholder:text-muted-foreground border-0"
+            className="h-12 rounded-xl pl-4 pr-12 text-base bg-[#F3F7EC] text-foreground placeholder:text-muted-foreground border-0"
           />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg h-8 w-8 flex items-center justify-center pointer-events-none">
               <Search className="h-5 w-5 text-muted-foreground" />
