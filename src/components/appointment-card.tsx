@@ -45,7 +45,7 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardClassName, variant 
             {isDashboard ? (
                 <div className="flex items-center">
                     <Avatar className="h-8 w-8 border">
-                        <Image src={patient.avatar} alt={patient.name} width={32} height={32} />
+                        <AvatarImage src={patient.avatar} alt={patient.name} className="object-cover" />
                         <AvatarFallback>{patient.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                 </div>
