@@ -21,7 +21,7 @@ const categories = [
 
 const CategoryCard = ({ icon, label, href }: { icon: React.ReactNode, label: string, href: string }) => (
     <Link href={href} className="block">
-        <Card className="shadow-md rounded-2xl aspect-square overflow-hidden bg-accent hover:shadow-lg transition-shadow duration-200">
+        <Card className="shadow-md rounded-2xl aspect-square overflow-hidden bg-accent hover:shadow-lg transition-shadow duration-200 border-0">
             <CardContent className="p-2 flex flex-col items-center justify-center h-full text-center">
                 {icon}
                 <h3 className="font-semibold text-xs text-card-foreground leading-tight mt-2">{label}</h3>
