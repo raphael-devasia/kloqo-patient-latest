@@ -58,7 +58,7 @@ export default function TokenTracker() {
           <div className="flex-1 flex items-center justify-center w-full">
             <div className="relative h-full flex items-center justify-center">
               <Progress value={progress} className="w-3 h-full" orientation="vertical" />
-              <div className="absolute top-1/2 -translate-y-1/2 left-8 bg-background px-2 py-1 rounded-md border shadow-sm text-center">
+              <div className="absolute top-1/2 -translate-y-1/2 left-8 bg-background px-2 py-1 rounded-md shadow-md text-center">
                   <p className="text-sm font-medium text-muted-foreground">Queue</p>
                   <p className="text-lg font-bold">{tokensRemaining > 0 ? `${tokensRemaining}` : 'Go'}</p>
                   <Users className="h-4 w-4 text-muted-foreground mx-auto mt-1" />
