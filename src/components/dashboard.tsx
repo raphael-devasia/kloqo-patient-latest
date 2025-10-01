@@ -72,8 +72,8 @@ const DoctorCard = ({
     
     return (
         <Card className="p-4 relative">
+          <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`} className="block">
             <div className="flex items-center gap-4">
-              <Link href={`/doctors/${doctor.id}`} className="flex items-center gap-4 flex-1">
                 <Avatar className="w-16 h-16 border">
                     <AvatarImage src={doctor.avatar} alt={doctor.name} />
                     <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
@@ -83,8 +83,8 @@ const DoctorCard = ({
                     <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
                     <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
                 </div>
-              </Link>
             </div>
+            </Link>
             <Button variant="ghost" size="icon" onClick={() => onToggleFavourite(doctor.id)} className="absolute top-2 right-2">
                 <Heart className={cn("w-5 h-5", doctor.isFavourite ? "text-red-500 fill-red-500" : "text-muted-foreground")} />
             </Button>
