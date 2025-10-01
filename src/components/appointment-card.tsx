@@ -10,15 +10,16 @@ import { savedPatients, user } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Image from "next/image";
+import React from "react";
 
 type AppointmentCardProps = {
   appointment: Appointment;
   onCancelSuccess: (id: string) => void;
-  cardClassName?: string;
+  cardStyle?: React.CSSProperties;
   variant?: 'dashboard' | 'default';
 };
 
-const AppointmentCard = ({ appointment, onCancelSuccess, cardClassName, variant = 'default' }: AppointmentCardProps) => {
+const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'default' }: AppointmentCardProps) => {
   const appointmentDate = parseISO(appointment.date);
   const token = `A${String(appointment.id.replace('appt', '')).padStart(3, '0')}`;
   const isDashboard = variant === 'dashboard';
@@ -29,7 +30,7 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardClassName, variant 
       : (savedPatients.find(p => p.name === appointment.patientDetails?.name) || user);
 
   return (
-    <Card className={cn("shadow-md", cardClassName)}>
+    <Card className="shadow-md" style={cardStyle}>
       <CardContent className="p-4 flex items-center gap-4">
         <div className={cn("flex flex-col items-center", isDashboard ? "w-12" : "w-16")}>
           <span className={cn("text-muted-foreground", isDashboard ? "text-xs" : "text-sm")}>{format(appointmentDate, 'MMM')}</span>

@@ -391,7 +391,7 @@ const handleLocationUpdate = async (newCity: string) => {
                             appointment={appointment} 
                             onCancelSuccess={handleCancelSuccess} 
                             variant="dashboard"
-                            cardClassName="bg-white"
+                            cardStyle={{ backgroundColor: '#A07D8A' }}
                           />
                         </div>
                       </CarouselItem>
