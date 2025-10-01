@@ -62,8 +62,7 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
                 </div>
             ) : (
                 <div>
-                    <p className="text-xs text-muted-foreground" style={mutedColorStyle}>For</p>
-                    <p className={cn("font-semibold", isDashboard ? "text-sm" : "")} style={textColorStyle}>{appointment.patientDetails?.name || user.name}</p>
+                    <p className={cn("font-semibold text-right", isDashboard ? "text-sm" : "")} style={textColorStyle}>{appointment.patientDetails?.name || user.name}</p>
                 </div>
             )}
           </div>
