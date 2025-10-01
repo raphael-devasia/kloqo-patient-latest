@@ -86,10 +86,10 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
               <Hospital className="w-5 h-5 text-black" />
             </div>
             <div>
-              <h2 className="font-bold text-base" style={{ color: '#89A950' }}>{clinic.name}</h2>
+              <h2 className="font-bold text-lg" style={{ color: '#89A950' }}>{clinic.name}</h2>
               <div className="flex items-center gap-2 mt-1">
                 <Phone className="w-4 h-4 text-[#89A950]" />
-                <span className="font-bold text-[#89A950] text-sm">{clinic.phone}</span>
+                <span className="font-bold text-[#89A950] text-xs">{clinic.phone}</span>
               </div>
             </div>
           </div>
@@ -200,7 +200,7 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
             placeholder="Search doctor, specialty, or clinic"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="h-12 rounded-xl pl-4 pr-12 text-base bg-white text-foreground placeholder:text-muted-foreground border-0"
+            className="h-12 rounded-xl pl-4 pr-12 text-base bg-input text-foreground placeholder:text-muted-foreground border-0"
           />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg h-8 w-8 flex items-center justify-center pointer-events-none">
               <Search className="h-5 w-5 text-muted-foreground" />
