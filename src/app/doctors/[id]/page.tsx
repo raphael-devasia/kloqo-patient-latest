@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { Suspense } from 'react';
@@ -13,7 +14,7 @@ import Link from 'next/link';
 function DoctorDetailPageContent() {
     const router = useRouter();
     const params = useParams();
-    const { id } = params;
+    const id = params ? (Array.isArray(params.id) ? params.id[0] : params.id) : undefined;
 
     const doctor = doctors.find(d => d.id === id);
 

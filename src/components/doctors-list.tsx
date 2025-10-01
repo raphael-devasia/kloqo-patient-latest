@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { doctors } from "@/lib/data";
@@ -40,29 +41,31 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
 };
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-    <Card className="w-full bg-white rounded-2xl shadow-sm flex items-center px-4 py-3 my-4 border-0">
-      <div className="flex items-center gap-3 flex-1">
-        <Avatar className="w-12 h-12 border-2 border-white shadow-sm">
-          <AvatarImage src={doctor.avatar} alt={doctor.name} />
-          <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
-        </Avatar>
-        <div className="flex flex-col justify-center">
-          <div className="flex items-center gap-2">
-            <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
-              <span className="block font-semibold text-base text-gray-900">{doctor.name}</span>
+    <Card className="w-full bg-white rounded-2xl shadow-sm overflow-hidden p-4 my-4 border-0">
+      <div className="flex items-center gap-4">
+        <Link href={`/doctors/${doctor.id}`}>
+            <Avatar className="w-20 h-20 border-4 border-primary/20">
+                <AvatarImage src={doctor.avatar} alt={doctor.name} />
+                <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+        </Link>
+        <div className="flex-1">
+            <Link href={`/doctors/${doctor.id}`} className="block">
+                <h3 className="font-bold text-lg text-gray-900">{doctor.name}</h3>
             </Link>
-          </div>
-          <div className="flex items-center gap-1 mt-1">
-            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-            <span className="text-sm font-medium text-gray-800">{doctor.rating?.toFixed(1) || '4.9'}</span>
-            <span className="mx-1 text-gray-400">•</span>
-            <span className="text-sm text-gray-500">{doctor.specialty}</span>
-          </div>
+            <p className="text-sm text-gray-500">{doctor.specialty}</p>
+            <div className="flex items-center gap-1 mt-1">
+                <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                <span className="text-sm font-medium text-gray-800">{doctor.rating?.toFixed(1) || '4.9'}</span>
+            </div>
         </div>
       </div>
-      <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
-        <button className="ml-2 px-4 py-2 rounded-full bg-primary hover:bg-primary/90 text-white text-sm font-semibold shadow active:scale-95 transition-all">Book Now</button>
-      </Link>
+      <div className="mt-4 pt-3 border-t flex justify-between items-center text-sm">
+        <p className="text-gray-600">Next Available: <span className="font-semibold text-primary">Today</span></p>
+        <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
+            <Button size="sm" className="rounded-full">Book Now</Button>
+        </Link>
+      </div>
     </Card>
   );
   
@@ -257,6 +260,7 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
 }
 
     
+
     
 
     
