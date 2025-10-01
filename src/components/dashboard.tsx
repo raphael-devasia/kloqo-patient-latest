@@ -412,8 +412,7 @@ const handleLocationUpdate = async (newCity: string) => {
       
       <div className="px-6 space-y-6 pt-6">
         {nextAppointment && (
-          <div className="bg-yellow-100 text-yellow-800 p-3 rounded-xl flex flex-wrap justify-between items-center w-full max-w-full overflow-x-auto gap-2 sm:p-4 shadow-md">
-
+          <div className="bg-yellow-100 text-yellow-800 p-3 rounded-xl flex justify-between items-center w-full max-w-full overflow-x-auto gap-2 sm:p-4 shadow-md">
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5 animate-dangle" />
               <p className="font-semibold text-sm">Your next appointment</p>
@@ -512,5 +511,7 @@ const handleLocationUpdate = async (newCity: string) => {
     </div>
   );
 }
+
+    
 
     
