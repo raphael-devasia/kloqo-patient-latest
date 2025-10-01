@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { user, doctors as initialDoctors, savedPatients } from "@/lib/data";
@@ -264,7 +265,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (nextAppointment) {
       const updateRelativeDate = () => {
-        setRelativeDate(formatDistanceToNow(parseISO(nextAppointment.date), { addSuffix: true }));
+        setRelativeDate(formatDistanceToNow(parseISO(nextAppointment.date), { addSuffix: true }).replace('about ', ''));
       };
       updateRelativeDate();
       const interval = setInterval(updateRelativeDate, 60000);
