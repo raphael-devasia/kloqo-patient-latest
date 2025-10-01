@@ -46,7 +46,7 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
   const isHistory = appointment.status === 'Past' || appointment.status === 'Cancelled';
 
   return (
-    <Card className={cn("shadow-md", isHistory && "opacity-70 border-0")} style={cardStyle}>
+    <Card className={cn("shadow-md border-0", isHistory && "opacity-70")} style={cardStyle}>
       <CardContent className={cn("p-4 flex items-center gap-4", isAppointmentPage && "p-3 gap-3")}>
         <div className={cn("flex flex-col items-center", isDashboard ? "w-12" : "w-16", isAppointmentPage && "w-12")}>
           <span className={cn("text-muted-foreground", isDashboard ? "text-xs" : "text-sm", isAppointmentPage && "text-xs")} style={mutedColorStyle}>{format(appointmentDate, 'MMM')}</span>
