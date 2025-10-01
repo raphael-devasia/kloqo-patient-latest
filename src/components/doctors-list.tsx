@@ -88,8 +88,8 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
             <div>
               <h2 className="font-bold text-base" style={{ color: '#89A950' }}>{clinic.name}</h2>
               <div className="flex items-center gap-2 mt-1">
-                <Phone className="w-4 h-4 text-black" />
-                <span className="font-bold text-black text-sm">{clinic.phone}</span>
+                <Phone className="w-4 h-4 text-[#89A950]" />
+                <span className="font-bold text-[#89A950] text-sm">{clinic.phone}</span>
               </div>
             </div>
           </div>
@@ -200,7 +200,7 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
             placeholder="Search doctor, specialty, or clinic"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="h-12 rounded-xl pl-4 pr-12 text-base bg-white text-foreground placeholder:text-muted-foreground border-border"
+            className="h-12 rounded-xl pl-4 pr-12 text-base bg-white text-foreground placeholder:text-muted-foreground border-0"
           />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg h-8 w-8 flex items-center justify-center pointer-events-none">
               <Search className="h-5 w-5 text-muted-foreground" />
@@ -209,7 +209,7 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon" className="h-12 w-12 flex-shrink-0 rounded-xl">
-                    <ArrowUpDown className="h-5 h-5" />
+                    <ArrowUpDown className="h-5 h-5 text-[#89A950]" />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
@@ -255,3 +255,5 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
     </div>
   );
 }
+
+    
