@@ -43,7 +43,7 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
   return d < 0.1 ? 0.1 : d;
 };
 
-const pastelColors = ['#D69759', '#A07D8A', '#8DB8A5', '#F5B7B1', '#AED6F1', '#F9E79F'];
+const pastelColors = ['rgba(214, 151, 89, 0.5)', 'rgba(160, 125, 138, 0.5)', 'rgba(141, 184, 165, 0.5)', 'rgba(245, 183, 177, 0.5)', 'rgba(174, 214, 241, 0.5)', 'rgba(249, 231, 159, 0.5)'];
 
 const CategoryCard = ({ icon, label, href }: { icon: React.ReactNode, label: string, href: string }) => (
   <Link href={href} className="flex flex-col items-center justify-center gap-2 text-center">
