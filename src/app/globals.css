@@ -95,7 +95,7 @@ body {
   }
 }
 
-.doctors-page, .schedule-page {
+.themed-page {
     --background: 78 54% 86%;
     --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
@@ -107,6 +107,6 @@ body {
     --border: 76 21% 68%;
 }
 
-.doctors-page, .schedule-page {
+.themed-page {
   background-image: linear-gradient(to bottom, #E1EFC7, #FFFFFF);
 }
