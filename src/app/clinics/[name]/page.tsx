@@ -5,7 +5,7 @@ import { doctors } from "@/lib/data";
 import { Doctor } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ChevronLeft, Check } from "lucide-react";
+import { ChevronLeft, MapPin, Phone } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import Link from "next/link";
@@ -44,14 +44,20 @@ export default function ClinicDetailsPage({ params }: { params: { name: string }
         </div>
         
         {/* Profile content below logo */}
-        <div className="flex flex-col items-center bg-[#7A997D] rounded-2xl shadow-lg px-4 pt-6 pb-6 mt-16 w-full relative z-20 text-white">
+        <div className="flex flex-col items-center bg-[#7A997D] rounded-2xl shadow-lg px-4 pt-6 pb-6 w-full relative z-20 text-white">
           <div className="flex items-center gap-2 mb-1 flex-wrap justify-center">
             <h1 className="text-xl font-bold text-center break-words">{clinicName}</h1>
           </div>
           <div className="text-base mb-2 text-center opacity-90">Multi Super Specialty Hospital</div>
           <div className="flex flex-wrap items-center gap-4 text-sm mb-2 justify-center opacity-90">
-            <span className="flex items-center gap-1">Melattur</span>
-            <span className="flex items-center gap-1">9447273941</span>
+            <span className="flex items-center gap-1">
+              <MapPin className="w-4 h-4" />
+              Melattur
+            </span>
+            <span className="flex items-center gap-1">
+              <Phone className="w-4 h-4" />
+              9447273941
+            </span>
           </div>
           <div className="text-center text-sm mb-2 max-w-xs opacity-90">
             The clinic provides comprehensive eye care services for patients of all ages, focusing on the diagnosis, treatment, and management of various eye conditions.
