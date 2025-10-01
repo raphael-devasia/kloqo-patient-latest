@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -22,7 +23,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   const isDashboard = pathname === '/';
-  const isThemedPage = ['/doctors', '/schedule', '/live'].includes(pathname);
+  const isThemedPage = ['/doctors', '/schedule', '/live', '/appointments'].includes(pathname);
   const isSchedulePage = pathname === '/schedule';
 
 
