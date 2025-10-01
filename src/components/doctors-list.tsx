@@ -258,11 +258,3 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
     </div>
   );
 }
-
-    
-
-    
-
-    
-
-    
