@@ -41,16 +41,9 @@ export default function ClinicDetailsPage({ params }: { params: { name: string }
             <ChevronLeft className="w-6 h-6 text-primary" />
           </button>
         </div>
-        {/* Purple theme gradient header */}
-        <div className="w-full bg-gradient-to-b from-primary to-purple-400 rounded-b-3xl pb-20 pt-8 px-0 relative flex flex-col items-center overflow-hidden">
-          {/* Clinic logo (placeholder) */}
-          <div className="w-24 h-24 bg-white rounded-2xl shadow-lg flex items-center justify-center absolute left-1/2 -translate-x-1/2 top-16 z-20 border-2 border-white">
-            {/* Replace with actual logo if available */}
-            <span className="text-2xl font-bold text-primary">N O R</span>
-          </div>
-        </div>
+        
         {/* Profile content below logo */}
-        <div className="flex flex-col items-center bg-white rounded-2xl shadow-lg px-4 pt-16 pb-6 -mt-14 mx-auto max-w-screen-sm w-full relative z-20">
+        <div className="flex flex-col items-center bg-white rounded-2xl shadow-lg px-4 pt-6 pb-6 mt-16 mx-auto max-w-screen-sm w-full relative z-20">
           <div className="flex items-center gap-2 mb-1 flex-wrap justify-center">
             <h1 className="text-xl font-bold text-center text-gray-900 break-words">{clinicName}</h1>
             <span className="ml-1 text-primary">✔️</span>
