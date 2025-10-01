@@ -8,6 +8,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
+import Link from "next/link";
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
     <Card className="shadow-md rounded-2xl aspect-square overflow-hidden" style={{ backgroundColor: '#d4E0EE', border: 'none' }}>
@@ -70,9 +71,9 @@ export default function ClinicDetailsPage({ params }: { params: { name: string }
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {clinicDoctors.length > 0 ? (
           clinicDoctors.map((doctor) => (
-            <a key={doctor.id} href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`} className="block transition-transform hover:scale-105">
+            <Link key={doctor.id} href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`} className="block transition-transform hover:scale-105">
               <DoctorCard doctor={doctor} />
-            </a>
+            </Link>
           ))
         ) : (
           <p className="col-span-full mt-4 text-center text-muted-foreground">

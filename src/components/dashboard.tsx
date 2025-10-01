@@ -392,16 +392,14 @@ const handleLocationUpdate = async (newCity: string) => {
                     {upcomingAppointments.map((appointment, index) => (
                       <CarouselItem key={appointment.id} className="pl-4 basis-auto">
                         <div className="w-64">
-                          <Link href="/appointments" passHref legacyBehavior>
-  <a className="block">
-    <AppointmentCard 
-      appointment={appointment} 
-      onCancelSuccess={handleCancelSuccess} 
-      variant="dashboard"
-      cardStyle={{ backgroundColor: pastelColors[index % pastelColors.length] }}
-    />
-  </a>
-</Link>
+                          <Link href="/appointments" className="block">
+                            <AppointmentCard 
+                              appointment={appointment} 
+                              onCancelSuccess={handleCancelSuccess} 
+                              variant="dashboard"
+                              cardStyle={{ backgroundColor: pastelColors[index % pastelColors.length] }}
+                            />
+                          </Link>
                         </div>
                       </CarouselItem>
                     ))}
@@ -497,18 +495,18 @@ const handleLocationUpdate = async (newCity: string) => {
             </div>
             <div className="space-y-3">
               {displayedDoctors.length > 0 ? (
-  displayedDoctors.map((doctor) => (
-    <Link key={doctor.id} href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
-  <DoctorCard 
-    doctor={doctor} 
-    userLocation={userLocation}
-    onToggleFavourite={handleToggleFavourite}
-  />
-</Link>
-  ))
-) : (
-  <p className="text-center text-muted-foreground pt-4">You have no favourite doctors yet.</p>
-)}
+                displayedDoctors.map((doctor) => (
+                  <Link key={doctor.id} href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
+                    <DoctorCard 
+                      doctor={doctor} 
+                      userLocation={userLocation}
+                      onToggleFavourite={handleToggleFavourite}
+                    />
+                  </Link>
+                ))
+              ) : (
+                <p className="text-center text-muted-foreground pt-4">You have no favourite doctors yet.</p>
+              )}
             </div>
           </section>
         </div>
