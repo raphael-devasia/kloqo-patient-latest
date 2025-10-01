@@ -65,14 +65,17 @@ export default function AppointmentsList({ filter }: { filter: "Upcoming" | "His
 
   return (
     <div className="space-y-4">
-       {filteredAppointments.map((appt, index) => (
+       {filteredAppointments.map((appt, index) => {
+        const isHistory = appt.status === 'Past' || appt.status === 'Cancelled';
+        return (
          <AppointmentCard 
           key={appt.id} 
           appointment={appt} 
           onCancelSuccess={handleCancelSuccess} 
-          cardStyle={{ backgroundColor: pastelColors[index % pastelColors.length] }}
+          cardStyle={isHistory ? { backgroundColor: 'white' } : { backgroundColor: pastelColors[index % pastelColors.length] }}
          />
-       ))}
+        )
+       })}
     </div>
   );
 }
