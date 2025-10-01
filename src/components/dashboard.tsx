@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { user, doctors as initialDoctors, savedPatients } from "@/lib/data";
@@ -71,7 +70,7 @@ const DoctorCard = ({
     }, [userLocation, doctor.location]);
     
     return (
-        <Card className="p-4 relative border-0">
+        <Card className="p-4 relative border-0 shadow-md">
           <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`} className="block">
             <div className="flex items-center gap-4">
                 <Avatar className="w-16 h-16 border">
@@ -513,3 +512,5 @@ const handleLocationUpdate = async (newCity: string) => {
     </div>
   );
 }
+
+    
