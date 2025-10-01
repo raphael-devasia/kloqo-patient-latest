@@ -94,7 +94,7 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
             </div>
           </div>
         </CardContent>
-        <div className="absolute bottom-2 right-2 flex flex-col items-end gap-1 text-xs text-muted-foreground">
+        <div className="absolute bottom-2 right-2 flex flex-col items-end gap-1 text-xs text-black">
             <span className="font-medium">{clinic.city}</span>
             {distance ? (
                 <div className="flex items-center gap-1">
@@ -255,3 +255,5 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
     </div>
   );
 }
+
+    
