@@ -93,7 +93,6 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
               </div>
             </div>
           </div>
-          <ChevronRight className="w-5 h-5 text-muted-foreground self-center" />
         </CardContent>
         <div className="absolute bottom-2 right-2 flex flex-col items-end gap-1 text-xs text-muted-foreground">
             <span className="font-medium">{clinic.city}</span>
