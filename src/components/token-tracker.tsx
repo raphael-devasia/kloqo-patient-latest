@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -41,35 +42,38 @@ export default function TokenTracker() {
         <CardDescription>Real-time clinic waiting information.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="grid grid-cols-2 gap-4 text-center">
-          <div className="rounded-lg bg-secondary/50 p-3">
+        <div className="flex flex-col items-center gap-4 text-center">
+          <div className="rounded-lg bg-secondary/50 p-3 w-full">
             <p className="text-sm font-medium text-muted-foreground">
               Current Token
             </p>
             <p className="text-3xl font-bold text-primary">{currentToken}</p>
           </div>
-          <div className="rounded-lg bg-primary/10 p-3">
+          
+          <div className="w-full space-y-2">
+            <div className="flex justify-between text-sm font-medium">
+              <span>Queue Progress</span>
+              <span className="text-muted-foreground">
+                {yourToken - currentToken > 0
+                  ? `${yourToken - currentToken} people ahead`
+                  : "It's your turn!"}
+              </span>
+            </div>
+            <Progress value={progress} className="h-3" />
+          </div>
+
+          <div className="rounded-lg bg-primary/10 p-3 w-full">
             <p className="text-sm font-medium text-muted-foreground">
               Your Token
             </p>
             <p className="text-3xl font-bold">{yourToken}</p>
           </div>
         </div>
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm font-medium">
-            <span>Queue Progress</span>
-            <span className="text-muted-foreground">
-              {yourToken - currentToken > 0
-                ? `${yourToken - currentToken} people ahead`
-                : "It's your turn!"}
-            </span>
-          </div>
-          <Progress value={progress} className="h-3" />
-        </div>
+        
         <div className="flex items-center justify-center gap-2 rounded-lg border bg-background p-3 text-sm font-medium">
-          <Clock className="h-5 w-5 text-accent" />
+          <Clock className="h-5 w-5 text-muted-foreground" />
           <span>Estimated Wait Time:</span>
-          <span className="font-bold text-accent">
+          <span className="font-bold text-primary">
             {estimatedTime > 0 ? `~${estimatedTime} mins` : "Now"}
           </span>
         </div>
