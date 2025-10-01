@@ -33,17 +33,22 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
       
   const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('');
 
-  const textColorStyle = cardStyle?.backgroundColor ? { color: 'hsl(var(--card-foreground))' } : {};
-  const mutedColorStyle = cardStyle?.backgroundColor ? { color: 'hsl(var(--muted-foreground))' } : {};
+  const isHistory = appointment.status === 'Past' || appointment.status === 'Cancelled';
   
+  const textColorStyle: React.CSSProperties = {};
+  const mutedColorStyle: React.CSSProperties = {};
+
   if (cardStyle?.backgroundColor) {
-    textColorStyle.color = '#000'; // Or a more suitable dark color
-    mutedColorStyle.color = 'rgba(0, 0, 0, 0.7)';
+    if (isHistory) {
+      textColorStyle.color = 'black';
+      mutedColorStyle.color = 'black';
+    } else {
+      textColorStyle.color = '#000'; // Or a more suitable dark color
+      mutedColorStyle.color = 'rgba(0, 0, 0, 0.7)';
+    }
   }
 
   const isAppointmentPage = variant === 'default';
-
-  const isHistory = appointment.status === 'Past' || appointment.status === 'Cancelled';
 
   return (
     <Card className={cn("shadow-md border-0", isHistory && "opacity-70")} style={cardStyle}>
