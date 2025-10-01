@@ -72,8 +72,8 @@ const DoctorCard = ({
     
     return (
         <Card className="p-4 relative">
-            <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
-              <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
+              <Link href={`/doctors/${doctor.id}`} className="flex items-center gap-4 flex-1">
                 <Avatar className="w-16 h-16 border">
                     <AvatarImage src={doctor.avatar} alt={doctor.name} />
                     <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
@@ -83,8 +83,8 @@ const DoctorCard = ({
                     <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
                     <p className="text-xs text-muted-foreground/80">{doctor.clinic}</p>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
             <Button variant="ghost" size="icon" onClick={() => onToggleFavourite(doctor.id)} className="absolute top-2 right-2">
                 <Heart className={cn("w-5 h-5", doctor.isFavourite ? "text-red-500 fill-red-500" : "text-muted-foreground")} />
             </Button>
@@ -142,7 +142,7 @@ export default function Dashboard() {
     } else if (suggestion.type === 'specialty') {
         router.push(`/doctors?specialty=${encodeURIComponent(suggestion.label)}`);
     } else { // doctor
-      router.push(`/doctors?search=${encodeURIComponent(suggestion.label)}`);
+      router.push(`/doctors/${suggestion.id.replace('doc-','')}`);
     }
   };
 
