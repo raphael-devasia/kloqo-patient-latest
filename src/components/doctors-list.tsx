@@ -79,7 +79,7 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
 
   return (
     <Link href={`/clinics/${encodeURIComponent(clinic.name)}`}>
-      <Card className="w-full relative">
+      <Card className="w-full relative my-2">
         <CardContent className="p-4 flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-primary/10 rounded-lg">
@@ -257,6 +257,9 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
 }
 
     
+
+    
+
     
 
     
