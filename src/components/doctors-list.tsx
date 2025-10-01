@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { doctors } from "@/lib/data";
@@ -41,32 +40,32 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
 };
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-  <Card className="w-full bg-white rounded-2xl shadow-sm flex items-center px-4 py-3 mb-3 border-0">
-    <div className="flex items-center gap-3 flex-1">
-      <Avatar className="w-12 h-12 border-2 border-white shadow-sm">
-        <AvatarImage src={doctor.avatar} alt={doctor.name} />
-        <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
-      </Avatar>
-      <div className="flex flex-col justify-center">
-        <div className="flex items-center gap-2">
-          <Link href={`/doctors/${doctor.id}`}>
-            <span className="block font-semibold text-base text-gray-900">{doctor.name}</span>
-          </Link>
-        </div>
-        <div className="flex items-center gap-1 mt-1">
-          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-          <span className="text-sm font-medium text-gray-800">{doctor.rating?.toFixed(1) || '4.9'}</span>
-          <span className="mx-1 text-gray-400">•</span>
-          <span className="text-sm text-gray-500">{doctor.specialty}</span>
+    <Card className="w-full bg-white rounded-2xl shadow-sm flex items-center px-4 py-3 mb-3 border-0">
+      <div className="flex items-center gap-3 flex-1">
+        <Avatar className="w-12 h-12 border-2 border-white shadow-sm">
+          <AvatarImage src={doctor.avatar} alt={doctor.name} />
+          <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col justify-center">
+          <div className="flex items-center gap-2">
+            <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
+              <span className="block font-semibold text-base text-gray-900">{doctor.name}</span>
+            </Link>
+          </div>
+          <div className="flex items-center gap-1 mt-1">
+            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+            <span className="text-sm font-medium text-gray-800">{doctor.rating?.toFixed(1) || '4.9'}</span>
+            <span className="mx-1 text-gray-400">•</span>
+            <span className="text-sm text-gray-500">{doctor.specialty}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
-      <button className="ml-2 px-4 py-2 rounded-full bg-primary hover:bg-primary/90 text-white text-sm font-semibold shadow active:scale-95 transition-all">Book Now</button>
-    </Link>
-  </Card>
-);
-
+      <Link href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`}>
+        <button className="ml-2 px-4 py-2 rounded-full bg-primary hover:bg-primary/90 text-white text-sm font-semibold shadow active:scale-95 transition-all">Book Now</button>
+      </Link>
+    </Card>
+  );
+  
 
 const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: string; phone: string; location: { latitude: number; longitude: number; } }, userLocation: { latitude: number; longitude: number; } | null }) => {
   const [distance, setDistance] = useState<string | null>(null);
@@ -80,7 +79,7 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
 
   return (
     <Link href={`/clinics/${encodeURIComponent(clinic.name)}`}>
-      <Card className="w-full">
+      <Card className="w-full relative">
         <CardContent className="p-4 flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-primary/10 rounded-lg">
@@ -98,18 +97,19 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            {distance ? (
-              <>
-                <MapPin className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm font-medium text-muted-foreground">{distance}</span>
-              </>
-            ) : (
-              <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
-            )}
-            <ChevronRight className="w-5 h-5 text-muted-foreground" />
-          </div>
+          <ChevronRight className="w-5 h-5 text-muted-foreground self-center" />
         </CardContent>
+        {distance && (
+          <div className="absolute bottom-2 right-2 flex items-center gap-1 text-xs text-muted-foreground">
+            <MapPin className="w-3 h-3" />
+            <span>{distance}</span>
+          </div>
+        )}
+        {!distance && (
+            <div className="absolute bottom-2 right-2">
+                <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+            </div>
+        )}
       </Card>
     </Link>
   );
@@ -260,3 +260,5 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
     </div>
   );
 }
+
+    
