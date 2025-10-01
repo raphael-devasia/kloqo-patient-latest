@@ -386,7 +386,7 @@ const handleLocationUpdate = async (newCity: string) => {
                   <CarouselContent className="-ml-2 pb-4">
                     {upcomingAppointments.map((appointment) => (
                       <CarouselItem key={appointment.id} className="pl-4 basis-auto">
-                        <div className="w-80">
+                        <div className="w-72">
                           <AppointmentCard 
                             appointment={appointment} 
                             onCancelSuccess={handleCancelSuccess} 
