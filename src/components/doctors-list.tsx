@@ -87,9 +87,9 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
             </div>
             <div>
               <h2 className="font-bold text-sm">{clinic.name}</h2>
-              <div className="flex items-center gap-2 text-sm text-foreground mt-1">
+              <div className="flex items-center gap-2 text-foreground mt-1">
                 <Phone className="w-4 h-4" />
-                <span>{clinic.phone}</span>
+                <span className="font-bold">{clinic.phone}</span>
               </div>
             </div>
           </div>
@@ -226,8 +226,8 @@ export default function DoctorsList({ specialty, initialSearchTerm }: { specialt
 
       <Tabs defaultValue="clinics" className="w-full mt-4">
         <TabsList className="w-full bg-white text-green-700">
-          <TabsTrigger value="clinics" className="flex-1 data-[state=active]:bg-[#D5B257] data-[state=active]:text-white font-bold">Clinics</TabsTrigger>
-          <TabsTrigger value="doctors" className="flex-1 data-[state=active]:bg-[#D5B257] data-[state=active]:text-white font-bold">Doctors</TabsTrigger>
+          <TabsTrigger value="clinics" className="flex-1 data-[state=active]:bg-[#E8A665] data-[state=active]:text-white font-bold">Clinics</TabsTrigger>
+          <TabsTrigger value="doctors" className="flex-1 data-[state=active]:bg-[#E8A665] data-[state=active]:text-white font-bold">Doctors</TabsTrigger>
         </TabsList>
         <TabsContent value="clinics">
           {showClinics && clinics.length > 0 ? (
