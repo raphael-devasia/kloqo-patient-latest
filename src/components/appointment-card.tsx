@@ -24,9 +24,9 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardClassName, variant 
   const isDashboard = variant === 'dashboard';
 
   const patient = 
-    appointment.patientDetails?.name === user.name 
+    (appointment.patientDetails?.name === user.name)
       ? user 
-      : savedPatients.find(p => p.name === appointment.patientDetails?.name) || user;
+      : (savedPatients.find(p => p.name === appointment.patientDetails?.name) || user);
 
   return (
     <Card className={cn("shadow-md", cardClassName)}>
