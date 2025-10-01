@@ -10,6 +10,8 @@ import { user, savedPatients } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import React from "react";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 type AppointmentCardProps = {
   appointment: Appointment;
@@ -74,9 +76,18 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
               )}
             </div>
           {!isDashboard && (
-            <div className="flex justify-end pt-1 gap-2">
-              <CancelAppointmentDialog appointmentId={appointment.id} onCancelSuccess={onCancelSuccess} />
-              <SmartRescheduleDialog appointment={appointment} />
+             <div className="flex justify-end pt-1 gap-2">
+              {appointment.status === 'Upcoming' && (
+                <>
+                  <CancelAppointmentDialog appointmentId={appointment.id} onCancelSuccess={onCancelSuccess} />
+                  <SmartRescheduleDialog appointment={appointment} />
+                </>
+              )}
+              {appointment.status === 'Past' && (
+                  <Link href={`/schedule?doctorId=${appointment.doctorId}`} passHref>
+                    <Button variant="outline" size="sm">Rebook</Button>
+                  </Link>
+              )}
             </div>
           )}
         </div>

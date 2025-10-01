@@ -11,7 +11,7 @@ import AppointmentCard from "./appointment-card";
 const pastelColors = ['rgba(214, 151, 89, 0.5)', 'rgba(160, 125, 138, 0.5)', 'rgba(141, 184, 165, 0.5)', 'rgba(245, 183, 177, 0.5)', 'rgba(174, 214, 241, 0.5)', 'rgba(249, 231, 159, 0.5)'];
 
 
-export default function AppointmentsList({ filter }: { filter: "Upcoming" | "Completed" }) {
+export default function AppointmentsList({ filter }: { filter: "Upcoming" | "History" }) {
     const [appointments, setAppointments] = useState(initialAppointments);
 
     useEffect(() => {
@@ -33,10 +33,16 @@ export default function AppointmentsList({ filter }: { filter: "Upcoming" | "Com
     };
 
     const filteredAppointments = appointments
+        .map(appt => {
+             const appointmentDate = parseISO(appt.date);
+             const status = appt.status === 'Cancelled' ? 'Cancelled' : (isPast(appointmentDate) ? "Past" : "Upcoming");
+             return { ...appt, status };
+        })
         .filter(appt => {
-            const appointmentDate = parseISO(appt.date);
-            const status = isPast(appointmentDate) ? "Completed" : "Upcoming";
-            return status === filter && appt.status !== 'Cancelled';
+            if (filter === 'History') {
+                return appt.status === 'Past' || appt.status === 'Cancelled';
+            }
+            return appt.status === filter;
         })
         .sort((a, b) => {
             const dateA = parseISO(a.date);
@@ -64,7 +70,7 @@ export default function AppointmentsList({ filter }: { filter: "Upcoming" | "Com
           key={appt.id} 
           appointment={appt} 
           onCancelSuccess={handleCancelSuccess} 
-          cardStyle={ filter === 'Upcoming' ? { backgroundColor: pastelColors[index % pastelColors.length] } : {}}
+          cardStyle={{ backgroundColor: pastelColors[index % pastelColors.length] }}
          />
        ))}
     </div>
