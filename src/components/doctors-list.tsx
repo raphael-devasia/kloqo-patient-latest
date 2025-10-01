@@ -89,7 +89,7 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
               <h2 className="font-bold text-sm">{clinic.name}</h2>
               <div className="flex items-center gap-2 text-foreground mt-1">
                 <Phone className="w-4 h-4" />
-                <span className="font-bold">{clinic.phone}</span>
+                <span className="font-bold text-sm">{clinic.phone}</span>
               </div>
             </div>
           </div>
