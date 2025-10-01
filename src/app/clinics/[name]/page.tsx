@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
     <Card className="shadow-md rounded-2xl aspect-square overflow-hidden" style={{ backgroundColor: '#d4E0EE', border: 'none' }}>
@@ -37,19 +38,31 @@ export default function ClinicDetailsPage({ params }: { params: { name: string }
   return (
     <div className="space-y-6 pb-8 -mx-6">
       <div className="relative">
-        <div className="absolute left-4 top-4 z-10">
+        <div className="absolute left-4 top-4 z-30">
           <button onClick={() => router.back()} className="bg-white/70 rounded-full p-2 shadow">
             <ChevronLeft className="w-6 h-6 text-primary" />
           </button>
         </div>
         
+        {/* Logo at the top */}
+        <div className="flex justify-center pt-8 bg-[#7A997D]">
+          <Image 
+            src="https://storage.googleapis.com/project-os-frontend/studio/669f9e1e2d921b6d19b3bd05/66a0d84c680bd60d1641b71d.png" 
+            alt="Clinic Logo" 
+            width={120} 
+            height={120} 
+            className="rounded-full border-4 border-white shadow-lg relative z-20"
+            data-ai-hint="clinic building"
+          />
+        </div>
+        
         {/* Profile content below logo */}
-        <div className="flex flex-col items-center bg-[#7A997D] rounded-2xl shadow-lg px-4 pt-6 pb-6 w-full relative z-20 text-white">
+        <div className="flex flex-col items-center bg-[#7A997D] rounded-b-2xl shadow-lg px-4 pt-16 pb-6 w-full relative -mt-14">
           <div className="flex items-center gap-2 mb-1 flex-wrap justify-center">
-            <h1 className="text-xl font-bold text-center break-words">{clinicName}</h1>
+            <h1 className="text-xl font-bold text-center break-words text-white">{clinicName}</h1>
           </div>
-          <div className="text-base mb-2 text-center opacity-90">Multi Super Specialty Hospital</div>
-          <div className="flex flex-wrap items-center gap-4 text-sm mb-2 justify-center opacity-90">
+          <div className="text-base mb-2 text-center text-white/90">Multi Super Specialty Hospital</div>
+          <div className="flex flex-wrap items-center gap-4 text-sm mb-2 justify-center text-white/90">
             <span className="flex items-center gap-1">
               <MapPin className="w-4 h-4" />
               Melattur
@@ -59,7 +72,7 @@ export default function ClinicDetailsPage({ params }: { params: { name: string }
               9447273941
             </span>
           </div>
-          <div className="text-center text-sm mb-2 max-w-xs opacity-90">
+          <div className="text-center text-sm mb-2 max-w-xs text-white/90">
             The clinic provides comprehensive eye care services for patients of all ages, focusing on the diagnosis, treatment, and management of various eye conditions.
             <span className="font-semibold cursor-pointer ml-1">read more</span>
           </div>
@@ -68,7 +81,7 @@ export default function ClinicDetailsPage({ params }: { params: { name: string }
 
       <div className="px-6">
         <h2 className="text-lg font-semibold text-gray-700 mb-2 mt-4">Available Doctors</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
           {clinicDoctors.length > 0 ? (
             clinicDoctors.map((doctor) => (
               <Link key={doctor.id} href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`} className="block transition-transform hover:scale-105">
