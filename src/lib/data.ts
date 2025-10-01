@@ -18,6 +18,21 @@ export const user: UserProfile = {
   avatar: findImage('user-avatar'),
 };
 
+export const savedPatients: UserProfile[] = [
+    {
+        name: 'Ava Sam',
+        email: 'ava.sam@example.com',
+        phone: '111-222-3333',
+        dob: '2018-08-20',
+        address: '456 Child St, Playful Town, 20202',
+        emergencyContact: {
+            name: 'Alex Doe',
+            phone: '123-456-7890',
+        },
+        avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhc2lhbiUyMGdpcmx8ZW58MHx8fHwxNzU4NjI2MzYyfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    }
+];
+
 export const doctors: Doctor[] = [
   { id: 'doc1', name: 'Dr. Priya Varma', specialty: 'Cardiology', avatar: findImage('doctor-1'), clinic: 'Wellness Clinic', rating: 4.9, reviews: 128, currentToken: 58, location: { latitude: 40.7128, longitude: -74.0060 }, isFavourite: true, bio: 'Dr. Priya Varma is a renowned cardiologist with over 15 years of experience in treating heart conditions. She is dedicated to providing compassionate and comprehensive care to her patients.', fee: 500 },
   { id: 'doc2', name: 'Dr. Katherine Rose', specialty: 'Dermatology', avatar: findImage('doctor-2'), clinic: 'City Clinic', rating: 4.8, reviews: 92, currentToken: 32, location: { latitude: 40.7580, longitude: -73.9855 }, isFavourite: false, bio: 'Dr. Katherine Rose is a board-certified dermatologist specializing in cosmetic and medical dermatology. She is passionate about helping her patients achieve healthy, beautiful skin.', fee: 350 },
@@ -60,6 +75,13 @@ export const appointments: Appointment[] = [
     time: '09:30 AM',
     type: 'Consultation',
     status: 'Upcoming',
+    patientDetails: {
+        name: 'Alex Doe',
+        age: '34',
+        sex: 'male',
+        location: 'Wellness City',
+        phone: '123-456-7890'
+    }
   },
   {
     id: 'appt3',
@@ -83,6 +105,24 @@ export const appointments: Appointment[] = [
     type: 'Consultation',
     status: 'Past',
   },
+  {
+    id: 'appt6',
+    doctorId: 'doc6',
+    doctorName: 'Dr. Swee',
+    doctorAvatar: findImage('doctor-2'),
+    doctorClinic: 'General Hospital',
+    date: format(addDays(new Date(), 8), 'yyyy-MM-dd'),
+    time: '09:30 AM',
+    type: 'Consultation',
+    status: 'Upcoming',
+    patientDetails: {
+      name: 'Ava Sam',
+      age: '5',
+      sex: 'female',
+      location: 'Playful Town',
+      phone: '111-222-3333',
+    }
+  }
 ];
 
 export const doctorAvailability = {

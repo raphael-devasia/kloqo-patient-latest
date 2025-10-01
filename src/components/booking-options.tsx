@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, User, Calendar, Clock, PlusCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { doctors, user, appointments as appointmentsData } from '@/lib/data';
+import { doctors, user, appointments as appointmentsData, savedPatients } from '@/lib/data';
 import { Appointment } from '@/lib/types';
 import { format } from 'date-fns';
 import { useState, useEffect } from 'react';
@@ -35,7 +35,7 @@ export default function BookingOptions() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
-  const [bookingFor, setBookingFor] = useState<'self' | 'other'>('self');
+  const [bookingFor, setBookingFor] = useState<'self' | 'other' | string>('self');
 
   const doctorId = searchParams.get('doctorId');
   const date = searchParams.get('date');
@@ -64,7 +64,7 @@ export default function BookingOptions() {
         location: user.address,
         phone: user.phone,
       });
-    } else {
+    } else if (bookingFor === 'other') {
       form.reset({
         name: '',
         age: '',
@@ -72,6 +72,18 @@ export default function BookingOptions() {
         location: '',
         phone: '',
       });
+    } else {
+        const patient = savedPatients.find(p => p.name === bookingFor);
+        if (patient) {
+            const patientAge = patient.dob ? String(new Date().getFullYear() - new Date(patient.dob).getFullYear()) : '';
+            form.reset({
+                name: patient.name,
+                age: patientAge,
+                sex: 'female', // This should be part of patient data
+                location: patient.address,
+                phone: patient.phone,
+            });
+        }
     }
   }, [bookingFor, form, user]);
 
@@ -155,7 +167,7 @@ export default function BookingOptions() {
       
       <div className="space-y-4 pt-6">
         <h2 className="text-lg font-semibold text-center">Who is this appointment for?</h2>
-        <div className="flex justify-center items-start gap-8">
+        <div className="flex justify-center items-start gap-4">
           <div 
             onClick={() => setBookingFor('self')}
             className={cn(
@@ -171,6 +183,25 @@ export default function BookingOptions() {
             </Avatar>
             <span className="text-sm font-medium">{user.name.split(' ')[0]} (You)</span>
           </div>
+
+            {savedPatients.map(patient => (
+                <div 
+                    key={patient.name}
+                    onClick={() => setBookingFor(patient.name)}
+                    className={cn(
+                    "flex flex-col items-center gap-2 cursor-pointer p-2 rounded-lg",
+                    bookingFor === patient.name && 'bg-primary/10'
+                    )}
+                >
+                    <Avatar className={cn(
+                    "h-16 w-16 border-2",
+                    bookingFor === patient.name ? 'border-primary' : 'border-transparent'
+                    )}>
+                    <Image src={patient.avatar} alt={patient.name} width={64} height={64} className="object-cover" />
+                    </Avatar>
+                    <span className="text-sm font-medium">{patient.name.split(' ')[0]}</span>
+                </div>
+            ))}
 
           <div 
             onClick={() => setBookingFor('other')}

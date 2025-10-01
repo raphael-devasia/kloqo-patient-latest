@@ -59,3 +59,4 @@ export type Notification = {
   date: string;
   isRead: boolean;
 };
+
