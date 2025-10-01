@@ -110,3 +110,7 @@ body {
 .themed-page {
   background-image: linear-gradient(to bottom, #E1EFC7, #FFFFFF);
 }
+
+.dashboard-page {
+  background-color: #F3F8EA;
+}
