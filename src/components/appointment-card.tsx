@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback } from "./ui/avatar";
 import React from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { Badge } from "./ui/badge";
 
 type AppointmentCardProps = {
   appointment: Appointment;
@@ -42,8 +43,10 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
 
   const isAppointmentPage = variant === 'default';
 
+  const isHistory = appointment.status === 'Past' || appointment.status === 'Cancelled';
+
   return (
-    <Card className="shadow-md" style={cardStyle}>
+    <Card className={cn("shadow-md", isHistory && "opacity-70")} style={cardStyle}>
       <CardContent className={cn("p-4 flex items-center gap-4", isAppointmentPage && "p-3 gap-3")}>
         <div className={cn("flex flex-col items-center", isDashboard ? "w-12" : "w-16", isAppointmentPage && "w-12")}>
           <span className={cn("text-muted-foreground", isDashboard ? "text-xs" : "text-sm", isAppointmentPage && "text-xs")} style={mutedColorStyle}>{format(appointmentDate, 'MMM')}</span>
@@ -84,9 +87,10 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
                 </>
               )}
               {appointment.status === 'Past' && (
-                  <Link href={`/schedule?doctorId=${appointment.doctorId}`} passHref>
-                    <Button variant="outline" size="sm">Rebook</Button>
-                  </Link>
+                <Badge variant="secondary">Completed</Badge>
+              )}
+              {appointment.status === 'Cancelled' && (
+                <Badge variant="destructive">Cancelled</Badge>
               )}
             </div>
           )}
