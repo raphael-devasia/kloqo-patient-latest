@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -35,7 +36,7 @@ export default function TokenTracker() {
     yourToken > currentToken ? ((currentToken - 50) / (yourToken - 50)) * 100 : 100;
 
   return (
-    <Card>
+    <Card className="border-0">
       <CardHeader>
         <CardTitle>Live Queue Status</CardTitle>
         <CardDescription>Real-time clinic waiting information.</CardDescription>
