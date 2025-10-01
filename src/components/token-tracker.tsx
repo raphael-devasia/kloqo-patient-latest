@@ -39,40 +39,43 @@ export default function TokenTracker() {
 
   return (
     <Card className="border-0 shadow-lg w-full max-w-sm">
-      <CardHeader className="text-center">
+      <CardHeader className="text-center pb-4">
         <CardTitle>Live Queue Status</CardTitle>
         <CardDescription>Real-time clinic waiting information.</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="flex justify-center items-center gap-8 text-center h-64">
-            <div className="flex flex-col items-center justify-center gap-4">
-              <div className="rounded-lg bg-secondary/50 p-4 w-40">
-                <p className="text-sm font-medium text-muted-foreground">
-                  Current Token
-                </p>
-                <p className="text-4xl font-bold text-primary">{currentToken}</p>
+      <CardContent className="space-y-4 px-4 pb-6">
+        <div className="flex flex-col items-center justify-between h-[22rem] gap-2">
+          
+          {/* Current Token */}
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-sm font-medium text-muted-foreground">
+              Current Token
+            </p>
+            <p className="text-6xl font-bold text-primary">{currentToken}</p>
+          </div>
+
+          {/* Progress Bar & Queue Info */}
+          <div className="flex-1 flex items-center justify-center w-full">
+            <div className="relative h-full flex items-center justify-center">
+              <Progress value={progress} className="w-3 h-full" orientation="vertical" />
+              <div className="absolute top-1/2 -translate-y-1/2 left-8 bg-background px-2 py-1 rounded-md border shadow-sm text-center">
+                  <p className="text-sm font-medium text-muted-foreground">Queue</p>
+                  <p className="text-lg font-bold">{tokensRemaining > 0 ? `${tokensRemaining}` : 'Go'}</p>
+                  <Users className="h-4 w-4 text-muted-foreground mx-auto mt-1" />
               </div>
             </div>
-
-            <div className="flex flex-col items-center justify-between h-full">
-                <div className="w-16 text-center">
-                    <p className="text-sm font-medium text-muted-foreground">Queue</p>
-                    <p className="text-lg font-bold">{tokensRemaining > 0 ? `${tokensRemaining}` : 'Go'}</p>
-                </div>
-                <Progress value={progress} className="w-3 h-full" orientation="vertical" />
-                <Users className="h-6 w-6 text-muted-foreground" />
-            </div>
-
-            <div className="flex flex-col items-center justify-center gap-4">
-              <div className="rounded-lg bg-primary/10 p-4 w-40">
-                <p className="text-sm font-medium text-muted-foreground">
-                  Your Token
-                </p>
-                <p className="text-4xl font-bold">{yourToken}</p>
-              </div>
-            </div>
+          </div>
+          
+          {/* Your Token */}
+          <div className="flex flex-col items-center gap-2">
+             <p className="text-sm font-medium text-muted-foreground">
+              Your Token
+            </p>
+            <p className="text-6xl font-bold">{yourToken}</p>
+          </div>
         </div>
         
+        {/* Estimated Time */}
         <div className="flex items-center justify-center gap-2 rounded-lg border bg-background p-3 text-sm font-medium">
           <Clock className="h-5 w-5 text-muted-foreground" />
           <span>Estimated Wait Time:</span>
