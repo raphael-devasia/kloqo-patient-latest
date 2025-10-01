@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { doctors } from "@/lib/data";
@@ -7,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ChevronLeft, MapPin, Phone } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, use } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
@@ -27,9 +28,10 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
     </Card>
 );
 
-export default function ClinicDetailsPage({ params }: { params: { name: string } }) {
+export default function ClinicDetailsPage({ params }: { params: Promise<{ name: string }> }) {
   const router = useRouter();
-  const clinicName = decodeURIComponent(params.name);
+  const { name } = use(params);
+  const clinicName = decodeURIComponent(name);
 
   const clinicDoctors = useMemo(() => {
     return doctors.filter(doctor => doctor.clinic === clinicName);
