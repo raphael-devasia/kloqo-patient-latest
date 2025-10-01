@@ -88,8 +88,8 @@ const ClinicCard = ({ clinic, userLocation }: { clinic: { name: string; city: st
             <div>
               <h2 className="font-bold text-base" style={{ color: '#899976' }}>{clinic.name}</h2>
               <div className="flex items-center gap-2 mt-1" style={{ color: '#899976' }}>
-                <Phone className="w-4 h-4 text-black" />
-                <span className="font-bold text-sm">{clinic.phone}</span>
+                <Phone className="w-4 h-4" style={{ color: '#899976' }}/>
+                <span className="font-bold text-xs">{clinic.phone}</span>
               </div>
             </div>
           </div>
