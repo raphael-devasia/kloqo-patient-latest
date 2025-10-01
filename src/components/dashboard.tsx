@@ -1,7 +1,7 @@
 
 "use client";
 
-import { user, doctors as initialDoctors } from "@/lib/data";
+import { user, doctors as initialDoctors, savedPatients } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,7 @@ import { appointments } from "@/lib/data";
 import NotificationsDialog from "./notifications-dialog";
 import LocationDialog from "./location-dialog";
 import { useRouter } from "next/navigation";
+import AppointmentCard from "./appointment-card";
 
 
 // Haversine formula to calculate distance between two lat/lon points
@@ -112,6 +113,7 @@ export default function Dashboard() {
   const [location, setLocation] = useState<{ city: string; country: string } | null>(null);
   const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null);
   const [doctors, setDoctors] = useState<Doctor[]>(initialDoctors);
+  const [currentAppointments, setCurrentAppointments] = useState(appointments);
   const [activeTab, setActiveTab] = useState<'near' | 'favourites'>('near');
   const [relativeDate, setRelativeDate] = useState<string>('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -188,6 +190,15 @@ export default function Dashboard() {
     );
   };
 
+  const handleCancelSuccess = (cancelledAppointmentId: string) => {
+    const updatedAppointments = currentAppointments.map(appt => 
+      appt.id === cancelledAppointmentId ? { ...appt, status: 'Cancelled' } : appt
+    );
+    setCurrentAppointments(updatedAppointments);
+    localStorage.setItem('appointments', JSON.stringify(updatedAppointments));
+  };
+
+
   const displayedDoctors = useMemo(() => {
     if (activeTab === 'favourites') {
       return doctors.filter(doc => doc.isFavourite);
@@ -229,10 +240,16 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
+    const storedAppointments = localStorage.getItem('appointments');
+    if (storedAppointments) {
+        setCurrentAppointments(JSON.parse(storedAppointments));
+    } else {
+        setCurrentAppointments(appointments);
+    }
     handleUseCurrentLocation();
   }, []);
   
-  const upcomingAppointments = appointments
+  const upcomingAppointments = currentAppointments
     .filter((appt) => appt.status === "Upcoming" && !isPast(new Date(appt.date)))
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
@@ -258,38 +275,6 @@ export default function Dashboard() {
     { label: "General", icon: <Stethoscope className="w-8 h-8 text-primary" /> },
   ];
 
-  const AppointmentCard = ({ appointment, index }: { appointment: Appointment, index: number }) => {
-    const doctor = doctors.find(d => d.id === appointment.doctorId);
-    const cardColors = ['bg-[#F2FFE3]', 'bg-[#E7D7C9]'];
-    const dateColors = ['bg-[#D9F5B3]', 'bg-[#DBCFB9]'];
-    const cardColor = cardColors[index % cardColors.length];
-    const dateColor = dateColors[index % dateColors.length];
-
-    return (
-      <Link href="/appointments" className="block">
-        <Card className={cn("flex-shrink-0 w-64 rounded-2xl shadow-md", cardColor)}>
-            <CardContent className="p-4 text-gray-800">
-                <div className="flex justify-between items-start">
-                    <div className="flex gap-4">
-                        <div className={cn("flex flex-col items-center justify-center rounded-lg p-1 w-16 h-16", dateColor)}>
-                            <span className="text-xs font-semibold">{format(new Date(appointment.date), 'MMM')}</span>
-                            <span className="text-xl font-bold">{format(new Date(appointment.date), 'dd')}</span>
-                            <span className="text-xs font-semibold">{format(new Date(appointment.date), 'E')}</span>
-                        </div>
-                        <div>
-                            <p className="text-sm text-gray-600">{appointment.time}</p>
-                            <h3 className="font-bold text-base mt-1">{doctor?.name}</h3>
-                            <p className="text-sm text-gray-600">{doctor?.specialty}</p>
-                            <p className="text-sm text-gray-500 mt-1">{doctor?.clinic}</p>
-                        </div>
-                    </div>
-                </div>
-            </CardContent>
-        </Card>
-      </Link>
-    );
-};
-
 const handleLocationUpdate = async (newCity: string) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/search?city=${newCity}&format=json&limit=1`);
@@ -297,7 +282,7 @@ const handleLocationUpdate = async (newCity: string) => {
       if (data && data.length > 0) {
         const { lat, lon, display_name } = data[0];
         const addressParts = display_name.split(', ');
-        const city = addressParts[0];
+        const city = addressParts.find(part => part.toLowerCase() !== 'calicut') || addressParts[0];
         const country = addressParts[addressParts.length - 1];
 
         setUserLocation({ latitude: parseFloat(lat), longitude: parseFloat(lon) });
@@ -391,11 +376,27 @@ const handleLocationUpdate = async (newCity: string) => {
                 <div className="flex justify-center items-center">
                     <h2 className="text-xl font-bold text-white">Upcoming appointments</h2>
                 </div>
-                <div className="flex space-x-4 overflow-x-auto pb-4">
-                    {upcomingAppointments.map((appointment, index) => (
-                        <AppointmentCard key={appointment.id} appointment={appointment} index={index} />
+                 <Carousel
+                  opts={{
+                    align: "start",
+                    dragFree: true,
+                  }}
+                  className="w-full"
+                >
+                  <CarouselContent className="-ml-2 pb-4">
+                    {upcomingAppointments.map((appointment) => (
+                      <CarouselItem key={appointment.id} className="pl-4 basis-auto">
+                        <div className="w-80">
+                          <AppointmentCard 
+                            appointment={appointment} 
+                            onCancelSuccess={handleCancelSuccess} 
+                            cardClassName="bg-white"
+                          />
+                        </div>
+                      </CarouselItem>
                     ))}
-                </div>
+                  </CarouselContent>
+                </Carousel>
             </div>
         )}
       </div>
@@ -404,8 +405,8 @@ const handleLocationUpdate = async (newCity: string) => {
         {nextAppointment && (
           <div className="bg-yellow-100 text-yellow-800 p-4 rounded-xl flex justify-between items-center border border-yellow-200">
             <div className="flex items-center gap-3">
-              <Bell className="w-5 h-5" />
-              <p className="font-semibold text-sm">Your next medical checkup</p>
+              <Bell className="w-5 h-5 animate-dangle" />
+              <p className="font-semibold text-sm">Your next appointment</p>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Clock className="w-4 h-4" />
@@ -503,5 +504,3 @@ const handleLocationUpdate = async (newCity: string) => {
     </div>
   );
 }
-
-    
