@@ -31,7 +31,7 @@ const SettingsItem = ({
         ) : (
           icon
         )}
-        <span className="font-medium text-gray-800">{label}</span>
+        <span className="font-medium text-primary">{label}</span>
       </div>
       <div>{children}</div>
     </div>
@@ -61,7 +61,7 @@ export default function SettingsPage() {
         <Link href="/profile/edit">
           <div className="flex items-center justify-between py-2">
             <div className="flex items-center gap-4">
-              <Avatar className="h-14 w-14 border-2 border-red-500">
+              <Avatar className="h-14 w-14 border-2 border-primary">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
               </Avatar>
@@ -76,7 +76,7 @@ export default function SettingsPage() {
         
         <div className="border-t border-b py-2">
           <SettingsItem
-            icon={<Moon className="w-6 h-6 text-gray-600" />}
+            icon={<Moon className="w-6 h-6 text-primary" />}
             label="Dark Mode"
           >
             <Switch defaultChecked />
@@ -87,7 +87,7 @@ export default function SettingsPage() {
         <div className="border-t border-b">
           <SettingsItem
             icon={<UserIcon className="w-5 h-5 text-white" />}
-            iconBgColor="#FFA500"
+            iconBgColor="#739c7b"
             label="Edit Profile"
             href="/profile/edit"
           >
@@ -96,7 +96,7 @@ export default function SettingsPage() {
           <div className="border-t"></div>
           <SettingsItem
             icon={<KeyRound className="w-5 h-5 text-white" />}
-            iconBgColor="#4169E1"
+            iconBgColor="#739c7b"
             label="Change Password"
           >
             <ChevronRight className="w-6 h-6 text-muted-foreground" />
@@ -107,7 +107,7 @@ export default function SettingsPage() {
         <div className="border-t border-b py-2">
           <SettingsItem
             icon={<Bell className="w-5 h-5 text-white" />}
-            iconBgColor="#32CD32"
+            iconBgColor="#739c7b"
             label="Notifications"
           >
             <Switch defaultChecked />
@@ -118,7 +118,7 @@ export default function SettingsPage() {
         <div className="border-t border-b">
           <SettingsItem
             icon={<Languages className="w-5 h-5 text-white" />}
-            iconBgColor="#6A5ACD"
+            iconBgColor="#739c7b"
             label="Language"
           >
             <ChevronRight className="w-6 h-6 text-muted-foreground" />
@@ -126,7 +126,7 @@ export default function SettingsPage() {
           <div className="border-t"></div>
           <SettingsItem
             icon={<LogOut className="w-5 h-5 text-white" />}
-            iconBgColor="#FF6347"
+            iconBgColor="#739c7b"
             label="Logout"
           >
             <ChevronRight className="w-6 h-6 text-muted-foreground" />
