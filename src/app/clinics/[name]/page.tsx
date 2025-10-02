@@ -57,10 +57,10 @@ export default function ClinicDetailsPage({ params }: { params: Promise<{ name: 
               <MapPin className="w-4 h-4" />
               Melattur
             </span>
-            <span className="flex items-center gap-1">
+            <a href="tel:9447273941" className="flex items-center gap-1">
               <Phone className="w-4 h-4" />
               9447273941
-            </span>
+            </a>
           </div>
           <div className="text-center text-sm mb-2 max-w-xs text-white/90">
             The clinic provides comprehensive eye care services for patients of all ages, focusing on the diagnosis, treatment, and management of various eye conditions.
