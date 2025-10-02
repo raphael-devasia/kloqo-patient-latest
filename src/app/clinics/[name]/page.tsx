@@ -47,8 +47,8 @@ export default function ClinicDetailsPage({ params }: { params: Promise<{ name: 
         </div>
         
         {/* Profile content below logo */}
-        <div className="flex flex-col items-center bg-[#7A997D] rounded-b-2xl shadow-lg px-4 pt-6 pb-6 w-full relative">
-          <div className="flex items-center gap-2 mb-1 flex-wrap justify-center">
+        <div className="flex flex-col items-center bg-[#7A997D] rounded-b-2xl shadow-lg px-4 pb-6 w-full relative">
+          <div className="flex items-center gap-2 mb-1 flex-wrap justify-center pt-6">
             <h1 className="text-xl font-bold text-center break-words text-white">{clinicName}</h1>
           </div>
           <div className="flex flex-wrap items-center gap-4 text-sm mb-2 justify-center text-white/90">
