@@ -55,19 +55,19 @@ export default function ProfileForm() {
   }
 
   return (
-    <Card className="max-w-4xl mx-auto">
+    <Card className="max-w-4xl mx-auto border-0 shadow-none">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardHeader>
             <div className="flex items-center gap-4">
               <div className="relative">
                 <Avatar className="h-20 w-20 border-2 border-primary">
-                    <AvatarFallback>AD</AvatarFallback>
+                    <AvatarImage src={user.avatar} alt={user.name} />
+                    <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                 </Avatar>
               </div>
               <div>
-                <CardTitle>{user.name}</CardTitle>
-                <CardDescription>Update your photo and personal details.</CardDescription>
+                <Button variant="link" className="p-0 h-auto">Change Profile Picture</Button>
               </div>
             </div>
           </CardHeader>
@@ -176,12 +176,10 @@ export default function ProfileForm() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="ml-auto">Save Changes</Button>
+            <Button type="submit" className="w-full">Save Changes</Button>
           </CardFooter>
         </form>
       </Form>
     </Card>
   );
 }
-
-    
