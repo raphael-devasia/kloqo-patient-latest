@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { user, doctors as initialDoctors, savedPatients } from "@/lib/data";
@@ -317,7 +316,7 @@ const handleLocationUpdate = async (newCity: string) => {
   return (
     <div className="relative min-h-full">
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-      <div className="bg-[#869A73] p-6 h-96 rounded-b-[3rem] flex flex-col justify-between">
+      <div className="bg-[#869A73] p-6 h-[450px] rounded-b-[3rem] flex flex-col justify-between">
         <div>
           <header className="flex items-start justify-between text-white pt-4">
             <div className="flex flex-col gap-4">
@@ -327,7 +326,7 @@ const handleLocationUpdate = async (newCity: string) => {
                     <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                 </Avatar>
               </button>
-              <div>
+              <div className="mt-4">
                 <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
                 <LocationDialog onLocationUpdate={handleLocationUpdate} onUseCurrentLocation={handleUseCurrentLocation}>
                   <div className="flex items-center gap-1.5 text-sm cursor-pointer">
@@ -390,7 +389,7 @@ const handleLocationUpdate = async (newCity: string) => {
         </div>
 
         {upcomingAppointments.length > 0 && (
-            <div className="space-y-4 -mx-6 px-6 mt-8">
+            <div className="space-y-4 -mx-6 px-6 mt-12">
                 <div className="flex justify-center items-center">
                     <h2 className="text-xl font-bold text-white">Upcoming appointments</h2>
                 </div>
@@ -523,3 +522,5 @@ const handleLocationUpdate = async (newCity: string) => {
     </div>
   );
 }
+
+    
