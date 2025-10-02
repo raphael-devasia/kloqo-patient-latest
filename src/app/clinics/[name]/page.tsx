@@ -47,7 +47,7 @@ export default function ClinicDetailsPage({ params }: { params: Promise<{ name: 
         </div>
         
         {/* Profile content below logo */}
-        <div className="flex flex-col items-center bg-[#7A997D] rounded-b-2xl shadow-lg px-4 pb-6 w-full relative">
+        <div className="flex flex-col items-center bg-[#7A997D] rounded-b-2xl shadow-lg px-4 pb-6 w-full relative mt-16">
           <Avatar className="w-24 h-24 border-4 border-white -mt-12 mb-4">
             <AvatarImage src="https://picsum.photos/seed/clinic/200/200" data-ai-hint="clinic building" alt={clinicName} />
             <AvatarFallback>{clinicName.charAt(0)}</AvatarFallback>
