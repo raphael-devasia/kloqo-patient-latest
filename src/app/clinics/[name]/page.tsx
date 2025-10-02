@@ -14,9 +14,9 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => (
-    <Card className="shadow-md rounded-2xl aspect-square overflow-hidden" style={{ backgroundColor: '#d4E0EE', border: 'none' }}>
+    <Card className="shadow-md rounded-2xl w-36 h-36 overflow-hidden" style={{ backgroundColor: '#E1E8F0', border: 'none' }}>
         <CardContent className="p-2 flex flex-col items-center justify-center h-full text-center">
-            <Avatar className="h-12 w-12 md:h-16 md:w-16 rounded-full mb-1 md:mb-2">
+            <Avatar className="h-14 w-14 rounded-full mb-2">
                 <AvatarImage src={doctor.avatar} alt={doctor.name} className="object-cover" />
                 <AvatarFallback>{doctor.name.charAt(0)}</AvatarFallback>
             </Avatar>
@@ -71,7 +71,7 @@ export default function ClinicDetailsPage({ params }: { params: Promise<{ name: 
 
       <div className="px-6">
         <h2 className="text-lg font-semibold text-gray-700 mb-2 mt-4">Available Doctors</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
+        <div className="flex flex-wrap gap-4">
           {clinicDoctors.length > 0 ? (
             clinicDoctors.map((doctor) => (
               <Link key={doctor.id} href={`/schedule?doctorId=${doctor.id}&specialty=${encodeURIComponent(doctor.specialty)}`} className="block transition-transform hover:scale-105">
