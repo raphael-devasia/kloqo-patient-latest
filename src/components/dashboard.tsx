@@ -390,7 +390,7 @@ const handleLocationUpdate = async (newCity: string) => {
         </div>
 
         {upcomingAppointments.length > 0 && (
-            <div className="space-y-4 -mx-6 px-6">
+            <div className="space-y-4 -mx-6 px-6 mt-8">
                 <div className="flex justify-center items-center">
                     <h2 className="text-xl font-bold text-white">Upcoming appointments</h2>
                 </div>
