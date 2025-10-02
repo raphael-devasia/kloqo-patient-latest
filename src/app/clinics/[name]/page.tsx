@@ -66,8 +66,7 @@ export default function ClinicDetailsPage({ params }: { params: Promise<{ name: 
             </a>
           </div>
           <div className="text-center text-sm mb-2 max-w-xs text-white/90">
-            The clinic provides comprehensive eye care services for patients of all ages, focusing on the diagnosis, treatment, and management of various eye conditions.
-            <span className="font-semibold cursor-pointer ml-1">read more</span>
+            A multi-specialty clinic providing a wide range of medical services to cater to your family's health needs.
           </div>
         </div>
       </div>
