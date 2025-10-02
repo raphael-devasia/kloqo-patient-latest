@@ -320,14 +320,14 @@ const handleLocationUpdate = async (newCity: string) => {
       <div className="bg-[#869A73] p-6 h-[450px] rounded-b-[3rem] flex flex-col justify-between">
         <div>
           <header className="flex items-start justify-between text-white pt-4">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
                <button onClick={() => setIsSidebarOpen(true)}>
                 <Avatar className="h-12 w-12 border-2 border-white">
                     <AvatarImage src={user.avatar} alt={user.name} />
                     <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                 </Avatar>
               </button>
-              <div className="mt-8">
+              <div className="mt-4">
                 <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
                 <LocationDialog onLocationUpdate={handleLocationUpdate} onUseCurrentLocation={handleUseCurrentLocation}>
                   <div className="flex items-center gap-1.5 text-sm cursor-pointer">
