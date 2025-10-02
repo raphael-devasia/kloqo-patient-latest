@@ -49,10 +49,6 @@ const SettingsItem = ({
   return content;
 };
 
-const SectionTitle = ({ title }: { title: string }) => (
-  <h2 className="text-sm font-semibold text-muted-foreground pt-4 pb-1">{title}</h2>
-);
-
 export default function SettingsPage() {
   return (
     <div className="bg-background text-foreground p-4">
@@ -84,7 +80,6 @@ export default function SettingsPage() {
           </SettingsItem>
         </div>
 
-        <SectionTitle title="Profile" />
         <div className="border-t border-b">
           <SettingsItem
             icon={<UserIcon className="w-5 h-5 text-white" />}
@@ -104,7 +99,6 @@ export default function SettingsPage() {
           </SettingsItem>
         </div>
 
-        <SectionTitle title="Notifications" />
         <div className="border-t border-b py-2">
           <SettingsItem
             icon={<Bell className="w-5 h-5 text-white" />}
@@ -115,7 +109,6 @@ export default function SettingsPage() {
           </SettingsItem>
         </div>
         
-        <SectionTitle title="Regional" />
         <div className="border-t border-b">
           <SettingsItem
             icon={<Languages className="w-5 h-5 text-white" />}
