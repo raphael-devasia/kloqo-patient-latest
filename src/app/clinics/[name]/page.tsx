@@ -51,7 +51,6 @@ export default function ClinicDetailsPage({ params }: { params: Promise<{ name: 
           <div className="flex items-center gap-2 mb-1 flex-wrap justify-center">
             <h1 className="text-xl font-bold text-center break-words text-white">{clinicName}</h1>
           </div>
-          <div className="text-base mb-2 text-center text-white/90">Multi Super Specialty Hospital</div>
           <div className="flex flex-wrap items-center gap-4 text-sm mb-2 justify-center text-white/90">
             <span className="flex items-center gap-1">
               <MapPin className="w-4 h-4" />
