@@ -24,7 +24,6 @@ import NotificationsDialog from "./notifications-dialog";
 import LocationDialog from "./location-dialog";
 import { useRouter } from "next/navigation";
 import AppointmentCard from "./appointment-card";
-import Sidebar from "./sidebar";
 
 
 // Haversine formula to calculate distance between two lat/lon points
@@ -316,17 +315,16 @@ const handleLocationUpdate = async (newCity: string) => {
 
   return (
     <div className="relative min-h-full">
-      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
       <div className="bg-[#869A73] p-6 h-[450px] rounded-b-[3rem] flex flex-col justify-between">
         <div>
           <header className="flex items-start justify-between text-white pt-4">
             <div className="flex flex-col">
-               <button onClick={() => setIsSidebarOpen(true)}>
+               <Link href="/profile">
                 <Avatar className="h-12 w-12 border-2 border-white">
                     <AvatarImage src={user.avatar} alt={user.name} />
                     <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                 </Avatar>
-              </button>
+              </Link>
               <div className="mt-1">
                 <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
                 <LocationDialog onLocationUpdate={handleLocationUpdate} onUseCurrentLocation={handleUseCurrentLocation}>
