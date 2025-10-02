@@ -316,17 +316,25 @@ const handleLocationUpdate = async (newCity: string) => {
     <div className="relative min-h-full">
       <div className="bg-[#869A73] p-6 h-96 rounded-b-[3rem] flex flex-col justify-between">
         <div>
-          <header className="flex items-center justify-between text-white pt-4">
-            <div>
-              <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
-              <LocationDialog onLocationUpdate={handleLocationUpdate} onUseCurrentLocation={handleUseCurrentLocation}>
-                <div className="flex items-center gap-1.5 text-sm cursor-pointer">
-                  <MapPin className="w-4 h-4" />
-                  <p>
-                    {location ? `${location.city}, ${location.country}` : 'Finding your location...'}
-                  </p>
-                </div>
-              </LocationDialog>
+          <header className="flex items-start justify-between text-white pt-4">
+            <div className="flex items-center gap-4">
+              <Link href="/profile">
+                <Avatar className="h-12 w-12 border-2 border-white">
+                    <AvatarImage src={user.avatar} alt={user.name} />
+                    <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                </Avatar>
+              </Link>
+              <div>
+                <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
+                <LocationDialog onLocationUpdate={handleLocationUpdate} onUseCurrentLocation={handleUseCurrentLocation}>
+                  <div className="flex items-center gap-1.5 text-sm cursor-pointer">
+                    <MapPin className="w-4 h-4" />
+                    <p>
+                      {location ? `${location.city}, ${location.country}` : 'Finding your location...'}
+                    </p>
+                  </div>
+                </LocationDialog>
+              </div>
             </div>
             <div className="flex items-center gap-2">
               <NotificationsDialog />
@@ -512,6 +520,8 @@ const handleLocationUpdate = async (newCity: string) => {
     </div>
   );
 }
+
+    
 
     
 
