@@ -70,7 +70,7 @@ export default function SettingsPage() {
           </div>
         </Link>
         
-        <div className="border-t border-b py-2">
+        <div className="py-2">
           <SettingsItem
             icon={<Moon className="w-6 h-6 text-white" />}
             iconBgColor="#739c7b"
@@ -80,7 +80,7 @@ export default function SettingsPage() {
           </SettingsItem>
         </div>
 
-        <div className="border-t border-b">
+        <div>
           <SettingsItem
             icon={<UserIcon className="w-5 h-5 text-white" />}
             iconBgColor="#739c7b"
@@ -89,7 +89,6 @@ export default function SettingsPage() {
           >
             
           </SettingsItem>
-          <div className="border-t"></div>
           <SettingsItem
             icon={<KeyRound className="w-5 h-5 text-white" />}
             iconBgColor="#739c7b"
@@ -99,7 +98,7 @@ export default function SettingsPage() {
           </SettingsItem>
         </div>
 
-        <div className="border-t border-b py-2">
+        <div className="py-2">
           <SettingsItem
             icon={<Bell className="w-5 h-5 text-white" />}
             iconBgColor="#739c7b"
@@ -109,7 +108,7 @@ export default function SettingsPage() {
           </SettingsItem>
         </div>
         
-        <div className="border-t border-b">
+        <div>
           <SettingsItem
             icon={<Languages className="w-5 h-5 text-white" />}
             iconBgColor="#739c7b"
@@ -117,7 +116,6 @@ export default function SettingsPage() {
           >
             
           </SettingsItem>
-          <div className="border-t"></div>
           <SettingsItem
             icon={<LogOut className="w-5 h-5 text-white" />}
             iconBgColor="#739c7b"
