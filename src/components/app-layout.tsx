@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import {
   Home,
   CalendarDays,
-  User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LiveIcon from './ui/live-icon';
@@ -16,7 +15,6 @@ const menuItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/appointments", label: "Appointments", icon: CalendarDays },
   { href: "/live", label: "Live", icon: LiveIcon },
-  { href: "/profile", label: "Profile", icon: User },
 ];
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
