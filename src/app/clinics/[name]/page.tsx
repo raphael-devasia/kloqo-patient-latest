@@ -49,7 +49,7 @@ export default function ClinicDetailsPage({ params }: { params: Promise<{ name: 
         {/* Logo at the top */}
         <div className="flex justify-center pt-4 bg-[#7A997D]">
           <Image 
-            src="https://storage.googleapis.com/project-os-frontend/studio/669f9e1e2d921b6d19b3bd05/66a0d84c680bd60d1641b71d.png" 
+            src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxDbGluaWN8ZW58MHx8fHwxNzU5MzkwNjE3fDA&ixlib=rb-4.1.0&q=80&w=1080" 
             alt="Clinic Logo" 
             width={100} 
             height={100} 
