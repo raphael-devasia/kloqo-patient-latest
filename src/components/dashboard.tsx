@@ -320,7 +320,7 @@ const handleLocationUpdate = async (newCity: string) => {
       <div className="bg-[#869A73] p-6 h-96 rounded-b-[3rem] flex flex-col justify-between">
         <div>
           <header className="flex items-start justify-between text-white pt-4">
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col gap-4">
                <button onClick={() => setIsSidebarOpen(true)}>
                 <Avatar className="h-12 w-12 border-2 border-white">
                     <AvatarImage src={user.avatar} alt={user.name} />
