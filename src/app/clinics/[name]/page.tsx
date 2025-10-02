@@ -47,19 +47,19 @@ export default function ClinicDetailsPage({ params }: { params: Promise<{ name: 
         </div>
         
         {/* Logo at the top */}
-        <div className="flex justify-center pt-8 bg-[#7A997D]">
+        <div className="flex justify-center pt-4 bg-[#7A997D]">
           <Image 
             src="https://storage.googleapis.com/project-os-frontend/studio/669f9e1e2d921b6d19b3bd05/66a0d84c680bd60d1641b71d.png" 
             alt="Clinic Logo" 
-            width={120} 
-            height={120} 
+            width={100} 
+            height={100} 
             className="rounded-full border-4 border-white shadow-lg relative z-20"
             data-ai-hint="clinic building"
           />
         </div>
         
         {/* Profile content below logo */}
-        <div className="flex flex-col items-center bg-[#7A997D] rounded-b-2xl shadow-lg px-4 pt-16 pb-6 w-full relative -mt-14">
+        <div className="flex flex-col items-center bg-[#7A997D] rounded-b-2xl shadow-lg px-4 pt-14 pb-6 w-full relative -mt-12">
           <div className="flex items-center gap-2 mb-1 flex-wrap justify-center">
             <h1 className="text-xl font-bold text-center break-words text-white">{clinicName}</h1>
           </div>
