@@ -1,3 +1,4 @@
+
 "use client"
 
 import { user } from "@/lib/data";
@@ -67,7 +68,6 @@ export default function SettingsPage() {
               </Avatar>
               <div>
                 <p className="font-bold text-lg">{user.name}</p>
-                <p className="text-sm text-muted-foreground">Edit personal details</p>
               </div>
             </div>
             <ChevronRight className="w-6 h-6 text-muted-foreground" />
@@ -76,7 +76,8 @@ export default function SettingsPage() {
         
         <div className="border-t border-b py-2">
           <SettingsItem
-            icon={<Moon className="w-6 h-6 text-primary" />}
+            icon={<Moon className="w-6 h-6 text-white" />}
+            iconBgColor="#739c7b"
             label="Dark Mode"
           >
             <Switch defaultChecked />
