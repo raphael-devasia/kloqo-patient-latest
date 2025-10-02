@@ -70,7 +70,7 @@ export default function SettingsPage() {
                 <p className="font-bold text-lg">{user.name}</p>
               </div>
             </div>
-            <ChevronRight className="w-6 h-6 text-muted-foreground" />
+            
           </div>
         </Link>
         
@@ -92,7 +92,7 @@ export default function SettingsPage() {
             label="Edit Profile"
             href="/profile/edit"
           >
-            <ChevronRight className="w-6 h-6 text-muted-foreground" />
+            
           </SettingsItem>
           <div className="border-t"></div>
           <SettingsItem
@@ -100,7 +100,7 @@ export default function SettingsPage() {
             iconBgColor="#739c7b"
             label="Change Password"
           >
-            <ChevronRight className="w-6 h-6 text-muted-foreground" />
+            
           </SettingsItem>
         </div>
 
@@ -122,7 +122,7 @@ export default function SettingsPage() {
             iconBgColor="#739c7b"
             label="Language"
           >
-            <ChevronRight className="w-6 h-6 text-muted-foreground" />
+            
           </SettingsItem>
           <div className="border-t"></div>
           <SettingsItem
@@ -130,7 +130,7 @@ export default function SettingsPage() {
             iconBgColor="#739c7b"
             label="Logout"
           >
-            <ChevronRight className="w-6 h-6 text-muted-foreground" />
+            
           </SettingsItem>
         </div>
       </div>
