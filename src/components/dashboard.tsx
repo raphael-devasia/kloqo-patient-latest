@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { user, doctors as initialDoctors, savedPatients } from "@/lib/data";
@@ -326,7 +327,7 @@ const handleLocationUpdate = async (newCity: string) => {
                     <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                 </Avatar>
               </button>
-              <div className="mt-4">
+              <div className="mt-8">
                 <h2 className="text-xl font-bold">Morning, {user.name.split(' ')[0]}</h2>
                 <LocationDialog onLocationUpdate={handleLocationUpdate} onUseCurrentLocation={handleUseCurrentLocation}>
                   <div className="flex items-center gap-1.5 text-sm cursor-pointer">
