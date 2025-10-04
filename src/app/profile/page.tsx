@@ -129,7 +129,7 @@ export default function SettingsPage() {
       </div>
       
       <div className="text-center text-muted-foreground text-sm py-4">
-        App ver 2.0.1
+        App ver 1.0.0
       </div>
     </div>
   );
