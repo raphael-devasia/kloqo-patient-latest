@@ -71,7 +71,7 @@ export default function TokenTracker() {
              <p className="text-sm font-medium text-muted-foreground">
               Your Token
             </p>
-            <p className="text-6xl font-bold">{yourToken}</p>
+            <p className="text-6xl font-bold" style={{ color: '#FFC64F' }}>{yourToken}</p>
           </div>
         </div>
         
