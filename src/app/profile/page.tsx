@@ -51,82 +51,84 @@ const SettingsItem = ({
 
 export default function SettingsPage() {
   return (
-    <div className="bg-background text-foreground p-4">
-      <h1 className="text-3xl font-bold mb-6">Settings</h1>
+    <div className="bg-background text-foreground p-4 flex flex-col h-full">
+      <div className="flex-grow">
+        <h1 className="text-3xl font-bold mb-6">Settings</h1>
 
-      <div className="space-y-2">
-        <Link href="/profile/edit">
-          <div className="flex items-center justify-between py-2">
-            <div className="flex items-center gap-4">
-              <Avatar className="h-14 w-14 border-2 border-primary">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-bold text-lg">{user.name}</p>
+        <div className="space-y-2">
+          <Link href="/profile/edit">
+            <div className="flex items-center justify-between py-2">
+              <div className="flex items-center gap-4">
+                <Avatar className="h-14 w-14 border-2 border-primary">
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="font-bold text-lg">{user.name}</p>
+                </div>
               </div>
+              
             </div>
-            
+          </Link>
+          
+          <div className="py-2">
+            <SettingsItem
+              icon={<Moon className="w-6 h-6 text-white" />}
+              iconBgColor="#739c7b"
+              label="Dark Mode"
+            >
+              <Switch defaultChecked />
+            </SettingsItem>
           </div>
-        </Link>
-        
-        <div className="py-2">
-          <SettingsItem
-            icon={<Moon className="w-6 h-6 text-white" />}
-            iconBgColor="#739c7b"
-            label="Dark Mode"
-          >
-            <Switch defaultChecked />
-          </SettingsItem>
-        </div>
 
-        <div>
-          <SettingsItem
-            icon={<UserIcon className="w-5 h-5 text-white" />}
-            iconBgColor="#739c7b"
-            label="Edit Profile"
-            href="/profile/edit"
-          >
-            
-          </SettingsItem>
-          <SettingsItem
-            icon={<KeyRound className="w-5 h-5 text-white" />}
-            iconBgColor="#739c7b"
-            label="Change Password"
-          >
-            
-          </SettingsItem>
-        </div>
+          <div>
+            <SettingsItem
+              icon={<UserIcon className="w-5 h-5 text-white" />}
+              iconBgColor="#739c7b"
+              label="Edit Profile"
+              href="/profile/edit"
+            >
+              
+            </SettingsItem>
+            <SettingsItem
+              icon={<KeyRound className="w-5 h-5 text-white" />}
+              iconBgColor="#739c7b"
+              label="Change Password"
+            >
+              
+            </SettingsItem>
+          </div>
 
-        <div className="py-2">
-          <SettingsItem
-            icon={<Bell className="w-5 h-5 text-white" />}
-            iconBgColor="#739c7b"
-            label="Notifications"
-          >
-            <Switch defaultChecked />
-          </SettingsItem>
-        </div>
-        
-        <div>
-          <SettingsItem
-            icon={<Languages className="w-5 h-5 text-white" />}
-            iconBgColor="#739c7b"
-            label="Language"
-          >
-            
-          </SettingsItem>
-          <SettingsItem
-            icon={<LogOut className="w-5 h-5 text-white" />}
-            iconBgColor="#739c7b"
-            label="Logout"
-          >
-            
-          </SettingsItem>
+          <div className="py-2">
+            <SettingsItem
+              icon={<Bell className="w-5 h-5 text-white" />}
+              iconBgColor="#739c7b"
+              label="Notifications"
+            >
+              <Switch defaultChecked />
+            </SettingsItem>
+          </div>
+          
+          <div>
+            <SettingsItem
+              icon={<Languages className="w-5 h-5 text-white" />}
+              iconBgColor="#739c7b"
+              label="Language"
+            >
+              
+            </SettingsItem>
+            <SettingsItem
+              icon={<LogOut className="w-5 h-5 text-white" />}
+              iconBgColor="#739c7b"
+              label="Logout"
+            >
+              
+            </SettingsItem>
+          </div>
         </div>
       </div>
       
-      <div className="text-center text-muted-foreground mt-8 text-sm">
+      <div className="text-center text-muted-foreground text-sm py-4">
         App ver 2.0.1
       </div>
     </div>
