@@ -38,14 +38,9 @@ const AppointmentCard = ({ appointment, onCancelSuccess, cardStyle, variant = 'd
   const textColorStyle: React.CSSProperties = {};
   const mutedColorStyle: React.CSSProperties = {};
 
-  if (cardStyle?.backgroundColor) {
-    if (isHistory) {
-      textColorStyle.color = 'black';
-      mutedColorStyle.color = 'black';
-    } else {
-      textColorStyle.color = '#000'; // Or a more suitable dark color
-      mutedColorStyle.color = 'rgba(0, 0, 0, 0.7)';
-    }
+  if (cardStyle?.backgroundColor && cardStyle.backgroundColor !== 'white') {
+    textColorStyle.color = '#333';
+    mutedColorStyle.color = '#555';
   }
 
   const isAppointmentPage = variant === 'default';

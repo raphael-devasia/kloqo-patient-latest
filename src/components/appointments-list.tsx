@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import AppointmentCard from "./appointment-card";
 
-const pastelColors = ['#CAD7E4', 'rgba(160, 125, 138, 0.3)', 'rgba(141, 184, 165, 0.3)', 'rgba(245, 183, 177, 0.3)', 'rgba(174, 214, 241, 0.3)', 'rgba(249, 231, 159, 0.3)'];
+const upcomingColor = '#CAD7E4';
 
 
 export default function AppointmentsList({ filter }: { filter: "Upcoming" | "History" }) {
@@ -72,7 +72,7 @@ export default function AppointmentsList({ filter }: { filter: "Upcoming" | "His
           key={appt.id} 
           appointment={appt} 
           onCancelSuccess={handleCancelSuccess} 
-          cardStyle={isHistory ? { backgroundColor: 'white' } : { backgroundColor: pastelColors[index % pastelColors.length] }}
+          cardStyle={isHistory ? { backgroundColor: 'white' } : { backgroundColor: upcomingColor }}
          />
         )
        })}
